@@ -137,6 +137,24 @@
       flex-shrink: 0;
     }
 
+    .logo-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-svg-fallback {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-sm);
+      background: radial-gradient(circle at center, rgba(0,242,254,0.2) 0%, #060913 100%);
+      border: 1px solid var(--border-cyan);
+      box-shadow: var(--glow-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .logo-img {
       width: 38px;
       height: 38px;
@@ -148,7 +166,7 @@
       transition: transform var(--t-fast) var(--ease);
     }
 
-    .logo:hover .logo-img {
+    .logo:hover .logo-img, .logo:hover .logo-svg-fallback {
       transform: scale(1.06);
       box-shadow: 0 0 25px rgba(0,242,254,0.45);
     }
@@ -808,14 +826,29 @@
     <div class="container">
       <nav class="nav-wrapper">
         <a href="#top" class="logo">
-          <img src="02_BRAND/razum_logo_official.jpg" alt="Razum AI" class="logo-img">
+          <div class="logo-box">
+            <img src="02_BRAND/razum_logo_official.jpg" alt="Razum AI" class="logo-img" onerror="this.src='razum_logo_official.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('logoSvgFallback').style.display='flex';}">
+            <div id="logoSvgFallback" class="logo-svg-fallback" style="display:none;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 4H14C16.2091 4 18 5.79086 18 8C18 10.2091 16.2091 12 14 12H6V4Z" stroke="url(#logo_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 12H13L18 20" stroke="url(#logo_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 4V20" stroke="url(#logo_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="logo_grad" x1="6" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#00f2fe"/>
+                    <stop offset="1" stop-color="#7928ca"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
           Razum <span style="background:var(--grad-prism);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">AI</span>
           <span class="logo-badge">Ecosystem</span>
         </a>
         <ul class="nav-links">
           <li><a href="#services" data-lang="en">Solutions</a><a href="#services" data-lang="ru">Решения</a></li>
-          <li><a href="#sprint" data-lang="en">5-Stage Sprint</a><a href="#sprint" data-lang="ru">Спринт запуска</a></li>
-          <li><a href="#calculator" data-lang="en">ROI Calculator</a><a href="#calculator" data-lang="ru">Калькулятор ROI</a></li>
+          <li><a href="Teleprompter_Studio.html" data-lang="en" style="color:var(--cyan);font-weight:700;">🎙️ Prompter</a><a href="Teleprompter_Studio.html" data-lang="ru" style="color:var(--cyan);font-weight:700;">🎙️ Телесуфлер</a></li>
+          <li><a href="Offer_Deck_Smarty_Marketing_SEO.html" data-lang="en">📊 Deck</a><a href="Offer_Deck_Smarty_Marketing_SEO.html" data-lang="ru">📊 Дек</a></li>
           <li><a href="#pricing" data-lang="en">Pricing</a><a href="#pricing" data-lang="ru">Тарифы</a></li>
           <li><a href="#audit" data-lang="en">Audit</a><a href="#audit" data-lang="ru">Аудит</a></li>
         </ul>

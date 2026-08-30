@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smarty Marketing SEO — AI Content Engine Offer Deck 2026</title>
+  <meta name="description" content="Интерактивная презентация решения по ИИ-видеопродакшну и оптимизации для Smarty Marketing SEO">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(26, 35, 55, 0.85);
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(0, 242, 254, 0.3);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(79, 172, 254, 0.08) 0%, transparent 40%);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Container & Navigation */
+    .deck-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px 80px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      margin-bottom: 30px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #050b14;
+      font-size: 18px;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #050b14;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+    }
+
+    /* Slides Content */
+    .slide-section {
+      display: none;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .slide-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero Slide */
+    .hero-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 60px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid var(--border-glow);
+      border-radius: 30px;
+      color: var(--accent-cyan);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 46px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 36px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+      text-align: left;
+    }
+
+    .stat-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .stat-box:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+    }
+
+    .stat-val {
+      font-size: 32px;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Cards Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+    }
+
+    .card-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .badge-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-cyan { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 242, 254, 0.3); }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .card-solution {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--accent-cyan);
+      font-size: 13px;
+    }
+
+    /* Architecture Flow */
+    .arch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+    }
+
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 30px;
+      position: relative;
+    }
+
+    .pipeline-node {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .pipeline-node:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.04);
+    }
+
+    .node-num {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #050b14;
+      font-weight: 800;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .node-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 8px 0 6px;
+      color: #fff;
+    }
+
+    .node-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ROI Calculator (Hormozi Formula) */
+    .roi-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+    }
+
+    .slider-group {
+      margin-bottom: 24px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .slider-header span:last-child {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    .roi-result-box {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(79, 172, 254, 0.05));
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .roi-score {
+      font-size: 54px;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent-emerald);
+      margin: 10px 0;
+    }
+
+    .roi-equation {
+      background: rgba(0,0,0,0.5);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Pricing Table */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price-card.featured {
+      border-color: var(--accent-cyan);
+      background: linear-gradient(180deg, rgba(0, 242, 254, 0.05) 0%, rgba(18, 24, 38, 0.95) 100%);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+    }
+
+    .price-tag {
+      font-size: 38px;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+      margin: 16px 0;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 20px 0 30px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      color: var(--accent-cyan);
+      font-weight: bold;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #050b14;
+      border: none;
+      padding: 14px 24px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--transition);
+    }
+
+    .btn-action:hover {
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 32px; }
+      .roi-wrapper { grid-template-columns: 1fr; }
+      header { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .nav-tabs { width: 100%; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    <!-- Header -->
+    <header>
+      <div class="brand-logo" style="display:flex;align-items:center;gap:12px;">
+        <img src="02_BRAND/razum_logo_official.jpg" alt="Razum AI" class="logo-img" onerror="this.src='razum_logo_official.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('deckLogoFallback').style.display='flex';}">
+        <div id="deckLogoFallback" style="display:none;width:40px;height:40px;border-radius:8px;background:radial-gradient(circle at center, rgba(0,242,254,0.2) 0%, #060913 100%);border:1px solid var(--accent-cyan);align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4H14C16.2091 4 18 5.79086 18 8C18 10.2091 16.2091 12 14 12H6V4Z" stroke="url(#d_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 12H13L18 20" stroke="url(#d_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 4V20" stroke="url(#d_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="d_grad" x1="6" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00f2fe"/>
+                <stop offset="1" stop-color="#7928ca"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Razum Intelligent AI & Smarty SEO</div>
+          <div class="brand-sub">Offer Deck: AI Video Production Pipeline 2026</div>
+        </div>
+      </div>
+      <nav class="nav-tabs">
+        <button id="nav-hero" class="nav-btn active" onclick="switchTab('hero')">Главная</button>
+        <button id="nav-mistakes" class="nav-btn" onclick="switchTab('mistakes')">SEO Тренды 2026</button>
+        <button id="nav-arch" class="nav-btn" onclick="switchTab('arch')">ИИ-Конвейер</button>
+        <button id="nav-roi" class="nav-btn" onclick="switchTab('roi')">Hormozi ROI</button>
+        <button id="nav-pricing" class="nav-btn" onclick="switchTab('pricing')">Тарифы</button>
+      </nav>
+    </header>
+
+    <!-- Slide 1: Hero -->
+    <section id="slide-hero" class="slide-section active">
+      <div class="hero-card">
+        <div class="hero-pill">⚡ Автономный видеоконвейер на Antigravity 2.0</div>
+        <h1 class="hero-title">Масштабирование контента для <span>Smarty Marketing SEO</span> без рутины</h1>
+        <p class="hero-subtitle">
+          Трансформация экспертизы агентства в 20+ Shorts и 4 глубоких YouTube-выпуска ежемесячно: автоматические скрипты для суфлера, генерация B-Roll в 4K и авторский Lo-Fi саундтрек.
+        </p>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-val">70%</div>
+            <div class="stat-label">Экономия времени основателя на продакшне</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">10X</div>
+            <div class="stat-label">Скорость сборки роликов (Nano Banana + Veo 3.1)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">0%</div>
+            <div class="stat-label">Риск Copyright Claims (Google Flow Music)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">60s</div>
+            <div class="stat-label">Телесуфлерный тайминг (15 слов / 5 сек)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: 3 SEO Mistakes of Aug 2026 -->
+    <section id="slide-mistakes" class="slide-section">
+      <div style="margin-bottom: 24px; text-align: center;">
+        <h2 style="font-size: 32px; margin-bottom: 8px;">3 критические ошибки SEO в августе 2026 года</h2>
+        <p style="color: var(--text-muted);">Основано на актуальных обновлениях алгоритмов Google и релизах ИИ-поиска</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="feature-card">
+          <div>
+            <div class="card-badge badge-rose">Ошибка #1: Игнорирование GEO</div>
+            <h3 class="card-title">ИИ-агент Gemini Spark</h3>
+            <p class="card-text">
+              Пользователи всё чаще поручают сбор информации агентам. Gemini Spark парсит индекс напрямую, лишая сайты прямых кликов и не фиксируя сессии в GA4.
+            </p>
+          </div>
+          <div class="card-solution">
+            <b>Решение:</b> Внедрение микроразметки источников GEO для гарантированного цитирования агентства в ИИ-выдаче.
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="card-badge badge-amber">Ошибка #2: Ручной GTM код</div>
+            <h3 class="card-title">Google Visual No-Code Tag</h3>
+            <p class="card-text">
+              Ручная верстка триггеров событий замедляет запуск рекламы. Google представил визуальный клик-трекинг, ускоряющий разметку конверсий в 10 раз.
+            </p>
+          </div>
+          <div class="card-solution">
+            <b>Решение:</b> Миграция на визуальный no-code трекинг с автоматической валидацией целей без участия разработчиков.
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div>
+            <div class="card-badge badge-rose">Ошибка #3: SVG Фавиконы</div>
+            <h3 class="card-title">Депрекация SVG поисковыми ботами</h3>
+            <p class="card-text">
+              С 29 августа 2026 г. роботы Google не парсят SVG-фавиконы. Сайты отображаются без логотипов, теряя до 31% мобильного CTR.
+            </p>
+          </div>
+          <div class="card-solution">
+            <b>Решение:</b> Автоматический аудит мета-тегов с конвертацией в сертифицированный 48x48 PNG/ICO формат.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: AI Pipeline Architecture -->
+    <section id="slide-arch" class="slide-section">
+      <div class="arch-card">
+        <h2 style="font-size: 28px; margin-bottom: 8px;">Сквозная архитектура: От идеи до публикации</h2>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Единая экосистема под управлением Global Orchestrator в Antigravity 2.0</p>
+
+        <div class="pipeline-steps">
+          <div class="pipeline-node">
+            <div class="node-num">1</div>
+            <div class="node-title">Сценарный генератор</div>
+            <div class="node-desc">Стандарт <code>smarty-seo-script.md</code>: разбивка на телесуфлерные блоки по 5 сек (до 15 слов).</div>
+          </div>
+
+          <div class="pipeline-node">
+            <div class="node-num">2</div>
+            <div class="node-title">Nano Banana Pro</div>
+            <div class="node-desc">Нативный 4K-рендеринг текста, инфографики и UI-панелей аналитики без искажений.</div>
+          </div>
+
+          <div class="pipeline-node">
+            <div class="node-num">3</div>
+            <div class="node-title">Veo 3.1 Video B-Roll</div>
+            <div class="node-desc">Динамичные видеовставки в 4K 60fps с кинематографическим освещением и анимацией.</div>
+          </div>
+
+          <div class="pipeline-node">
+            <div class="node-num">4</div>
+            <div class="node-title">Google Flow Music</div>
+            <div class="node-desc">Генерация брендовых 84 BPM Lo-Fi битов без лицензионных ограничений.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Hormozi ROI Equation -->
+    <section id="slide-roi" class="slide-section">
+      <div class="roi-wrapper">
+        <div>
+          <h2 style="font-size: 26px; margin-bottom: 12px;">Калькулятор ценности (Hormozi Formula)</h2>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">
+            Формула привлекательности предложения: максимизируем Желаемый результат и Вероятность успеха, сводя к минимуму Временную задержку и Усилия клиента.
+          </p>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Желаемый результат (Dream Outcome)</span>
+              <span id="val-dream">90</span>
+            </div>
+            <input type="range" id="input-dream" min="50" max="100" value="90" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Вероятность успеха (Perceived Likelihood)</span>
+              <span id="val-likelihood">95</span>
+            </div>
+            <input type="range" id="input-likelihood" min="50" max="100" value="95" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Временная задержка (Time Delay) [меньше = лучше]</span>
+              <span id="val-delay">15</span>
+            </div>
+            <input type="range" id="input-delay" min="5" max="50" value="15" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Усилия и жертвы клиента (Effort & Sacrifice)</span>
+              <span id="val-effort">10</span>
+            </div>
+            <input type="range" id="input-effort" min="5" max="50" value="10" oninput="calculateROI()">
+          </div>
+        </div>
+
+        <div class="roi-result-box">
+          <div style="font-size: 13px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">
+            Индекс ценности предложения (Value Score)
+          </div>
+          <div class="roi-score" id="roi-output">57.0x</div>
+          <p style="font-size: 14px; color: var(--text-main);">
+            За счет полной автоматизации продакшна время эксперта на выпуск 1 ролика сокращается с <b>4 часов до 10 минут</b>.
+          </p>
+          <div class="roi-equation">
+            Value = (Dream Outcome × Likelihood) / (Time Delay × Effort)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Pricing -->
+    <section id="slide-pricing" class="slide-section">
+      <div style="margin-bottom: 24px; text-align: center;">
+        <h2 style="font-size: 32px; margin-bottom: 8px;">Форматы внедрения для Smarty Marketing SEO</h2>
+        <p style="color: var(--text-muted);">Выберите подходящий темп масштабирования</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <div class="card-badge badge-cyan">Тестовый спринт</div>
+            <h3 style="font-size: 24px; color: #fff;">Пакет «Быстрый старт»</h3>
+            <div class="price-tag">MVP / 7 дней</div>
+            <ul class="feature-list">
+              <li>8 готовых Shorts + 2 длинных YouTube-выпуска</li>
+              <li>Настройка телесуфлерных стандартов (5 сек)</li>
+              <li>Библиотека из 10 брендовых Lo-Fi треков</li>
+              <li>Шаблоны графики Nano Banana Pro</li>
+            </ul>
+          </div>
+          <button id="btn-mvp-action" class="btn-action" onclick="alert('Выбран пакет «Быстрый старт»! Готовим договор.')">Выбрать «Быстрый старт»</button>
+        </div>
+
+        <div class="price-card featured">
+          <div>
+            <div class="card-badge badge-emerald">Максимальный ROI</div>
+            <h3 style="font-size: 24px; color: #fff;">Пакет «Контент-Фабрика»</h3>
+            <div class="price-tag">Полная интеграция</div>
+            <ul class="feature-list">
+              <li>20 Shorts + 4 YouTube-выпуска ежемесячно</li>
+              <li>Полная интеграция с CRM и Google Apps Script</li>
+              <li>Автономный B-Roll конвейер (Nano Banana + Veo 3.1)</li>
+              <li>Поддержка сквозного оркестратора Antigravity</li>
+              <li>Еженедельный аудит SEO-трендов и GEO-оптимизация</li>
+            </ul>
+          </div>
+          <button id="btn-full-action" class="btn-action" onclick="alert('Выбран пакет «Контент-Фабрика»! Запускаем полный цикл.')">Запустить «Контент-Фабрику»</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.slide-section').forEach(sec => sec.classList.remove('active'));
+
+      const targetBtn = document.getElementById('nav-' + tabId);
+      const targetSec = document.getElementById('slide-' + tabId);
+
+      if (targetBtn && targetSec) {
+        targetBtn.classList.add('active');
+        targetSec.classList.add('active');
+      }
+    }
+
+    function calculateROI() {
+      const dream = parseFloat(document.getElementById('input-dream').value);
+      const likelihood = parseFloat(document.getElementById('input-likelihood').value);
+      const delay = parseFloat(document.getElementById('input-delay').value);
+      const effort = parseFloat(document.getElementById('input-effort').value);
+
+      document.getElementById('val-dream').innerText = dream;
+      document.getElementById('val-likelihood').innerText = likelihood;
+      document.getElementById('val-delay').innerText = delay;
+      document.getElementById('val-effort').innerText = effort;
+
+      const score = ((dream * likelihood) / (delay * effort)).toFixed(1);
+      document.getElementById('roi-output').innerText = score + 'x';
+    }
+
+    // Init
+    calculateROI();
+  </script>
+</body>
+</html>

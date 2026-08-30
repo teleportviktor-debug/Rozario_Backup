@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razum AI — Teleprompter & Video Recording Studio</title>
+  <meta name="description" content="Professional B2B Teleprompter & Video Recording Studio with 5s/15w cadence control, live webcam overlay, and 1-click video export.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060913;
+      --bg-card: rgba(13, 20, 40, 0.85);
+      --border-cyan: rgba(0, 242, 254, 0.35);
+      --cyan: #00f2fe;
+      --purple: #7928ca;
+      --green: #10b981;
+      --red: #ef4444;
+      --grad-prism: linear-gradient(135deg, #00f2fe 0%, #7928ca 100%);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Studio Bar */
+    header {
+      height: 60px;
+      background: rgba(4, 8, 16, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 50;
+    }
+
+    .studio-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .logo-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border-cyan);
+    }
+
+    .studio-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .rec-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+      font-weight: 700;
+      font-size: 12px;
+      display: none;
+    }
+
+    .rec-badge.active {
+      display: inline-flex;
+    }
+
+    .rec-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    /* Studio Main Layout */
+    .studio-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      height: calc(100vh - 60px);
+    }
+
+    /* Left: Teleprompter & Camera Stage */
+    .stage-container {
+      position: relative;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Webcam Video Layer */
+    #webcamVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      transform: scaleX(-1); /* Mirror by default */
+      transition: opacity 0.3s;
+    }
+
+    #webcamVideo.hidden { display: none; }
+
+    /* Teleprompter Text Layer */
+    .prompter-viewport {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 200px 40px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .prompter-reading-guide {
+      position: absolute;
+      top: 38%;
+      left: 10%;
+      right: 10%;
+      height: 90px;
+      border-top: 2px dashed rgba(0, 242, 254, 0.5);
+      border-bottom: 2px dashed rgba(0, 242, 254, 0.5);
+      background: rgba(0, 242, 254, 0.05);
+      border-radius: 8px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .prompter-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      text-align: center;
+      max-width: 860px;
+      transition: transform 0.1s linear;
+    }
+
+    .prompter-line {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.7);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .prompter-line.active {
+      color: #fff;
+      transform: scale(1.04);
+      text-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+    }
+
+    /* Right Control Sidebar */
+    .control-sidebar {
+      background: rgba(10, 16, 32, 0.95);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .select-input, .text-input {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .select-input:focus, .text-input:focus {
+      border-color: var(--cyan);
+    }
+
+    /* Range slider */
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--cyan);
+    }
+
+    /* Buttons */
+    .btn-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-record {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-record.recording {
+      background: #374151;
+      box-shadow: none;
+    }
+
+    .btn-play {
+      background: var(--grad-prism);
+      color: #060913;
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--cyan);
+    }
+
+    .timer-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--cyan);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="studio-logo" style="display:flex;align-items:center;gap:10px;">
+      <img src="02_BRAND/razum_logo_official.jpg" alt="Razum AI" class="logo-img" onerror="this.src='razum_logo_official.jpg'; this.onerror=function(){this.style.display='none'; document.getElementById('prompterLogoFallback').style.display='flex';}">
+      <div id="prompterLogoFallback" style="display:none;width:32px;height:32px;border-radius:6px;background:radial-gradient(circle at center, rgba(0,242,254,0.2) 0%, #060913 100%);border:1px solid var(--border-cyan);align-items:center;justify-content:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 4H14C16.2091 4 18 5.79086 18 8C18 10.2091 16.2091 12 14 12H6V4Z" stroke="url(#p_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 12H13L18 20" stroke="url(#p_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 4V20" stroke="url(#p_grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="p_grad" x1="6" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00f2fe"/>
+              <stop offset="1" stop-color="#7928ca"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span>Razum AI • Teleprompter Studio</span>
+    </div>
+    <div class="studio-status">
+      <div class="rec-badge" id="recBadge">
+        <span class="rec-dot"></span>
+        <span>REC 4K • ЗАПИСЬ</span>
+      </div>
+      <a href="index.html" class="btn-secondary" style="padding:6px 14px;border-radius:9999px;font-size:12px;text-decoration:none;">← На главную</a>
+    </div>
+  </header>
+
+  <!-- Studio Stage -->
+  <div class="studio-main">
+    
+    <!-- Stage Area -->
+    <div class="stage-container">
+      <video id="webcamVideo" autoplay playsinline muted></video>
+
+      <!-- Reading Guide Box -->
+      <div class="prompter-reading-guide"></div>
+
+      <!-- Scrolling Viewport -->
+      <div class="prompter-viewport" id="viewport">
+        <div class="prompter-stream" id="prompterStream">
+          <!-- Lines inserted via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Sidebar -->
+    <div class="control-sidebar">
+      
+      <!-- Script Preset -->
+      <div class="control-group">
+        <label>Сценарий / Шаблон</label>
+        <select class="select-input" id="scriptSelect" onchange="loadPresetScript()">
+          <option value="preset_razum">Razum AI — 45s Промо-Трейлер</option>
+          <option value="preset_seo">SEO 2026 — 3 Критические ошибки</option>
+          <option value="custom">Пользовательский скрипт...</option>
+        </select>
+      </div>
+
+      <!-- Timer -->
+      <div class="control-group">
+        <label>Таймер дубля</label>
+        <div class="timer-display" id="timerDisplay">00:00 / 00:45</div>
+      </div>
+
+      <!-- Primary Action Buttons -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button class="btn-action btn-play" id="btnPlay" onclick="toggleScroll()">▶ Старт суфлера (Space)</button>
+        <button class="btn-action btn-record" id="btnRecord" onclick="toggleRecording()">⏺ Запись видео</button>
+      </div>
+
+      <!-- Speed Slider -->
+      <div class="control-group">
+        <label>Скорость скролла (Шаг 5 сек): <span id="speedVal">1.0x</span></label>
+        <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.1" value="1.0" oninput="updateSpeed()">
+      </div>
+
+      <!-- Font Size -->
+      <div class="control-group">
+        <label>Размер шрифта: <span id="fontVal">34px</span></label>
+        <input type="range" id="fontSlider" min="24" max="52" step="2" value="34" oninput="updateFontSize()">
+      </div>
+
+      <!-- Camera Opacity -->
+      <div class="control-group">
+        <label>Прозрачность камеры: <span id="camOpacityVal">35%</span></label>
+        <input type="range" id="camOpacitySlider" min="0" max="100" step="5" value="35" oninput="updateCamOpacity()">
+      </div>
+
+      <!-- Camera Controls -->
+      <div style="display:flex;gap:8px;">
+        <button class="btn-secondary btn-action" style="flex:1;" onclick="toggleCamera()">📷 Камера</button>
+        <button class="btn-secondary btn-action" style="flex:1;" onclick="resetPrompter()">↺ Сброс</button>
+      </div>
+
+      <!-- Download Video Link (hidden by default) -->
+      <div id="downloadContainer" style="display:none;margin-top:10px;">
+        <a id="downloadLink" class="btn-action btn-play" style="background:var(--green);color:#fff;text-decoration:none;" download="razum_take.webm">
+          ⬇ Скачать записанный дубль
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const presets = {
+      preset_razum: [
+        "Are you tired of losing clients to competitors with better packaging?",
+        "Manual marketing is burning your time while AI competitors scale 10x faster.",
+        "Meet the new standard: Razum Intelligent AI.",
+        "We rebuild your market authority with deep competitor audits and high-converting web architecture.",
+        "45 minutes of your voice turns into 24 viral Shorts and YouTube deep-dives monthly.",
+        "Zero manual editing. 100% original sound. Continuous CRM lead pipeline.",
+        "Ready to dominate your niche in 2026?",
+        "Claim your free 48-hour competitive audit today."
+      ],
+      preset_seo: [
+        "Вот 3 критические ошибки в SEO, которые топят трафик в 2026 году.",
+        "Ошибка 1: Игнорирование zero-click выдачи в Gemini Spark и нейропоиске.",
+        "Ошибка 2: Отсутствие вертикального видеоконтента для удержания внимания.",
+        "Ошибка 3: Ручной видеомонтаж и бесконечные страйки за чужую музыку.",
+        "В нашей системе 45 минут вашей начитки превращаются в 20+ Shorts в 4K.",
+        "Переходите по ссылке, чтобы получить бесплатный SEO и видео-аудит."
+      ]
+    };
+
+    let isScrolling = false;
+    let scrollInterval = null;
+    let scrollPos = 0;
+    let speed = 1.0;
+    let timerInterval = null;
+    let elapsedSeconds = 0;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+
+    // Load initial preset
+    function loadPresetScript() {
+      const selected = document.getElementById('scriptSelect').value;
+      const lines = presets[selected] || presets.preset_razum;
+      const stream = document.getElementById('prompterStream');
+      stream.innerHTML = lines.map((l, i) => `<div class="prompter-line ${i === 0 ? 'active' : ''}" id="line-${i}">${l}</div>`).join('');
+      resetPrompter();
+    }
+
+    function toggleScroll() {
+      isScrolling = !isScrolling;
+      const btn = document.getElementById('btnPlay');
+      if (isScrolling) {
+        btn.textContent = '⏸ Пауза суфлера';
+        startScrolling();
+        startTimer();
+      } else {
+        btn.textContent = '▶ Старт суфлера (Space)';
+        stopScrolling();
+        stopTimer();
+      }
+    }
+
+    function startScrolling() {
+      const stream = document.getElementById('prompterStream');
+      const step = 0.8 * speed;
+      scrollInterval = setInterval(() => {
+        scrollPos += step;
+        stream.style.transform = `translateY(-${scrollPos}px)`;
+      }, 20);
+    }
+
+    function stopScrolling() {
+      if (scrollInterval) clearInterval(scrollInterval);
+    }
+
+    function resetPrompter() {
+      stopScrolling();
+      stopTimer();
+      isScrolling = false;
+      scrollPos = 0;
+      elapsedSeconds = 0;
+      document.getElementById('prompterStream').style.transform = 'translateY(0px)';
+      document.getElementById('btnPlay').textContent = '▶ Старт суфлера (Space)';
+      document.getElementById('timerDisplay').textContent = '00:00 / 00:45';
+    }
+
+    function updateSpeed() {
+      speed = parseFloat(document.getElementById('speedSlider').value);
+      document.getElementById('speedVal').textContent = speed.toFixed(1) + 'x';
+      if (isScrolling) {
+        stopScrolling();
+        startScrolling();
+      }
+    }
+
+    function updateFontSize() {
+      const size = document.getElementById('fontSlider').value + 'px';
+      document.getElementById('fontVal').textContent = size;
+      document.querySelectorAll('.prompter-line').forEach(el => el.style.fontSize = size);
+    }
+
+    function updateCamOpacity() {
+      const opacity = document.getElementById('camOpacitySlider').value;
+      document.getElementById('camOpacityVal').textContent = opacity + '%';
+      document.getElementById('webcamVideo').style.opacity = opacity / 100;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        elapsedSeconds++;
+        const mins = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+        const secs = String(elapsedSeconds % 60).padStart(2, '0');
+        document.getElementById('timerDisplay').textContent = `${mins}:${secs} / 00:45`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+    }
+
+    // Camera & Recording
+    async function initCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 }, audio: true });
+        const video = document.getElementById('webcamVideo');
+        video.srcObject = stream;
+      } catch (err) {
+        console.warn("Camera not available or access denied:", err);
+      }
+    }
+
+    function toggleCamera() {
+      const video = document.getElementById('webcamVideo');
+      video.classList.toggle('hidden');
+    }
+
+    async function toggleRecording() {
+      const btn = document.getElementById('btnRecord');
+      const badge = document.getElementById('recBadge');
+
+      if (!isRecording) {
+        try {
+          const video = document.getElementById('webcamVideo');
+          if (!video.srcObject) await initCamera();
+
+          recordedChunks = [];
+          mediaRecorder = new MediaRecorder(video.srcObject);
+          mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) recordedChunks.push(e.data); };
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = url;
+            document.getElementById('downloadContainer').style.display = 'block';
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.textContent = '⏹ Остановить запись';
+          btn.classList.add('recording');
+          badge.classList.add('active');
+
+          if (!isScrolling) toggleScroll();
+        } catch (e) {
+          alert("Для записи видео разрешите доступ к веб-камере в браузере.");
+        }
+      } else {
+        if (mediaRecorder) mediaRecorder.stop();
+        isRecording = false;
+        btn.textContent = '⏺ Запись видео';
+        btn.classList.remove('recording');
+        badge.classList.remove('active');
+        if (isScrolling) toggleScroll();
+      }
+    }
+
+    // Spacebar shortcut
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
+        e.preventDefault();
+        toggleScroll();
+      }
+    });
+
+    // Auto-init
+    loadPresetScript();
+    initCamera();
+  </script>
+</body>
+</html>
