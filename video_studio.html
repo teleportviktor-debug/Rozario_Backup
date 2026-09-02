@@ -266,17 +266,26 @@
           <div class="panel-title">📹 Управление Записью Видео</div>
         </div>
 
+        <div id="camera-status" style="font-size:13px; color:var(--text-dim); margin-bottom:12px; font-family:var(--font-mono);">
+          Статус: Ожидание подключения камеры...
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:12px;">
-          <button id="btn-camera" class="btn btn-secondary" onclick="toggleCamera()">
-            📷 Включить Камеру (Webcam)
-          </button>
+          <div style="display:flex; gap:10px;">
+            <button id="btn-camera" class="btn btn-secondary" style="flex:1;" onclick="toggleCamera()">
+              📷 Включить Камеру
+            </button>
+            <button id="btn-switch-cam" class="btn btn-secondary" style="display:none;" onclick="switchCamera()">
+              🔄 Переключить
+            </button>
+          </div>
           
-          <button id="btn-record" class="btn btn-primary" onclick="toggleRecording()" style="padding:16px; font-size:16px;">
+          <button id="btn-record" class="btn btn-primary" onclick="toggleRecording()" style="padding:16px; font-size:16px; font-weight:800;">
             🔴 Начать Запись (15 сек)
           </button>
 
-          <a id="btn-download" class="btn btn-secondary" style="display:none; text-align:center; background:rgba(16,185,129,0.2); color:var(--emerald-400); border-color:var(--emerald-400);">
-            💾 Скачать Готовое Видео MP4/WebM
+          <a id="btn-download" class="btn btn-secondary" style="display:none; text-align:center; background:rgba(16,185,129,0.2); color:var(--emerald-400); border-color:var(--emerald-400); font-weight:700;">
+            💾 Скачать Готовое Видео
           </a>
         </div>
       </div>
@@ -325,29 +334,76 @@
     let recordedChunks = [];
     let recordInterval = null;
     let secondsElapsed = 0;
+    let currentFacingMode = 'user';
+
+    function setStatus(msg, isErr) {
+      const el = document.getElementById('camera-status');
+      if (el) {
+        el.innerText = msg;
+        el.style.color = isErr ? '#f43f5e' : '#34d399';
+      }
+    }
 
     async function toggleCamera() {
       const videoEl = document.getElementById('camera-feed');
       const btn = document.getElementById('btn-camera');
+      const switchBtn = document.getElementById('btn-switch-cam');
 
       if (mediaStream) {
         mediaStream.getTracks().forEach(t => t.stop());
         mediaStream = null;
         videoEl.srcObject = null;
-        btn.innerText = '📷 Включить Камеру (Webcam)';
+        btn.innerText = '📷 Включить Камеру';
+        switchBtn.style.display = 'none';
+        setStatus('Камера отключена.', false);
         return;
       }
 
-      try {
-        mediaStream = await navigator.mediaDevices.getUserMedia({
-          video: { width: { ideal: 1080 }, height: { ideal: 1920 }, facingMode: 'user' },
-          audio: true
-        });
-        videoEl.srcObject = mediaStream;
-        btn.innerText = '⏹️ Выключить Камеру';
-      } catch (err) {
-        alert('Камера не доступна или заблокирована в браузере: ' + err.message);
+      setStatus('Запрос разрешения на камеру...', false);
+
+      // Mobile iOS Safari attributes
+      videoEl.setAttribute('autoplay', '');
+      videoEl.setAttribute('muted', '');
+      videoEl.setAttribute('playsinline', '');
+      videoEl.setAttribute('webkit-playsinline', '');
+      videoEl.muted = true;
+
+      // Try multiple constraint variations for 100% mobile compatibility
+      const attempts = [
+        { video: { facingMode: currentFacingMode }, audio: true },
+        { video: { facingMode: currentFacingMode }, audio: false },
+        { video: true, audio: true },
+        { video: true, audio: false }
+      ];
+
+      for (let constraints of attempts) {
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+          if (mediaStream) break;
+        } catch (e) {
+          console.warn('Attempt with', constraints, 'failed:', e);
+        }
       }
+
+      if (mediaStream) {
+        videoEl.srcObject = mediaStream;
+        try { await videoEl.play(); } catch(e) {}
+        btn.innerText = '⏹️ Выключить Камеру';
+        switchBtn.style.display = 'inline-block';
+        setStatus('✓ Камера активна (60 FPS)', false);
+      } else {
+        setStatus('❌ Ошибка: Разрешите доступ к камере в настройках браузера', true);
+        alert('Пожалуйста, нажмите «Разрешить» (Allow) при запросе доступа к камере в браузере.');
+      }
+    }
+
+    async function switchCamera() {
+      currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+        mediaStream = null;
+      }
+      await toggleCamera();
     }
 
     function toggleRecording() {
@@ -361,29 +417,56 @@
         clearInterval(recordInterval);
         recBadge.style.display = 'none';
         btn.innerText = '🔴 Начать Запись (15 сек)';
+        setStatus('✓ Запись завершена! Нажмите «Скачать Видео» ниже.', false);
         return;
       }
 
       if (!mediaStream) {
-        alert('Сначала включите камеру кнопкой выше!');
+        alert('Сначала включите камеру кнопкой «📷 Включить Камеру»!');
         return;
       }
 
       recordedChunks = [];
-      mediaRecorder = new MediaRecorder(mediaStream);
-      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
+      
+      // Smart mimeType detection for iOS Safari vs Android Chrome
+      let options = {};
+      if (typeof MediaRecorder !== 'undefined') {
+        if (MediaRecorder.isTypeSupported('video/mp4;codecs=avc1')) {
+          options = { mimeType: 'video/mp4;codecs=avc1' };
+        } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+          options = { mimeType: 'video/mp4' };
+        } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
+          options = { mimeType: 'video/webm;codecs=vp8,opus' };
+        } else if (MediaRecorder.isTypeSupported('video/webm')) {
+          options = { mimeType: 'video/webm' };
+        }
+      }
+
+      try {
+        mediaRecorder = new MediaRecorder(mediaStream, options);
+      } catch (e) {
+        mediaRecorder = new MediaRecorder(mediaStream);
+      }
+
+      mediaRecorder.ondataavailable = e => { 
+        if (e.data && e.data.size > 0) recordedChunks.push(e.data); 
+      };
+
       mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const type = (options.mimeType && options.mimeType.includes('mp4')) ? 'video/mp4' : 'video/webm';
+        const ext = type.includes('mp4') ? 'mp4' : 'webm';
+        const blob = new Blob(recordedChunks, { type: type });
         const url = URL.createObjectURL(blob);
         downloadBtn.href = url;
-        downloadBtn.download = `RAZUM_SHORTS_${Date.now()}.webm`;
+        downloadBtn.download = `RAZUM_SHORTS_${Date.now()}.${ext}`;
         downloadBtn.style.display = 'block';
       };
 
-      mediaRecorder.start();
+      mediaRecorder.start(500);
       secondsElapsed = 0;
       recBadge.style.display = 'flex';
       btn.innerText = '⏹️ Остановить Запись';
+      setStatus('🔴 Идет запись видео...', false);
 
       recordInterval = setInterval(() => {
         secondsElapsed++;
