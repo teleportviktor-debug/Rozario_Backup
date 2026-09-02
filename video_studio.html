@@ -306,6 +306,9 @@
     }
 
     let liveStream = null;
+    let liveRecorder = null;
+    let liveChunks = [];
+
     async function startLiveCameraStream() {
       const v = document.getElementById('preview-video');
       const btn = document.getElementById('btn-live-cam');
@@ -319,25 +322,37 @@
         return;
       }
 
-      setStatus('Запрос Live-камеры у браузера...', false);
+      setStatus('Запрос доступа к камере...', false);
+
       try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error('Ваш браузер не поддерживает доступ к камере по WebRTC.');
+        }
+
         v.setAttribute('autoplay', 'true');
         v.setAttribute('playsinline', 'true');
         v.setAttribute('webkit-playsinline', 'true');
         v.muted = true;
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user' }
-        });
+        let stream = null;
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+        } catch (e1) {
+          console.warn('Fallback to { video: true }');
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        }
+
         liveStream = stream;
         v.srcObject = stream;
         await v.play();
 
         btn.innerText = '⏹️ Выключить Live-Камеру';
-        setStatus('✓ Live-камера работает в реальном времени!', false);
+        setStatus('✓ Live-камера активна! Нажмите «Запустить Титры», чтобы читать текст.', false);
       } catch (err) {
         console.error('Live cam error:', err);
-        setStatus('ℹ️ Браузер сообщил: ' + err.name + ' (' + err.message + ')', true);
+        const errMsg = err.name + ': ' + err.message;
+        setStatus('❌ Ошибка: ' + errMsg, true);
+        alert('Камера заблокирована телефоном (' + err.name + ')!\n\nКак включить за 10 секунд:\n\n• На iPhone: Настройки телефона ➔ Safari ➔ Камера ➔ Разрешить.\n• На Android: Нажмите на замочек 🔒 рядом с адресом сайта вверху ➔ Разрешения ➔ Камера ➔ Разрешить.');
       }
     }
 
