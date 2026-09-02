@@ -106,6 +106,25 @@
       display: inline-block;
     }
 
+    /* STYLED NATIVE INPUT */
+    .native-upload-wrap input[type="file"] {
+      width: 100%;
+      color: transparent;
+    }
+    .native-upload-wrap input[type="file"]::file-selector-button {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+      color: #ffffff;
+      padding: 18px 24px;
+      border-radius: 16px;
+      border: none;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+      margin-bottom: 6px;
+    }
+
     /* BIG TOUCH BUTTONS */
     .touch-btn {
       display: flex;
@@ -113,17 +132,17 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 18px 20px;
+      padding: 16px 20px;
       border-radius: 16px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       border: none;
       cursor: pointer;
       text-decoration: none;
       box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
-    .touch-btn-red {
-      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+    .touch-btn-blue {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
       color: #ffffff;
     }
     .touch-btn-green {
@@ -159,7 +178,7 @@
         <div class="brand-logo" style="width:34px; height:34px; border-radius:8px;"></div>
         <div>
           <div style="font-weight:800; font-size:15px; color:#fff;">RAZUM SHORTS STUDIO</div>
-          <span class="badge-v">✓ v2026.6 NATIVE CAM</span>
+          <span class="badge-v">✓ v2026.7 HYBRID CAM</span>
         </div>
       </div>
       <div style="display:flex; gap:8px;">
@@ -192,22 +211,33 @@
       </div>
     </div>
 
-    <!-- RECORDING ACTION BUTTONS -->
+    <!-- ACTIONS -->
     <div style="display:flex; flex-direction:column; gap:12px;">
       
-      <!-- 100% NATIVE iOS / ANDROID DIRECT LABEL TRIGGER -->
-      <label for="phone-camera-input" class="touch-btn touch-btn-red" style="cursor:pointer; position:relative; overflow:hidden;">
-        <input type="file" id="phone-camera-input" accept="video/*" capture="user" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;" onchange="onVideoRecorded(event)">
-        📹 Запустить Камеру Телефона (Запись)
-      </label>
+      <!-- 1. DIRECT NATIVE FILE SELECTOR BUTTON -->
+      <div class="native-upload-wrap">
+        <input type="file" id="phone-camera-input" accept="video/*" onchange="onVideoRecorded(event)">
+      </div>
 
+      <!-- 2. LIVE IN-BROWSER STREAM -->
+      <button id="btn-live-cam" class="touch-btn touch-btn-blue" onclick="startLiveCameraStream()">
+        📹 Включить Live-Камеру в Браузере
+      </button>
+
+      <!-- 3. REHEARSAL TIMER -->
       <button id="btn-rehearse" class="touch-btn touch-btn-green" onclick="toggleRehearsal()">
         ⏱️ Запустить Титры и Таймер (15 сек)
       </button>
 
+      <!-- 4. DOWNLOAD -->
       <a id="btn-dl" class="touch-btn touch-btn-dark" style="display:none;">
         💾 Скачать Записанное Видео
       </a>
+
+      <!-- STATUS LOG -->
+      <div id="status-log" style="background:#090d16; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; font-size:12px; color:#38bdf8; font-family:var(--font-mono); text-align:center;">
+        Статус: Готово к съемке. Выберите способ выше.
+      </div>
 
     </div>
 
@@ -236,6 +266,14 @@
       "4": { hook: "«СОЗДАЙТЕ СВОЙ СОБСТВЕННЫЙ AI-РОЙ ПОД КЛЮЧ»", body: "5 автономных агентов работают в облаке 24/7. White-Label перепродажа." }
     };
 
+    function setStatus(msg, isErr) {
+      const el = document.getElementById('status-log');
+      if (el) {
+        el.innerText = msg;
+        el.style.color = isErr ? '#f43f5e' : '#34d399';
+      }
+    }
+
     function applyScript() {
       const val = document.getElementById('sel-script').value;
       const s = scripts[val] || scripts["1"];
@@ -249,16 +287,13 @@
       document.getElementById('video-body-text').innerText = document.getElementById('in-body').value;
     }
 
-    function openCamera() {
-      document.getElementById('phone-camera-input').click();
-    }
-
     function onVideoRecorded(e) {
       const file = e.target.files[0];
       if (!file) return;
 
       const url = URL.createObjectURL(file);
       const v = document.getElementById('preview-video');
+      v.srcObject = null;
       v.src = url;
       v.play().catch(err => console.log(err));
 
@@ -266,7 +301,44 @@
       dl.href = url;
       dl.download = `RAZUM_SHORTS_${Date.now()}.mp4`;
       dl.style.display = 'flex';
-      dl.innerText = '💾 Скачать Готовое Видео (' + Math.round(file.size / 1024) + ' KB)';
+      dl.innerText = '💾 Скачать Записанное Видео (' + Math.round(file.size / 1024) + ' KB)';
+      setStatus('✓ Видео успешно загружено в превью!', false);
+    }
+
+    let liveStream = null;
+    async function startLiveCameraStream() {
+      const v = document.getElementById('preview-video');
+      const btn = document.getElementById('btn-live-cam');
+
+      if (liveStream) {
+        liveStream.getTracks().forEach(t => t.stop());
+        liveStream = null;
+        v.srcObject = null;
+        btn.innerText = '📹 Включить Live-Камеру в Браузере';
+        setStatus('Live-камера отключена.', false);
+        return;
+      }
+
+      setStatus('Запрос Live-камеры у браузера...', false);
+      try {
+        v.setAttribute('autoplay', 'true');
+        v.setAttribute('playsinline', 'true');
+        v.setAttribute('webkit-playsinline', 'true');
+        v.muted = true;
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user' }
+        });
+        liveStream = stream;
+        v.srcObject = stream;
+        await v.play();
+
+        btn.innerText = '⏹️ Выключить Live-Камеру';
+        setStatus('✓ Live-камера работает в реальном времени!', false);
+      } catch (err) {
+        console.error('Live cam error:', err);
+        setStatus('ℹ️ Браузер сообщил: ' + err.name + ' (' + err.message + ')', true);
+      }
     }
 
     let interval = null;
