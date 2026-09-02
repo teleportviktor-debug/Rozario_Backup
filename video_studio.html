@@ -159,7 +159,7 @@
         <div class="brand-logo" style="width:34px; height:34px; border-radius:8px;"></div>
         <div>
           <div style="font-weight:800; font-size:15px; color:#fff;">RAZUM SHORTS STUDIO</div>
-          <span class="badge-v">✓ v2026.5 FAST MOBILE</span>
+          <span class="badge-v">✓ v2026.6 NATIVE CAM</span>
         </div>
       </div>
       <div style="display:flex; gap:8px;">
@@ -195,12 +195,11 @@
     <!-- RECORDING ACTION BUTTONS -->
     <div style="display:flex; flex-direction:column; gap:12px;">
       
-      <!-- Native camera input: 1-click camera trigger -->
-      <input type="file" id="phone-camera-input" accept="video/*" capture="user" style="display:none;" onchange="onVideoRecorded(event)">
-      
-      <button class="touch-btn touch-btn-red" onclick="openCamera()">
+      <!-- 100% NATIVE iOS / ANDROID DIRECT LABEL TRIGGER -->
+      <label for="phone-camera-input" class="touch-btn touch-btn-red" style="cursor:pointer; position:relative; overflow:hidden;">
+        <input type="file" id="phone-camera-input" accept="video/*" capture="user" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;" onchange="onVideoRecorded(event)">
         📹 Запустить Камеру Телефона (Запись)
-      </button>
+      </label>
 
       <button id="btn-rehearse" class="touch-btn touch-btn-green" onclick="toggleRehearsal()">
         ⏱️ Запустить Титры и Таймер (15 сек)
