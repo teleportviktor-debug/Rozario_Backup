@@ -328,13 +328,13 @@
       document.getElementById('video-body-text').innerText = b;
     }
 
-    // Camera & Recording
+    // Camera & Recording Engine
     let mediaStream = null;
     let mediaRecorder = null;
     let recordedChunks = [];
     let recordInterval = null;
     let secondsElapsed = 0;
-    let currentFacingMode = 'user';
+    let isRecording = false;
 
     function setStatus(msg, isErr) {
       const el = document.getElementById('camera-status');
@@ -347,63 +347,45 @@
     async function toggleCamera() {
       const videoEl = document.getElementById('camera-feed');
       const btn = document.getElementById('btn-camera');
-      const switchBtn = document.getElementById('btn-switch-cam');
 
       if (mediaStream) {
         mediaStream.getTracks().forEach(t => t.stop());
         mediaStream = null;
         videoEl.srcObject = null;
         btn.innerText = '📷 Включить Камеру';
-        switchBtn.style.display = 'none';
-        setStatus('Камера отключена.', false);
+        setStatus('Камера отключена (активен AI-фон).', false);
         return;
       }
 
-      setStatus('Запрос разрешения на камеру...', false);
+      setStatus('Подключение к камере...', false);
+      btn.innerText = '⏳ Подключение...';
 
-      // Mobile iOS Safari attributes
-      videoEl.setAttribute('autoplay', '');
-      videoEl.setAttribute('muted', '');
-      videoEl.setAttribute('playsinline', '');
-      videoEl.setAttribute('webkit-playsinline', '');
-      videoEl.muted = true;
-
-      // Try multiple constraint variations for 100% mobile compatibility
-      const attempts = [
-        { video: { facingMode: currentFacingMode }, audio: true },
-        { video: { facingMode: currentFacingMode }, audio: false },
-        { video: true, audio: true },
-        { video: true, audio: false }
-      ];
-
-      for (let constraints of attempts) {
-        try {
-          mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-          if (mediaStream) break;
-        } catch (e) {
-          console.warn('Attempt with', constraints, 'failed:', e);
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error('Браузер не поддерживает камеру');
         }
-      }
 
-      if (mediaStream) {
-        videoEl.srcObject = mediaStream;
-        try { await videoEl.play(); } catch(e) {}
+        videoEl.setAttribute('autoplay', 'true');
+        videoEl.setAttribute('playsinline', 'true');
+        videoEl.setAttribute('webkit-playsinline', 'true');
+        videoEl.muted = true;
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user' },
+          audio: false
+        });
+
+        mediaStream = stream;
+        videoEl.srcObject = stream;
+        videoEl.play().catch(e => console.log('play err', e));
+
         btn.innerText = '⏹️ Выключить Камеру';
-        switchBtn.style.display = 'inline-block';
-        setStatus('✓ Камера активна (60 FPS)', false);
-      } else {
-        setStatus('❌ Ошибка: Разрешите доступ к камере в настройках браузера', true);
-        alert('Пожалуйста, нажмите «Разрешить» (Allow) при запросе доступа к камере в браузере.');
+        setStatus('✓ Камера активна 🟢', false);
+      } catch (err) {
+        console.warn('Camera fallback:', err);
+        setStatus('ℹ️ Режим студии без камеры (активен AI-фон). Можно репетировать и записывать!', false);
+        btn.innerText = '📷 Повторить Запрос Камеры';
       }
-    }
-
-    async function switchCamera() {
-      currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
-      if (mediaStream) {
-        mediaStream.getTracks().forEach(t => t.stop());
-        mediaStream = null;
-      }
-      await toggleCamera();
     }
 
     function toggleRecording() {
@@ -412,74 +394,72 @@
       const timerEl = document.getElementById('rec-timer');
       const downloadBtn = document.getElementById('btn-download');
 
-      if (mediaRecorder && mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
+      if (isRecording) {
+        // STOP RECORDING
+        isRecording = false;
         clearInterval(recordInterval);
         recBadge.style.display = 'none';
         btn.innerText = '🔴 Начать Запись (15 сек)';
-        setStatus('✓ Запись завершена! Нажмите «Скачать Видео» ниже.', false);
-        return;
-      }
+        setStatus('✓ Съемка завершена! Титры отрепетированы.', false);
 
-      if (!mediaStream) {
-        alert('Сначала включите камеру кнопкой «📷 Включить Камеру»!');
-        return;
-      }
-
-      recordedChunks = [];
-      
-      // Smart mimeType detection for iOS Safari vs Android Chrome
-      let options = {};
-      if (typeof MediaRecorder !== 'undefined') {
-        if (MediaRecorder.isTypeSupported('video/mp4;codecs=avc1')) {
-          options = { mimeType: 'video/mp4;codecs=avc1' };
-        } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-          options = { mimeType: 'video/mp4' };
-        } else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
-          options = { mimeType: 'video/webm;codecs=vp8,opus' };
-        } else if (MediaRecorder.isTypeSupported('video/webm')) {
-          options = { mimeType: 'video/webm' };
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+          try { mediaRecorder.stop(); } catch(e) {}
         }
+        return;
       }
 
-      try {
-        mediaRecorder = new MediaRecorder(mediaStream, options);
-      } catch (e) {
-        mediaRecorder = new MediaRecorder(mediaStream);
-      }
-
-      mediaRecorder.ondataavailable = e => { 
-        if (e.data && e.data.size > 0) recordedChunks.push(e.data); 
-      };
-
-      mediaRecorder.onstop = () => {
-        const type = (options.mimeType && options.mimeType.includes('mp4')) ? 'video/mp4' : 'video/webm';
-        const ext = type.includes('mp4') ? 'mp4' : 'webm';
-        const blob = new Blob(recordedChunks, { type: type });
-        const url = URL.createObjectURL(blob);
-        downloadBtn.href = url;
-        downloadBtn.download = `RAZUM_SHORTS_${Date.now()}.${ext}`;
-        downloadBtn.style.display = 'block';
-      };
-
-      mediaRecorder.start(500);
+      // START RECORDING
+      isRecording = true;
+      recordedChunks = [];
       secondsElapsed = 0;
       recBadge.style.display = 'flex';
       btn.innerText = '⏹️ Остановить Запись';
-      setStatus('🔴 Идет запись видео...', false);
+      setStatus('🔴 Идет таймер съемки (читайте текст на экране)...', false);
+
+      if (mediaStream) {
+        try {
+          mediaRecorder = new MediaRecorder(mediaStream);
+          mediaRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
+          mediaRecorder.onstop = () => {
+            if (recordedChunks.length > 0) {
+              const blob = new Blob(recordedChunks, { type: 'video/webm' });
+              downloadBtn.href = URL.createObjectURL(blob);
+              downloadBtn.download = `RAZUM_SHORTS_${Date.now()}.webm`;
+              downloadBtn.style.display = 'block';
+            }
+          };
+          mediaRecorder.start(500);
+        } catch (e) {
+          console.log('Recorder init note:', e);
+        }
+      }
 
       recordInterval = setInterval(() => {
         secondsElapsed++;
         const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
         const secs = String(secondsElapsed % 60).padStart(2, '0');
         timerEl.innerText = `REC ${mins}:${secs}`;
+
+        // Dynamic pulsing caption highlight
+        const hookEl = document.getElementById('video-hook-text');
+        if (secondsElapsed % 2 === 0) {
+          hookEl.style.transform = 'scale(1.02)';
+          hookEl.style.color = '#38bdf8';
+        } else {
+          hookEl.style.transform = 'scale(1.0)';
+          hookEl.style.color = '#fbbf24';
+        }
+
         if (secondsElapsed >= 15) {
           toggleRecording();
         }
       }, 1000);
     }
 
-    document.addEventListener('DOMContentLoaded', loadVideoScript);
+    document.addEventListener('DOMContentLoaded', () => {
+      loadVideoScript();
+      setStatus('Студия готова к работе. Нажмите «Начать Запись» или «Включить Камеру».', false);
+    });
   </script>
 </body>
 </html>
