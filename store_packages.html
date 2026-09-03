@@ -60,18 +60,71 @@
       font-size: 12px;
       text-transform: uppercase;
     }
+
+    /* SPOTLIGHT EFFECT */
+    .spotlight {
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 242, 254, 0.12), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .spotlight:hover::before { opacity: 1; }
+    .spotlight > * { position: relative; z-index: 2; }
+    
+    .sound-toggle {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      outline: none;
+    }
+    .sound-toggle.on {
+      background: rgba(16,185,129,0.1);
+      color: var(--emerald-400);
+      border-color: rgba(16,185,129,0.3);
+      box-shadow: 0 0 15px rgba(16,185,129,0.2);
+    }
+    .live-pill {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .sound-toggle.on .live-pill {
+      background: var(--emerald-400);
+      box-shadow: 0 0 8px var(--emerald-400);
+    }
   </style>
 </head>
 <body>
 
   <!-- TOP NAV -->
-  <header class="top-header" style="max-width:1200px; margin:0 auto; background:transparent; border:none;">
+  <header class="top-header" style="max-width:1200px; margin:0 auto; background:transparent; border:none; padding: 24px 20px;">
     <div style="display:flex; align-items:center; gap:12px;">
-      <div class="brand-logo"></div>
+      <div class="brand-logo" style="font-weight:800; font-size:24px;">R</div>
       <div style="font-weight:800; font-size:18px; letter-spacing:-0.02em;">RAZUM AI STORE</div>
     </div>
-    <div>
-      <a href="index.html" class="btn btn-secondary btn-sm">В Центр Управления ⚙️</a>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <button id="btn-sound" class="sound-toggle on hover-snd" title="Выключить звуковой отклик интерфейса">
+        <div class="live-pill"></div> Sound: ON
+      </button>
+      <a href="index.html" class="btn btn-secondary btn-sm hover-snd click-snd">В Центр Управления ⚙️</a>
     </div>
   </header>
 
@@ -100,8 +153,13 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Средняя зарплата сотрудника в месяц ($):</label>
-            <input type="number" id="store-calc-salary" class="form-control" value="1200">
+            <label class="form-label" style="display:flex; justify-content:space-between;">
+              <span>Средняя зарплата в месяц:</span>
+              <span id="store-badge-salary" class="range-badge" style="color:var(--emerald-400);">$1,200</span>
+            </label>
+            <div class="range-wrapper">
+              <input type="range" id="store-calc-salary" min="300" max="5000" step="100" value="1200">
+            </div>
           </div>
         </div>
 
@@ -127,6 +185,16 @@
   <!-- PACKAGES SECTION -->
   <div style="max-width:1200px; margin:0 auto; padding:0 20px 80px;">
     
+    <!-- PREMIUM TRANSFORMATION BANNER -->
+    <a href="sovereign_transformation.html" class="spotlight hover-snd click-snd" style="display:block; text-decoration:none; background:var(--bg-card); backdrop-filter:blur(20px); border:1px solid rgba(16,185,129,0.4); border-radius:24px; padding:32px; text-align:center; margin-bottom:40px; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+      <div style="font-size:12px; font-weight:800; color:var(--emerald-400); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">💎 Эксклюзивный Оффер</div>
+      <h3 style="font-size:28px; font-weight:900; color:#fff; margin-bottom:12px;">Sovereign AI Transformation ($2,500)</h3>
+      <p style="color:var(--text-main); margin:0 auto; max-width:600px; font-size:15px;">Полный цикл автоматизации: 5 агентов, CRM, Webhook, и кастомные решения под ключ в вашем собственном Google-аккаунте. Отдел продаж, который никогда не увольняется.</p>
+      <div style="margin-top:24px;">
+        <span style="display:inline-block; padding:12px 24px; background:var(--emerald-400); color:#000; font-weight:800; border-radius:12px; font-size:14px;">Посмотреть детали трансформации →</span>
+      </div>
+    </a>
+
     <div style="text-align:center; margin-bottom:30px;">
       <h2 style="font-size:32px; font-weight:800;">5 Премиальных AI-Пакетов для Бизнеса</h2>
       <p style="color:var(--text-muted); font-size:15px;">Разовая оплата в USD • Работает в вашем Google Workspace • Без подписок</p>
@@ -244,6 +312,8 @@
       const p = parseInt(peopleSlider.value, 10);
       const s = parseInt(salaryInput.value, 10);
       if (peopleBadge) peopleBadge.innerText = `${p} чел`;
+      const salaryBadge = document.getElementById('store-badge-salary');
+      if (salaryBadge) salaryBadge.innerText = `$${s.toLocaleString('en-US')}`;
 
       // 2 hours/day per person on routine = ~25% of salary wasted
       const annualLoss = Math.round(p * (s * 0.25) * 12);
@@ -251,8 +321,8 @@
     }
 
     if (peopleSlider && salaryInput) {
-      peopleSlider.addEventListener('input', updateStoreLoss);
-      salaryInput.addEventListener('input', updateStoreLoss);
+      peopleSlider.addEventListener('input', () => { updateStoreLoss(); playTick(); });
+      salaryInput.addEventListener('input', () => { updateStoreLoss(); playTick(); });
       updateStoreLoss();
     }
 
@@ -260,6 +330,108 @@
     if (typeof initPackagesCatalog === 'function') {
       initPackagesCatalog();
     }
+
+    // ====================================================
+    // WEB AUDIO API SOUND ENGINE
+    // ====================================================
+    let audioCtx = null;
+    let masterGain = null;
+    let isSoundOn = true;
+
+    const btnSound = document.getElementById('btn-sound');
+
+    function initAudio() {
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.5;
+      masterGain.connect(audioCtx.destination);
+    }
+
+    // Initialize audio context on first interaction if Sound is ON
+    document.body.addEventListener('mousedown', () => {
+      if (isSoundOn) {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+    }, { once: true });
+
+    btnSound.addEventListener('click', () => {
+      isSoundOn = !isSoundOn;
+      if(isSoundOn) {
+        initAudio();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        btnSound.classList.add('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: ON`;
+        playDigitalTap();
+      } else {
+        btnSound.classList.remove('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: OFF`;
+      }
+    });
+
+    function playOscillator(type, freq, duration, volMod = 1, volDecay = true) {
+      if(!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(volMod, audioCtx.currentTime);
+      if(volDecay) gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playTick() {
+      if(!isSoundOn || !audioCtx || audioCtx.state === 'suspended') return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(2000, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.02);
+    }
+    
+    window.playHover = () => playOscillator('sine', 800, 0.05, 0.1);
+    window.playDigitalTap = () => playOscillator('square', 1200, 0.05, 0.3);
+
+    // Apply sounds and spotlight to existing and dynamically added elements
+    function attachEffects() {
+      document.querySelectorAll('.hover-snd').forEach(el => {
+        el.removeEventListener('mouseenter', playHover);
+        el.addEventListener('mouseenter', playHover);
+      });
+      document.querySelectorAll('.click-snd').forEach(el => {
+        el.removeEventListener('mousedown', playDigitalTap);
+        el.addEventListener('mousedown', playDigitalTap);
+      });
+      document.querySelectorAll('.spotlight').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          btn.style.setProperty('--mouse-x', `${x}px`);
+          btn.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    // Since packages are loaded dynamically, run attachEffects after a short delay
+    setTimeout(attachEffects, 500);
+    // Also re-attach when filters change
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.addEventListener('click', () => { setTimeout(attachEffects, 100); playDigitalTap(); });
+      b.classList.add('hover-snd');
+    });
   </script>
 </body>
 </html>
