@@ -638,7 +638,7 @@ function initPackagesCatalog() {
 
     filtered.forEach(pkg => {
       const card = document.createElement('div');
-      card.className = 'package-card';
+      card.className = 'package-card spotlight hover-snd';
       if (pkg.featured) {
         card.style.borderColor = 'rgba(251, 191, 36, 0.5)';
         card.style.boxShadow = '0 0 25px rgba(251, 191, 36, 0.15)';
@@ -658,7 +658,7 @@ function initPackagesCatalog() {
             ${pkg.price}
             <small>Единоразово • Без подписки</small>
           </div>
-          <button class="btn ${pkg.featured ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="openOrderModal('${pkg.id}')">
+          <button class="btn ${pkg.featured ? 'btn-primary' : 'btn-secondary'} btn-sm click-snd" onclick="openOrderModal('${pkg.id}')">
             Запустить 🚀
           </button>
         </div>
@@ -730,17 +730,32 @@ window.submitOrder = function(e) {
     console.warn('LocalStorage error:', err);
   }
 
-  // ⚡ Live Telegram Dispatch (Guaranteed Instant Delivery)
-  const tgToken = '8746018179:AAHBqzasizNCw3pw9gMpVb5yvr1uikY07OU';
-  const tgChatId = '7655208225';
-  const tgText = `🔔 НОВАЯ ЗАЯВКА НА ПАКЕТ!\n━━━━━━━━━━━━━━━━━━━━\n👤 Клиент: ${clientName}\n📧 Email: ${clientEmail}\n📞 Телефон: ${clientPhone}\n📦 Тариф: ${fullPkgName}\n💰 Сумма: $${priceUsd} (разово)\n⏰ Время: ${newLead.timestamp}\n━━━━━━━━━━━━━━━━━━━━\n🚀 Статус: Готов к сборке в 10_PRODUCTION`;
+  // ⚡ Telegram Notification: handled server-side via Google Apps Script webhook
+  // (LiveSheetsWebhook.gs → sendTelegram()) — no tokens exposed in client JS.
+  // The Sheets Webhook dispatch below triggers both CRM insert AND Telegram alert.
 
-  // Dual Dispatch: Fetch + Beacon Fallback
-  const tgUrl = `https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgChatId}&text=${encodeURIComponent(tgText)}`;
-  
-  fetch(tgUrl, { method: 'GET', mode: 'no-cors' })
-    .then(() => console.log('✓ TG Dispatch Success'))
-    .catch(err => console.log('TG note:', err));
+  // ⚡ Live Google Sheets CRM Webhook Dispatch (CRM_LEADS_2026)
+  const sheetsWebhookUrl = 'https://script.google.com/macros/s/AKfycbx67HdxS8wglplNTThZjJDuzRFe4LUn4DR2kQUnDjcfUq4l42I03fekmQpIL5UAvz-o/exec';
+  try {
+    fetch(sheetsWebhookUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: newLead.id,
+        name: clientName,
+        email: clientEmail,
+        phone: clientPhone,
+        package: fullPkgName,
+        price_usd: priceUsd,
+        niche: 'B2B Клиент',
+        score: 90
+      })
+    }).then(() => console.log('✓ Google Sheets Webhook Dispatch Success'))
+      .catch(err => console.log('Sheets Webhook note:', err));
+  } catch (err) {
+    console.log('Sheets fetch error:', err);
+  }
 
   // ⚡ Auto-Packager Hook (Calls Local Engine to build 10_PRODUCTION ZIP)
   fetch('/api/order', {
