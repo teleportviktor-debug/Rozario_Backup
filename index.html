@@ -19,7 +19,7 @@
     <!-- SIDEBAR NAVIGATION -->
     <aside class="sidebar">
       <div class="brand-header">
-        <div class="brand-logo"></div>
+        <div class="brand-logo">R</div>
         <div>
           <div class="brand-title">RAZUM AI 2026</div>
           <div class="brand-subtitle">Google Sovereign Core</div>
@@ -73,6 +73,11 @@
           <div class="nav-icon">📦</div>
           <span>Витрина Пакетов</span>
           <span class="nav-badge" style="background:rgba(99,102,241,0.2); color:var(--indigo-400); border-color:rgba(99,102,241,0.4);">$50-$500</span>
+        </li>
+        <li class="nav-item" data-view="soundlab">
+          <div class="nav-icon">🎛️</div>
+          <span>Procedural Sound Lab</span>
+          <span class="nav-badge" style="background:rgba(6,182,212,0.2); color:var(--cyan-400); border-color:rgba(6,182,212,0.4);">WEB AUDIO</span>
         </li>
         <li class="nav-item">
           <a href="store_packages.html" target="_blank" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:12px; width:100%;">
@@ -771,6 +776,56 @@ function doPost(e) {
           </div>
         </section>
 
+        <!-- VIEW 12: PROCEDURAL SOUND LAB -->
+        <section id="view-soundlab" class="view-section">
+          <div class="section-head">
+            <div>
+              <h1 class="section-title">🎛️ Procedural Sound Lab</h1>
+              <p class="section-desc">Технологическая демонстрация Web Audio API и Canvas: управление частотами, синтез звуков и рендеринг осциллографа в реальном времени.</p>
+            </div>
+            <button id="btn-sound-lab" class="btn btn-primary" onclick="initSoundLab()">Включить Аудио Движок 🔊</button>
+          </div>
+
+          <div class="cockpit-wrapper">
+            <div class="cockpit" id="tilt-cockpit">
+              <!-- Controls Panel -->
+              <div class="cockpit-panel">
+                <div class="type-selectors">
+                  <button class="type-btn active hover-snd click-snd" data-type="lowpass">Low-Pass</button>
+                  <button class="type-btn hover-snd click-snd" data-type="bandpass">Band-Pass</button>
+                  <button class="type-btn hover-snd click-snd" data-type="highpass">High-Pass</button>
+                </div>
+
+                <div class="ctrl-group">
+                  <label>Cutoff Frequency <span class="val-badge" id="lbl-cutoff">6000 Hz</span></label>
+                  <input type="range" id="sl-cutoff" class="hover-snd" min="200" max="12000" value="6000" step="10">
+                </div>
+                
+                <div class="ctrl-group">
+                  <label>Resonance (Q) <span class="val-badge" id="lbl-res">2.0</span></label>
+                  <input type="range" id="sl-res" class="hover-snd" min="0.5" max="12" value="2.0" step="0.1">
+                </div>
+
+                <div class="pad-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;">
+                  <button class="btn btn-secondary" id="pad-hover">01. Sine Blip</button>
+                  <button class="btn btn-secondary" id="pad-click">02. Digital Tap</button>
+                  <button class="btn btn-secondary" id="pad-toggle">03. Dual Pop</button>
+                  <button class="btn btn-secondary" id="pad-success">04. Synth Chord</button>
+                </div>
+              </div>
+
+              <!-- Canvas Panel -->
+              <div class="cockpit-canvas" style="background:rgba(0,0,0,0.4); border-radius:16px; padding:20px; border:1px solid var(--border-glass);">
+                <div style="font-size:12px; color:var(--text-muted); font-family:monospace; margin-bottom:10px; display:flex; justify-content:space-between;">
+                  <span>LIVE OSCILLOSCOPE</span>
+                  <span style="color:var(--cyan-400)">Web Audio API</span>
+                </div>
+                <canvas id="oscilloscope" style="width:100%; height:200px; border-radius:8px; background:#000;"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
   </div>
@@ -813,6 +868,7 @@ function doPost(e) {
   <script src="js/geo_optimizer.js"></script>
   <script src="js/speech_auditor.js"></script>
   <script src="js/passport_generator.js"></script>
+  <script src="js/sound_lab.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
