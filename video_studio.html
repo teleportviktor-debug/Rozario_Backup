@@ -2,402 +2,187 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Shorts & Reels Video Studio 2026 • RAZUM AI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <title>Видео-Студия 2026 • RAZUM AI</title>
   <style>
-    html, body {
-      background-color: #030712 !important;
-      color: #f8fafc !important;
-      font-family: var(--font-sans);
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       margin: 0;
-      padding: 0;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
-    }
-    .page-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 16px 16px 80px 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
-
-    /* 9:16 PHONE PREVIEW BOX */
-    .phone-box {
+    .container {
       width: 100%;
-      max-width: 360px;
-      margin: 0 auto;
-      height: 520px;
-      background: #090d16;
-      border: 3px solid rgba(255, 255, 255, 0.15);
-      border-radius: 32px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(6, 182, 212, 0.2);
+      max-width: 420px;
       display: flex;
       flex-direction: column;
+      gap: 14px;
     }
-    .preview-video {
-      position: absolute;
-      inset: 0;
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+    .nav-link {
+      background: #10b981;
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .video-box {
+      width: 100%;
+      height: 380px;
+      background: #111;
+      border: 2px solid #333;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 1;
-      background: #0f172a;
     }
-    .watermark-r {
+    .overlay-text {
       position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 160px;
-      height: 160px;
-      background: url('assets/razum_logo.jpg') center/contain no-repeat;
-      opacity: 0.15;
-      filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.6));
+      bottom: 15px;
+      left: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.85);
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #444;
       pointer-events: none;
-      z-index: 5;
     }
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
+    .hook { color: #fbbf24; font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+    .body-t { color: #fff; font-size: 11px; }
+
+    .btn-block {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 20px 16px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 25%, transparent 65%, rgba(0,0,0,0.92) 100%);
-      pointer-events: none;
-    }
-    .caption-box {
-      text-align: center;
-      margin-top: auto;
-      margin-bottom: 16px;
-      z-index: 20;
-    }
-    .caption-hook {
-      font-size: 17px;
-      font-weight: 900;
-      color: #fbbf24;
-      text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.95), 0 0 15px rgba(251, 191, 36, 0.5);
-      line-height: 1.3;
-      margin-bottom: 8px;
-    }
-    .caption-body {
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.95);
-      line-height: 1.4;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 6px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: inline-block;
-    }
-
-    /* STYLED NATIVE INPUT */
-    .native-upload-wrap input[type="file"] {
-      width: 100%;
-      color: transparent;
-    }
-    .native-upload-wrap input[type="file"]::file-selector-button {
-      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-      color: #ffffff;
-      padding: 18px 24px;
-      border-radius: 16px;
-      border: none;
-      font-weight: 800;
-      font-size: 16px;
-      cursor: pointer;
-      width: 100%;
-      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
-      margin-bottom: 6px;
-    }
-
-    /* BIG TOUCH BUTTONS */
-    .touch-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 16px 20px;
-      border-radius: 16px;
-      font-size: 15px;
-      font-weight: 800;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
-    .touch-btn-blue {
-      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-      color: #ffffff;
-    }
-    .touch-btn-green {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-    }
-    .touch-btn-dark {
+    .input-card {
       background: #1e293b;
-      color: #e2e8f0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-
-    .badge-v {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-      font-family: var(--font-mono);
+    .input-card label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #93c5fd;
+    }
+    .input-card input[type="file"] {
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .timer-btn {
+      background: #10b981;
+      color: #000;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div class="page-wrap">
+  <div class="container">
+    <div class="header-nav">
+      <a href="teleprompter_studio.html" class="nav-link">🎙️ В Телесуфлер</a>
+      <a href="client_portal.html" class="nav-link" style="background:#334155; color:#fff;">👑 Портал</a>
+    </div>
 
-    <!-- HEADER -->
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <div class="brand-logo" style="width:34px; height:34px; border-radius:8px;"></div>
-        <div>
-          <div style="font-weight:800; font-size:15px; color:#fff;">RAZUM SHORTS STUDIO</div>
-          <span class="badge-v">✓ v2026.7 HYBRID CAM</span>
-        </div>
-      </div>
-      <div style="display:flex; gap:8px;">
-        <a href="teleprompter_studio.html" class="btn btn-secondary btn-sm" style="padding:6px 12px; font-size:12px;">🎙️ Суфлер</a>
-        <a href="client_portal.html" class="btn btn-secondary btn-sm" style="padding:6px 12px; font-size:12px;">👑 Портал</a>
+    <!-- PREVIEW BOX -->
+    <div class="video-box">
+      <video id="vid" playsinline webkit-playsinline controls></video>
+      <div class="overlay-text">
+        <div id="hook-txt" class="hook">«ХВАТИТ ТРАТИТЬ $2,500 НА ПОДПИСКИ»</div>
+        <div id="body-txt" class="body-t">Суверенный Google Workspace окупается за 4 дня.</div>
       </div>
     </div>
 
-    <!-- 9:16 PREVIEW -->
-    <div class="phone-box">
-      <video id="preview-video" class="preview-video" playsinline webkit-playsinline muted loop></video>
-      <div class="watermark-r"></div>
-      <div class="video-overlay">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div id="timer-badge" style="display:none; background:rgba(244,63,94,0.3); border:1px solid #f43f5e; color:#f43f5e; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; font-family:var(--font-mono);">
-            ● REC <span id="timer-val">00:15</span>
-          </div>
-          <div style="font-family:var(--font-mono); font-size:11px; color:#38bdf8; font-weight:700;">
-            9:16 SHORTS
-          </div>
-        </div>
-        <div class="caption-box">
-          <div id="video-hook-text" class="caption-hook">
-            «ХВАТИТ ТРАТИТЬ $2,500 НА ПУСТЫЕ AI-ПОДПИСКИ»
-          </div>
-          <div id="video-body-text" class="caption-body">
-            Суверенный Google Workspace контур окупается за 4 дня.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ACTIONS -->
-    <div style="display:flex; flex-direction:column; gap:12px;">
+    <!-- INPUT BLOCKS -->
+    <div class="btn-block">
       
-      <!-- 1. DIRECT NATIVE FILE SELECTOR BUTTON -->
-      <div class="native-upload-wrap">
-        <input type="file" id="phone-camera-input" accept="video/*" onchange="onVideoRecorded(event)">
+      <!-- 1. FRONT SELFIE CAMERA -->
+      <div class="input-card" style="border-color: #f43f5e;">
+        <label>🔴 1. Снять Видео (Селфи / Фронтальная камера):</label>
+        <input type="file" accept="video/*" capture="user" onchange="previewFile(event)">
       </div>
 
-      <!-- 2. LIVE IN-BROWSER STREAM -->
-      <button id="btn-live-cam" class="touch-btn touch-btn-blue" onclick="startLiveCameraStream()">
-        📹 Включить Live-Камеру в Браузере
-      </button>
-
-      <!-- 3. REHEARSAL TIMER -->
-      <button id="btn-rehearse" class="touch-btn touch-btn-green" onclick="toggleRehearsal()">
-        ⏱️ Запустить Титры и Таймер (15 сек)
-      </button>
-
-      <!-- 4. DOWNLOAD -->
-      <a id="btn-dl" class="touch-btn touch-btn-dark" style="display:none;">
-        💾 Скачать Записанное Видео
-      </a>
-
-      <!-- STATUS LOG -->
-      <div id="status-log" style="background:#090d16; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; font-size:12px; color:#38bdf8; font-family:var(--font-mono); text-align:center;">
-        Статус: Готово к съемке. Выберите способ выше.
+      <!-- 2. MAIN BACK CAMERA -->
+      <div class="input-card" style="border-color: #f59e0b;">
+        <label>🎥 2. Снять Видео (Основная / Задняя камера):</label>
+        <input type="file" accept="video/*" capture="environment" onchange="previewFile(event)">
       </div>
 
+      <!-- 3. GALLERY ONLY (NO CAPTURE) -->
+      <div class="input-card" style="border-color: #0ea5e9;">
+        <label>📁 3. Выбрать из Галереи / Файлов:</label>
+        <input type="file" accept="video/*" onchange="previewFile(event)">
+      </div>
+
+      <!-- TIMER -->
+      <button class="timer-btn" onclick="run15sTimer()">⏱️ Запустить Титры (15 сек)</button>
+
+      <div id="status" style="font-size:12px; color:#10b981; text-align:center;">Статус: Готово к съемке</div>
     </div>
-
-    <!-- SCRIPT SELECTOR -->
-    <div style="background:#0f172a; border:1px solid rgba(255,255,255,0.12); padding:18px; border-radius:18px;">
-      <div style="font-weight:800; font-size:14px; margin-bottom:12px; color:#fff;">🎬 Выберите сценарий Агента 4:</div>
-      
-      <select id="sel-script" style="width:100%; background:#020617; border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:13px; padding:12px; border-radius:12px; margin-bottom:12px;" onchange="applyScript()">
-        <option value="1">🔥 Сценарий 1: Суверенная Экосистема vs SaaS ($300)</option>
-        <option value="2">⚡ Сценарий 2: Разбор счетов PDF за 3 сек ($50)</option>
-        <option value="3">🎯 Сценарий 3: B2B Скоринг по Хормози ($200)</option>
-        <option value="4">👑 Сценарий 4: White-Label AI-Геном ($500)</option>
-      </select>
-
-      <input type="text" id="in-hook" style="width:100%; background:#020617; border:1px solid rgba(255,255,255,0.15); color:#fbbf24; font-weight:700; font-size:13px; padding:10px; border-radius:10px; margin-bottom:8px;" oninput="syncText()">
-      <textarea id="in-body" style="width:100%; background:#020617; border:1px solid rgba(255,255,255,0.15); color:#f8fafc; font-size:13px; padding:10px; border-radius:10px; height:54px;" oninput="syncText()"></textarea>
-    </div>
-
   </div>
 
   <script>
-    const scripts = {
-      "1": { hook: "«ХВАТИТ ТРАТИТЬ $2,500 НА ПУСТЫЕ AI-ПОДПИСКИ»", body: "Суверенный Google Workspace контур окупается за 4 дня. Разовая оплата. Без подписки." },
-      "2": { hook: "«КАК ОБРАБАТЫВАТЬ 500 СЧЕТОВ ЗА 3 СЕКУНДЫ?»", body: "Zero-Log парсер счетов сразу в Google Таблицу без утечек данных." },
-      "3": { hook: "«ПОЧЕМУ ВАШИ МЕНЕДЖЕРЫ ТЕРЯЮТ B2B СДЕЛКИ?»", body: "Hormozi 4-Factor скоринг закрывает VIP-клиентов в день обращения." },
-      "4": { hook: "«СОЗДАЙТЕ СВОЙ СОБСТВЕННЫЙ AI-РОЙ ПОД КЛЮЧ»", body: "5 автономных агентов работают в облаке 24/7. White-Label перепродажа." }
-    };
-
-    function setStatus(msg, isErr) {
-      const el = document.getElementById('status-log');
-      if (el) {
-        el.innerText = msg;
-        el.style.color = isErr ? '#f43f5e' : '#34d399';
-      }
-    }
-
-    function applyScript() {
-      const val = document.getElementById('sel-script').value;
-      const s = scripts[val] || scripts["1"];
-      document.getElementById('in-hook').value = s.hook;
-      document.getElementById('in-body').value = s.body;
-      syncText();
-    }
-
-    function syncText() {
-      document.getElementById('video-hook-text').innerText = document.getElementById('in-hook').value;
-      document.getElementById('video-body-text').innerText = document.getElementById('in-body').value;
-    }
-
-    function onVideoRecorded(e) {
-      const file = e.target.files[0];
+    function previewFile(e) {
+      var file = e.target.files && e.target.files[0];
       if (!file) return;
-
-      const url = URL.createObjectURL(file);
-      const v = document.getElementById('preview-video');
-      v.srcObject = null;
+      var url = URL.createObjectURL(file);
+      var v = document.getElementById('vid');
       v.src = url;
-      v.play().catch(err => console.log(err));
-
-      const dl = document.getElementById('btn-dl');
-      dl.href = url;
-      dl.download = `RAZUM_SHORTS_${Date.now()}.mp4`;
-      dl.style.display = 'flex';
-      dl.innerText = '💾 Скачать Записанное Видео (' + Math.round(file.size / 1024) + ' KB)';
-      setStatus('✓ Видео успешно загружено в превью!', false);
+      v.load();
+      v.play().catch(function(){});
+      document.getElementById('status').innerText = '✓ Загружено: ' + file.name + ' (' + Math.round(file.size/1024) + ' KB)';
     }
 
-    let liveStream = null;
-    let liveRecorder = null;
-    let liveChunks = [];
-
-    async function startLiveCameraStream() {
-      const v = document.getElementById('preview-video');
-      const btn = document.getElementById('btn-live-cam');
-
-      if (liveStream) {
-        liveStream.getTracks().forEach(t => t.stop());
-        liveStream = null;
-        v.srcObject = null;
-        btn.innerText = '📹 Включить Live-Камеру в Браузере';
-        setStatus('Live-камера отключена.', false);
-        return;
-      }
-
-      setStatus('Запрос доступа к камере...', false);
-
-      try {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          throw new Error('Ваш браузер не поддерживает доступ к камере по WebRTC.');
-        }
-
-        v.setAttribute('autoplay', 'true');
-        v.setAttribute('playsinline', 'true');
-        v.setAttribute('webkit-playsinline', 'true');
-        v.muted = true;
-
-        let stream = null;
-        try {
-          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
-        } catch (e1) {
-          console.warn('Fallback to { video: true }');
-          stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        }
-
-        liveStream = stream;
-        v.srcObject = stream;
-        await v.play();
-
-        btn.innerText = '⏹️ Выключить Live-Камеру';
-        setStatus('✓ Live-камера активна! Нажмите «Запустить Титры», чтобы читать текст.', false);
-      } catch (err) {
-        console.error('Live cam error:', err);
-        const errMsg = err.name + ': ' + err.message;
-        setStatus('❌ Ошибка: ' + errMsg, true);
-        alert('Камера заблокирована телефоном (' + err.name + ')!\n\nКак включить за 10 секунд:\n\n• На iPhone: Настройки телефона ➔ Safari ➔ Камера ➔ Разрешить.\n• На Android: Нажмите на замочек 🔒 рядом с адресом сайта вверху ➔ Разрешения ➔ Камера ➔ Разрешить.');
-      }
-    }
-
-    let interval = null;
-    let sec = 15;
-    let timing = false;
-
-    function toggleRehearsal() {
-      const btn = document.getElementById('btn-rehearse');
-      const badge = document.getElementById('timer-badge');
-      const val = document.getElementById('timer-val');
-      const hook = document.getElementById('video-hook-text');
-
-      if (timing) {
-        clearInterval(interval);
-        timing = false;
-        badge.style.display = 'none';
-        btn.innerText = '⏱️ Запустить Титры и Таймер (15 сек)';
-        hook.style.color = '#fbbf24';
-        return;
-      }
-
-      timing = true;
-      sec = 15;
-      badge.style.display = 'block';
-      val.innerText = '00:15';
-      btn.innerText = '⏹️ Остановить Таймер';
-
-      interval = setInterval(() => {
+    var t = null;
+    function run15sTimer() {
+      var sec = 15;
+      var b = document.getElementById('body-txt');
+      clearInterval(t);
+      t = setInterval(function() {
         sec--;
-        val.innerText = '00:' + String(sec).padStart(2, '0');
-        hook.style.color = (sec % 2 === 0) ? '#38bdf8' : '#fbbf24';
-
+        if (sec === 10) b.innerText = '1. Разбор счетов за 3 сек в Google Таблицу.';
+        if (sec === 5) b.innerText = '2. 100% суверенно без ежемесячной подписки.';
         if (sec <= 0) {
-          clearInterval(interval);
-          timing = false;
-          badge.style.display = 'none';
-          btn.innerText = '⏱️ Запустить Титры и Таймер (15 сек)';
-          hook.style.color = '#fbbf24';
-          alert('✓ 15 секунд истекли! Титры отрепетированы.');
+          clearInterval(t);
+          b.innerText = '👉 Напишите СУВЕРЕНИТЕТ в комментариях прямо сейчас!';
+          document.getElementById('status').innerText = '🎉 15 секунд прошло!';
         }
       }, 1000);
+      document.getElementById('status').innerText = '● Идет отсчет 15 секунд...';
     }
-
-    document.addEventListener('DOMContentLoaded', applyScript);
   </script>
 </body>
 </html>
