@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teleprompter Studio 2026 | Мульти-Сценарный AI-Телесуфлер</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .teleprompter-toolbar {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .teleprompter-content-area {
+      flex: 1;
+      overflow-y: scroll;
+      padding: 120px 15% 350px 15%;
+      line-height: 1.7;
+      text-align: center;
+      transition: font-size 0.2s ease;
+      scroll-behavior: smooth;
+    }
+
+    .teleprompter-content-area.mirrored {
+      transform: scaleX(-1);
+    }
+
+    .cue-marker {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: rgba(16, 185, 129, 0.3);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    .cue-marker::before {
+      content: '▶ CUE LEVEL';
+      position: absolute;
+      left: 10px;
+      top: -10px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--emerald-400);
+      background: #000;
+      padding: 0 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .highlight-hook {
+      color: var(--amber-400);
+      font-weight: 800;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .highlight-fact {
+      color: var(--emerald-400);
+      font-weight: 700;
+    }
+
+    .highlight-cta {
+      color: var(--cyan-400);
+      font-weight: 800;
+      margin-top: 40px;
+      display: block;
+    }
+
+    /* EDIT MODAL */
+    .edit-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .edit-modal.active { display: flex; }
+    .edit-modal-box {
+      background: #0f172a;
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      max-width: 700px;
+      width: 100%;
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP CONTROL TOOLBAR -->
+  <header class="teleprompter-toolbar">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="index.html" class="btn btn-secondary btn-sm">⬅ В Дашборд</a>
+      <div style="font-weight:800; font-size:15px; color:var(--emerald-400);">🎙️ TELEPROMPTER STUDIO 2026</div>
+      
+      <!-- SCRIPT SELECTOR -->
+      <select id="select-script" class="form-control" style="width:280px; font-size:12px; padding:6px 10px;">
+        <option value="script1">⚡ Сценарий 1: Суверенный Контур vs SaaS ($300)</option>
+        <option value="script2">📑 Сценарий 2: Разбор счетов за 3 секунды ($50)</option>
+        <option value="script3">🎯 Сценарий 3: B2B Hormozi Sales Intelligence ($200)</option>
+        <option value="script4">👑 Сценарий 4: White-Label AI-Геном ($500)</option>
+        <option value="custom">✍️ Пользовательский сценарий...</option>
+      </select>
+
+      <button class="btn btn-secondary btn-sm" onclick="openEditModal()">✏️ Редактор</button>
+    </div>
+
+    <!-- CONTROLS -->
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <span style="font-size:12px; color:var(--text-muted);">Шрифт:</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeFontSize(-4)">A-</button>
+        <span id="font-size-val" class="range-badge">42px</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeFontSize(4)">A+</button>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:6px;">
+        <span style="font-size:12px; color:var(--text-muted);">Скорость:</span>
+        <input type="range" id="speed-slider" min="1" max="10" value="3" style="width:90px;">
+        <span id="speed-badge" class="range-badge">3x</span>
+      </div>
+
+      <button id="btn-mirror" class="btn btn-secondary btn-sm" onclick="toggleMirror()">
+        🪞 Зеркало (Off)
+      </button>
+
+      <button id="btn-play-pause" class="btn btn-primary" onclick="togglePlay()">
+        ▶ Старт (Пробел)
+      </button>
+    </div>
+  </header>
+
+  <!-- CUE LINE -->
+  <div class="cue-marker"></div>
+
+  <!-- SCROLLING TEXT CONTAINER -->
+  <main id="teleprompter-box" class="teleprompter-content-area" style="font-size:42px;">
+    <!-- Rendered via JS -->
+  </main>
+
+  <!-- SCRIPT EDIT MODAL -->
+  <div id="edit-modal" class="edit-modal">
+    <div class="edit-modal-box">
+      <div style="font-size:18px; font-weight:800; margin-bottom:12px; color:var(--emerald-400);">
+        ✏️ Редактирование Текста Телесуфлера
+      </div>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+        Вставьте ваш продающий сценарий. Выделите блоки хуков и CTA:
+      </p>
+      <textarea id="custom-script-text" class="form-control" style="width:100%; height:280px; font-size:14px; font-family:var(--font-mono); margin-bottom:16px;"></textarea>
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button class="btn btn-secondary" onclick="closeEditModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="applyCustomScript()">Применить в Суфлер 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPTS = {
+      script1: `
+        <div class="highlight-hook">[ХУК 0-3 СЕК] «80% компаний, внедривших AI в 2025 году, выкинули деньги на ветер! Вот почему...»</div>
+        <p style="margin-bottom:30px; color:#cbd5e1;">Большинство думает, что для автоматизации нужны сложные платформы с подпиской по сто долларов за сотрудника и бесконечные кредиты.</p>
+        <p style="margin-bottom:30px;">Но в 2026 году выигрывает тот, кто использует <span class="highlight-fact">СУВЕРЕННЫЙ КОНТУР GOOGLE WORKSPACE</span>.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">1. Все счета и первичка разбираются за 3 секунды без риска утечки коммерческой тайны.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">2. Математический скоринг лидов считает окупаемость на Python со 100% точностью и без галлюцинаций.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">3. Никаких подписок. Один разовый платёж — и система работает в вашем аккаунте навсегда.</p>
+        <div class="highlight-cta">[CTA] «Напишите слово "СУВЕРЕНИТЕТ" в комментарии — я пришлю вам живой расчет экономии для вашего бизнеса прямо сейчас!»</div>
+      `,
+      script2: `
+        <div class="highlight-hook">[ХУК 0-3 СЕК] «Вот как бухгалтер тратит ровно 5 минут в день на разбор 100 входящих счетов!»</div>
+        <p style="margin-bottom:30px; color:#cbd5e1;">Вам больше не нужно вручную перебивать ИНН, суммы и номенклатуру из PDF в таблицы.</p>
+        <p style="margin-bottom:30px;"><span class="highlight-fact">Zero-Leakage Gemini Flash Lite</span> автоматически парсит вложения прямо из вашей почты Gmail.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">1. Строгая валидация реквизитов и математический пересчет НДС.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">2. Данные заносятся в Google Таблицу за 2.4 секунды.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">3. Разовый пакет от $50 без ежемесячных платежей.</p>
+        <div class="highlight-cta">[CTA] «Кликайте ссылку в шапке профиля — развернем контур в вашей Google Таблице за 24 часа!»</div>
+      `,
+      script3: `
+        <div class="highlight-hook">[ХУК 0-3 СЕК] «Как удвоить продажи в B2B без найма новых менеджеров?»</div>
+        <p style="margin-bottom:30px; color:#cbd5e1;">Менеджеры тратят 70% времени на пустые разговоры с нецелевыми лидами.</p>
+        <p style="margin-bottom:30px;">Модуль <span class="highlight-fact">B2B Intelligence & Hormozi Scorer</span> квалифицирует заявки по 4 факторам: Боль, Бюджет, ЛПР и Срочность.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">1. Мгновенная сортировка: Tier 1 VIP (закрывать сегодня) vs прогрев.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">2. Автоматическая генерация Grand Slam оффера под отрасль клиента.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">3. Окупаемость внедрения ($200) — ровно 4 дня.</p>
+        <div class="highlight-cta">[CTA] «Пишите "СКОРИНГ" в директ — пришлю интерактивный радар квалификации лидов!»</div>
+      `,
+      script4: `
+        <div class="highlight-hook">[ХУК 0-3 СЕК] «Готовый White-Label AI-бизнес под ключ для агентств и интеграторов в 2026 году.»</div>
+        <p style="margin-bottom:30px; color:#cbd5e1;">Хватит продавать чужие SaaS сервисы и отдавать им 80% маржи.</p>
+        <p style="margin-bottom:30px;">С пакетом <span class="highlight-fact">Genesis Enterprise ($500)</span> вы получаете суверенную систему с правом перепродажи под собственным брендом.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">1. 5 автономных агентов на базе Python Antigravity Swarm.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">2. 100% маржинальность на каждом внедрении у ваших заказчиков.</p>
+        <p style="margin-bottom:30px; color:#cbd5e1;">3. Полная изоляция данных и паспорта безопасности Zero-Log.</p>
+        <div class="highlight-cta">[CTA] «Забронируйте персональный разбор архитектуры по ссылке в описании прямо сейчас!»</div>
+      `
+    };
+
+    let isPlaying = false;
+    let scrollSpeed = 3;
+    let currentFontSize = 42;
+    let isMirrored = false;
+    let scrollInterval = null;
+
+    const box = document.getElementById('teleprompter-box');
+    const playBtn = document.getElementById('btn-play-pause');
+    const speedSlider = document.getElementById('speed-slider');
+    const speedBadge = document.getElementById('speed-badge');
+    const fontSizeBadge = document.getElementById('font-size-val');
+    const mirrorBtn = document.getElementById('btn-mirror');
+    const scriptSelect = document.getElementById('select-script');
+
+    function loadScript(key) {
+      if (key === 'custom') {
+        const saved = localStorage.getItem('custom_teleprompter_script');
+        if (saved) {
+          box.innerHTML = saved;
+        } else {
+          openEditModal();
+        }
+      } else {
+        box.innerHTML = SCRIPTS[key] || SCRIPTS['script1'];
+      }
+      box.scrollTop = 0;
+      if (isPlaying) togglePlay();
+    }
+
+    scriptSelect.addEventListener('change', (e) => {
+      loadScript(e.target.value);
+    });
+
+    speedSlider.addEventListener('input', (e) => {
+      scrollSpeed = parseInt(e.target.value, 10);
+      speedBadge.innerText = `${scrollSpeed}x`;
+    });
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playBtn.innerText = '⏸ Пауза (Пробел)';
+        playBtn.classList.remove('btn-primary');
+        playBtn.classList.add('btn-indigo');
+        startScrolling();
+      } else {
+        playBtn.innerText = '▶ Старт (Пробел)';
+        playBtn.classList.add('btn-primary');
+        playBtn.classList.remove('btn-indigo');
+        stopScrolling();
+      }
+    }
+
+    function startScrolling() {
+      if (scrollInterval) clearInterval(scrollInterval);
+      scrollInterval = setInterval(() => {
+        box.scrollTop += (scrollSpeed * 0.8);
+      }, 20);
+    }
+
+    function stopScrolling() {
+      if (scrollInterval) clearInterval(scrollInterval);
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(72, Math.max(24, currentFontSize + delta));
+      box.style.fontSize = `${currentFontSize}px`;
+      fontSizeBadge.innerText = `${currentFontSize}px`;
+    }
+
+    function toggleMirror() {
+      isMirrored = !isMirrored;
+      if (isMirrored) {
+        box.classList.add('mirrored');
+        mirrorBtn.innerText = '🪞 Зеркало (On)';
+        mirrorBtn.classList.add('btn-primary');
+      } else {
+        box.classList.remove('mirrored');
+        mirrorBtn.innerText = '🪞 Зеркало (Off)';
+        mirrorBtn.classList.remove('btn-primary');
+      }
+    }
+
+    function openEditModal() {
+      const modal = document.getElementById('edit-modal');
+      const textarea = document.getElementById('custom-script-text');
+      textarea.value = box.innerText;
+      modal.classList.add('active');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.remove('active');
+    }
+
+    function applyCustomScript() {
+      const text = document.getElementById('custom-script-text').value;
+      const formatted = text.split('\n\n').map(para => `<p style="margin-bottom:30px;">${para}</p>`).join('');
+      box.innerHTML = formatted;
+      localStorage.setItem('custom_teleprompter_script', formatted);
+      scriptSelect.value = 'custom';
+      closeEditModal();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.code === 'Escape') {
+        stopScrolling();
+        isPlaying = false;
+        playBtn.innerText = '▶ Старт (Пробел)';
+        box.scrollTop = 0;
+      }
+    });
+
+    // Initial load
+    loadScript('script1');
+  </script>
+</body>
+</html>

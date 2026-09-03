@@ -1,0 +1,121 @@
+{
+  "_comment": "Реестр задач. Агенты проверяют этот файл перед запуском — если задача в done, пропускают её.",
+  "_rules": {
+    "write_access": "agent_5_spark ONLY",
+    "read_access": "all agents",
+    "idempotency": "Проверь поле status перед выполнением. done = не выполнять повторно."
+  },
+  "tasks": {
+    "create_service_account": {
+      "status": "done",
+      "completed_at": "2026-09-01T20:00:00+03:00",
+      "completed_by": "user_manual",
+      "output": "service_account.json создан в GCP Console. Email: sheets-integration-bot@gen-lang-client-0207478259.iam.gserviceaccount.com"
+    },
+    "deploy_drive_markdown_converter": {
+      "status": "done",
+      "completed_at": "2026-09-01T23:31:35+03:00",
+      "completed_by": "antigravity_main",
+      "output": "drive_markdown_converter/ — все файлы созданы: main.py, config.py, drive_service.py, converter.py"
+    },
+    "init_google_drive_folders": {
+      "status": "done",
+      "completed_at": "2026-09-01T23:30:49+03:00",
+      "completed_by": "drive_markdown_converter",
+      "output": "01_INBOX (1j5yTtPP...), 02_FOR_NOTEBOOK (12_Bk_tg...), _ARCHIVE (1i32vmG2...) созданы на Drive"
+    },
+    "setup_github_actions_cron": {
+      "status": "done",
+      "completed_at": "2026-09-01T17:00:00+03:00",
+      "completed_by": "antigravity_main",
+      "output": ".github/workflows/swarm_cron.yml создан. Требует git push для активации."
+    },
+    "fix_unicode_logging_windows": {
+      "status": "done",
+      "completed_at": "2026-09-01T23:31:00+03:00",
+      "completed_by": "antigravity_main",
+      "output": "sys.stdout.reconfigure(encoding='utf-8') добавлен в main.py"
+    },
+    "add_daemon_auto_reconnect": {
+      "status": "done",
+      "completed_at": "2026-09-02T17:52:10+03:00",
+      "completed_by": "antigravity_main",
+      "output": "Exponential backoff + Drive client reinit добавлен в run_daemon_loop()"
+    },
+    "create_swarm_agents_1_to_5": {
+      "status": "done",
+      "completed_at": "2026-09-01T17:00:00+03:00",
+      "completed_by": "antigravity_main",
+      "output": "python_engine/agents/: agent_1_lead.py, agent_2_spy.py, agent_3_smm.py, agent_4_video.py, agent_5_spark_coordinator.py"
+    },
+    "design_shared_memory_architecture": {
+      "status": "done",
+      "completed_at": "2026-09-02T17:59:38+03:00",
+      "completed_by": "antigravity_architect",
+      "output": "implementation_plan.md утверждён пользователем"
+    },
+    "setup_shared_memory_system": {
+      "status": "done",
+      "completed_at": "2026-09-02T19:38:00+03:00",
+      "completed_by": "antigravity",
+      "output": "_MEMORY architecture deployed with ISO daily logs, task registry and Google Drive mirroring"
+    },
+    "create_memory_manager_module": {
+      "status": "done",
+      "completed_at": "2026-09-02T19:38:00+03:00",
+      "completed_by": "antigravity",
+      "output": "python_engine/memory_manager.py built and tested with all 5 Swarm agents"
+    },
+    "memory_sync_with_github": {
+      "status": "done",
+      "completed_at": "2026-09-03T00:50:00+03:00",
+      "completed_by": "antigravity",
+      "output": "tools/prepare_github_deploy.py created GITHUB_PAGES_DEPLOY.zip for 1-click cloud synchronization"
+    },
+    "memory_sync_with_drive": {
+      "status": "done",
+      "completed_at": "2026-09-02T19:38:08.631323+03:00",
+      "completed_by": "antigravity",
+      "output": "Drive sync confirmed: _MEMORY synced to g:\\Мой диск\\AI_WORK_SYSTEM"
+    },
+    "configure_notebooklm_sources": {
+      "status": "done",
+      "completed_at": "2026-09-02T19:40:39.874696+03:00",
+      "completed_by": "antigravity",
+      "output": "21 source documents copied to g:\\Мой диск\\02_FOR_NOTEBOOK (01_CORE, 02_SALES, 03_TECHNICAL)"
+    },
+    "create_client_packaging_script": {
+      "status": "done",
+      "completed_at": "2026-09-02T21:49:00+03:00",
+      "completed_by": "antigravity",
+      "output": "python_engine/client_packager.py created with automated ZIP packaging and HTML Passport Certificate generator"
+    },
+    "create_production_folder_structure": {
+      "status": "done",
+      "completed_at": "2026-09-02T21:49:00+03:00",
+      "completed_by": "antigravity",
+      "output": "10_PRODUCTION structure with _TEMPLATES and live client packages configured"
+    },
+    "create_restore_from_drive_script": {
+      "status": "done",
+      "completed_at": "2026-09-02T23:41:00+03:00",
+      "completed_by": "antigravity",
+      "output": "tools/restore_from_drive.py created for interactive ZIP restore from Google Drive mirror"
+    },
+    "setup_daily_log_automation": {
+      "status": "done",
+      "completed_at": "2026-09-02T23:41:00+03:00",
+      "completed_by": "antigravity",
+      "output": "Automated ISO logging via memory_manager.py and daily_log hooks"
+    },
+    "agent5_memory_integration": {
+      "status": "done",
+      "completed_at": "2026-09-02T23:41:00+03:00",
+      "completed_by": "antigravity",
+      "output": "Agent 5 Spark Coordinator integrated with MEMORY.json watchdog and A2UI auto-healing",
+      "depends_on": [
+        "create_memory_manager_module"
+      ]
+    }
+  }
+}

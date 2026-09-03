@@ -1,0 +1,74 @@
+{
+  "financial_model_version": "2026.3-USD",
+  "currency": "USD",
+  "pricing_model": "One-Time Payment (No Recurring SaaS)",
+  "packages": [
+    {
+      "id": "pkg-starter",
+      "name": "Spark Starter",
+      "audience": "Freelance & Microbusiness",
+      "price_usd": 50,
+      "cogs_api_cost_usd": 0.5,
+      "setup_time_minutes": 15,
+      "labor_cost_usd": 5.0,
+      "gross_margin_pct": 89.0,
+      "target_monthly_sales": 60,
+      "monthly_revenue_usd": 3000
+    },
+    {
+      "id": "pkg-command",
+      "name": "Command Center",
+      "audience": "Small Business & Teams 2-10",
+      "price_usd": 100,
+      "cogs_api_cost_usd": 1.2,
+      "setup_time_minutes": 45,
+      "labor_cost_usd": 15.0,
+      "gross_margin_pct": 83.8,
+      "target_monthly_sales": 35,
+      "monthly_revenue_usd": 3500
+    },
+    {
+      "id": "pkg-intelligence",
+      "name": "Intelligence Module",
+      "audience": "B2B Sales Teams & Agencies",
+      "price_usd": 200,
+      "cogs_api_cost_usd": 2.5,
+      "setup_time_minutes": 90,
+      "labor_cost_usd": 30.0,
+      "gross_margin_pct": 83.75,
+      "target_monthly_sales": 25,
+      "monthly_revenue_usd": 5000
+    },
+    {
+      "id": "pkg-sovereign",
+      "name": "Sovereign Autopilot",
+      "audience": "Companies 10-50 & Fintech",
+      "price_usd": 300,
+      "cogs_api_cost_usd": 4.0,
+      "setup_time_minutes": 150,
+      "labor_cost_usd": 50.0,
+      "gross_margin_pct": 82.0,
+      "target_monthly_sales": 15,
+      "monthly_revenue_usd": 4500
+    },
+    {
+      "id": "pkg-genesis",
+      "name": "Genesis Enterprise",
+      "audience": "Holdings & White-Label Partners",
+      "price_usd": 500,
+      "cogs_api_cost_usd": 8.0,
+      "setup_time_minutes": 240,
+      "labor_cost_usd": 80.0,
+      "gross_margin_pct": 82.4,
+      "target_monthly_sales": 8,
+      "monthly_revenue_usd": 4000
+    }
+  ],
+  "monthly_financial_summary": {
+    "total_monthly_revenue_usd": 20000,
+    "total_direct_cogs_usd": 259.5,
+    "total_labor_costs_usd": 2965.0,
+    "net_monthly_profit_usd": 16775.5,
+    "net_profit_margin_pct": 83.88
+  }
+}

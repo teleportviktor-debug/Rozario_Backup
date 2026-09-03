@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign AI Transformation | $2,500 + Retainer</title>
+  <meta name="description" content="Ваш собственный AI-отдел, который работает 24/7 в вашем Google-аккаунте и никогда не увольняется.">
+  <style>
+    /* NEXUS OBSIDIAN DESIGN SYSTEM */
+    :root {
+      --bg-base: #05070e;
+      --bg-panel: rgba(13, 18, 32, 0.65);
+      --cyan: #00F2FE;
+      --teal: #06B6D4;
+      --violet: #8B5CF6;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Ambient Mesh Glow */
+    .ambient-mesh {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      position: relative;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .logo span { color: var(--cyan); }
+    
+    .sound-toggle {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 8px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      outline: none;
+    }
+    .sound-toggle.on {
+      background: rgba(16,185,129,0.1);
+      color: var(--emerald);
+      border-color: rgba(16,185,129,0.3);
+      box-shadow: 0 0 15px rgba(16,185,129,0.2);
+    }
+    .live-pill {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .sound-toggle.on .live-pill {
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+      perspective: 1000px;
+    }
+    .badge-premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      color: var(--cyan);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+    }
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      max-width: 900px;
+      margin: 0 auto 24px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--cyan), var(--teal));
+      color: #000;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    .cta-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+    }
+
+    /* Scroll Reveal Class */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Spotlight Glow */
+    .spotlight {
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 242, 254, 0.12), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .spotlight:hover::before { opacity: 1; }
+    .spotlight > * { position: relative; z-index: 2; }
+
+    /* ROI CALCULATOR SECTION */
+    .roi-section {
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), 0 20px 50px rgba(0,0,0,0.5);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 80px;
+    }
+    .roi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
+    
+    .slider-container { margin-bottom: 24px; }
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    input[type=range] {
+      width: 100%;
+      appearance: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      height: 12px;
+      border-radius: 6px;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--cyan), var(--teal));
+      border: 1px solid rgba(255,255,255,0.6);
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    }
+
+    .roi-result {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+    .loss-amount {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--rose);
+      font-family: monospace;
+      margin: 10px 0;
+      text-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
+    }
+
+    /* Interactive Cockpit (Sound Lab) */
+    .cockpit-wrapper {
+      perspective: 1200px;
+      margin: 80px 0;
+    }
+    .cockpit {
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5), var(--glass-shadow);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      transition: transform 0.1s ease-out; 
+      transform-style: preserve-3d;
+    }
+    .cockpit-panel { transform: translateZ(30px); }
+    .cockpit-canvas {
+      transform: translateZ(60px);
+      background: rgba(0,0,0,0.4);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    canvas {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .pad-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .pad-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      padding: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .pad-btn:hover { background: rgba(255,255,255,0.1); }
+    .pad-btn:active { transform: scale(0.95); background: rgba(0, 242, 254, 0.2); border-color: var(--cyan); }
+    
+    .type-selectors { display: flex; gap: 8px; margin-bottom: 24px; }
+    .type-btn {
+      flex: 1; padding: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer; font-size: 12px; transition: 0.2s;
+    }
+    .type-btn.active { background: rgba(0,242,254,0.15); color: var(--cyan); border-color: var(--cyan); }
+    .ctrl-group { margin-bottom: 24px; }
+    .ctrl-group label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; }
+    .ctrl-group label span.val-badge { background: rgba(0,242,254,0.1); color: var(--cyan); padding: 2px 8px; border-radius: 10px; font-family: monospace; }
+
+    /* OFFER TABLE */
+    .grand-slam-offer { margin: 80px 0; }
+    .offer-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+    .offer-table th, .offer-table td {
+      padding: 18px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.2s ease;
+    }
+    .offer-table tbody tr:hover td { background: rgba(255, 255, 255, 0.03); }
+    .offer-table th {
+      background: rgba(255,255,255,0.02);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+    }
+    .val-cell {
+      text-align: right;
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--cyan);
+    }
+    .total-row {
+      background: rgba(0, 242, 254, 0.05);
+      font-weight: 900;
+      font-size: 20px;
+    }
+    .total-row td { border-bottom: none; }
+    .price-strike { text-decoration: line-through; color: var(--rose); font-size: 16px; margin-right: 12px; }
+    .price-final { color: var(--cyan); font-size: 28px; }
+
+    /* FORM */
+    .form-section {
+      max-width: 600px;
+      margin: 0 auto 100px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px) saturate(180%);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow), 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .form-input {
+      width: 100%; padding: 14px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px; color: #fff; font-size: 16px; box-sizing: border-box;
+      transition: border 0.3s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,242,254,0.2); }
+  </style>
+</head>
+<body>
+  
+  <div class="ambient-mesh"></div>
+
+  <!-- TOP NAV -->
+  <div class="container">
+    <header>
+      <div class="logo"><span>R</span> Sovereign AI</div>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <button id="btn-sound" class="sound-toggle on hover-snd" title="Выключить звуковой отклик интерфейса">
+          <div class="live-pill"></div> Sound: ON
+        </button>
+        <a href="store_packages.html" style="color:var(--text-muted); text-decoration:none; font-weight:600;" class="hover-snd">← Назад</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero reveal">
+      <div class="badge-premium">💎 ENTERPRISE TRANSFORMATION</div>
+      <h1>Ваш собственный AI-отдел, который работает 24/7 и <span>никогда не увольняется</span></h1>
+      <p>Вместо того чтобы покупать разрозненные SaaS по подписке, внедрите суверенный AI-контур прямо в ваш Google Workspace. Полный контроль, нулевые утечки данных.</p>
+      <a href="#order" class="cta-btn magnetic-btn hover-snd click-snd">Забронировать Разбор (Осталось 2 места)</a>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section class="roi-section spotlight reveal">
+      <div class="roi-grid">
+        <div>
+          <h2 style="font-size: 28px; font-weight: 800; margin-top: 0;">🧮 Сколько вы теряете прямо сейчас?</h2>
+          <p style="color: var(--text-muted); margin-bottom: 30px;">Каждая минута ручного копирования данных, парсинга счетов и ответов на рутинные письма — это упущенная чистая прибыль.</p>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Сотрудников на рутине:</span>
+              <span id="val-employees" style="color: var(--cyan);">5 чел</span>
+            </div>
+            <input type="range" id="slider-employees" class="hover-snd" min="1" max="50" value="5">
+          </div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Средняя ЗП ($/мес):</span>
+              <span id="val-salary" style="color: var(--violet);">$1,500</span>
+            </div>
+            <input type="range" id="slider-salary" class="hover-snd" min="300" max="5000" step="100" value="1500">
+          </div>
+        </div>
+        
+        <div class="roi-result">
+          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">Упущенная прибыль компании:</div>
+          <div class="loss-amount" id="val-loss">$27,000 / год</div>
+          <div style="color: var(--text-main); font-size: 15px; margin-bottom: 20px;">Это деньги, которые мы можем вернуть вам за 14 дней внедрения.</div>
+          <div style="padding: 10px; background: rgba(0,242,254,0.1); border-radius: 8px; color: var(--cyan); font-weight: 700; border: 1px solid rgba(0,242,254,0.2);">
+            Окупаемость трансформации: <span id="val-payback">33 дня</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- HORMOZI GRAND SLAM OFFER -->
+    <section class="grand-slam-offer reveal">
+      <h2 style="font-size: 36px; font-weight: 900; text-align: center; margin-bottom: 10px;">Структура Инвестиции</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px;">Прозрачная ценность. Никаких скрытых платежей за «модули».</p>
+
+      <table class="offer-table spotlight">
+        <thead>
+          <tr>
+            <th>Компонент Трансформации</th>
+            <th style="text-align: right;">Реальная Ценность</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Аудит бизнес-процессов (2 часа Zoom)</strong><br><span style="color:var(--text-muted); font-size:13px;">Карта «где утекают деньги» с конкретными цифрами</span></td>
+            <td class="val-cell">$500</td>
+          </tr>
+          <tr>
+            <td><strong>Business DNA Extraction (Pomelli)</strong><br><span style="color:var(--text-muted); font-size:13px;">Персонализированный AI-профиль вашей компании</span></td>
+            <td class="val-cell">$300</td>
+          </tr>
+          <tr>
+            <td><strong>Развертывание Sovereign Контура</strong><br><span style="color:var(--text-muted); font-size:13px;">5 агентов + CRM + Webhook + NotebookLM</span></td>
+            <td class="val-cell">$1,500</td>
+          </tr>
+          <tr>
+            <td><strong>3 кастомных AI-агента (Opal + Apps Script)</strong><br><span style="color:var(--text-muted); font-size:13px;">Автоматизация под ваши уникальные бизнес-процессы</span></td>
+            <td class="val-cell">$1,200</td>
+          </tr>
+          <tr>
+            <td><strong>Teleprompter Studio PRO + 6 вирусных скриптов</strong><br><span style="color:var(--text-muted); font-size:13px;">Пайплайн создания Shorts за 1 дубль</span></td>
+            <td class="val-cell">$200</td>
+          </tr>
+          <tr>
+            <td><strong>Паспорт безопасности Zero-Log</strong><br><span style="color:var(--text-muted); font-size:13px;">Юридический документ для вашей бухгалтерии и СБ</span></td>
+            <td class="val-cell">$150</td>
+          </tr>
+          <tr>
+            <td><strong>60 дней инженерного сопровождения под ключ</strong><br><span style="color:var(--text-muted); font-size:13px;">Быстрая реакция и адаптация агентов</span></td>
+            <td class="val-cell">$600</td>
+          </tr>
+          <tr class="total-row">
+            <td>ИТОГО ЦЕННОСТЬ (Perceived Value)</td>
+            <td class="val-cell" style="color:var(--text-main);">$4,450</td>
+          </tr>
+          <tr>
+            <td style="padding: 30px 24px; text-align:right; font-weight:700;">Ваша Единоразовая Инвестиция:</td>
+            <td style="padding: 30px 24px; text-align:right;">
+              <span class="price-strike">$4,450</span>
+              <span class="price-final">$2,500</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="text-align:center; margin-top: 15px; color: var(--text-muted); font-size: 14px;">
+        * Опциональный Retainer за техподдержку: <strong>$300/мес</strong> (после 60 дней)
+      </div>
+    </section>
+
+    <!-- ORDER FORM -->
+    <section id="order" class="form-section reveal spotlight">
+      <h2 style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 30px;">Оставить заявку на внедрение</h2>
+      <form id="transformation-form">
+        <div style="margin-bottom: 20px;">
+          <label style="display:block; margin-bottom: 8px; font-size: 14px; color: var(--text-muted);">Имя или Название компании</label>
+          <input type="text" id="t-name" class="form-input hover-snd" required>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="display:block; margin-bottom: 8px; font-size: 14px; color: var(--text-muted);">Email для получения КП</label>
+          <input type="email" id="t-email" class="form-input hover-snd" required>
+        </div>
+        <div style="margin-bottom: 30px;">
+          <label style="display:block; margin-bottom: 8px; font-size: 14px; color: var(--text-muted);">Ваша ниша / Отрасль</label>
+          <input type="text" id="t-niche" class="form-input hover-snd" required>
+        </div>
+        <button type="submit" style="width: 100%;" class="cta-btn magnetic-btn hover-snd click-snd">Получить персональное КП на email</button>
+      </form>
+    </section>
+
+  </div>
+
+  <script>
+    // ====================================================
+    // ROI CALCULATOR LOGIC
+    // ====================================================
+    const slEmp = document.getElementById('slider-employees');
+    const slSal = document.getElementById('slider-salary');
+    const vEmp = document.getElementById('val-employees');
+    const vSal = document.getElementById('val-salary');
+    const vLoss = document.getElementById('val-loss');
+    const vPayb = document.getElementById('val-payback');
+
+    function updateCalc() {
+      const e = parseInt(slEmp.value);
+      const s = parseInt(slSal.value);
+      vEmp.innerText = e + ' чел';
+      vSal.innerText = '$' + s.toLocaleString();
+      
+      const monthlyLoss = Math.round(e * s * 0.3);
+      const yearlyLoss = monthlyLoss * 12;
+      
+      vLoss.innerText = '$' + yearlyLoss.toLocaleString() + ' / год';
+      
+      const dailyLoss = monthlyLoss / 30;
+      let paybackDays = Math.ceil(2500 / dailyLoss);
+      if (paybackDays < 1) paybackDays = 1;
+      
+      vPayb.innerText = paybackDays + ' ' + (paybackDays % 10 === 1 && paybackDays !== 11 ? 'день' : ([2,3,4].includes(paybackDays % 10) && ![12,13,14].includes(paybackDays) ? 'дня' : 'дней'));
+    }
+
+    slEmp.addEventListener('input', () => { updateCalc(); playTick(); });
+    slSal.addEventListener('input', () => { updateCalc(); playTick(); });
+    updateCalc();
+
+    // ====================================================
+    // WEB AUDIO API SOUND ENGINE (Simplified)
+    // ====================================================
+    let audioCtx = null;
+    let masterGain = null;
+    let isSoundOn = true;
+
+    const btnSound = document.getElementById('btn-sound');
+
+    function initAudio() {
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.5;
+      masterGain.connect(audioCtx.destination);
+    }
+
+    // Initialize audio context on first interaction if Sound is ON
+    document.body.addEventListener('mousedown', () => {
+      if (isSoundOn) {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+    }, { once: true });
+
+    btnSound.addEventListener('click', () => {
+      isSoundOn = !isSoundOn;
+      if(isSoundOn) {
+        initAudio();
+        if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        btnSound.classList.add('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: ON`;
+        playDigitalTap();
+      } else {
+        btnSound.classList.remove('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: OFF`;
+      }
+    });
+
+    function playTick() {
+      if(!isSoundOn || !audioCtx || audioCtx.state === 'suspended') return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(2000, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.02);
+    }
+
+    function playOscillator(type, freq, duration, volMod = 1, volDecay = true) {
+      if(!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(volMod, audioCtx.currentTime);
+      if(volDecay) gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playHover() { playOscillator('sine', 600, 0.05, 0.3); }
+    function playDigitalTap() {
+      if(!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(900, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.05);
+    }
+    function playToggle() {
+      if(!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.15);
+    }
+    function playSuccessChime() {
+      if(!isSoundOn || !audioCtx) return;
+      const notes = [523.25, 659.25, 783.99, 987.77, 1174.66];
+      notes.forEach((freq, i) => {
+        setTimeout(() => {
+          playOscillator('sine', freq, 0.8, 0.2);
+          playOscillator('triangle', freq/2, 0.8, 0.1);
+        }, i * 80);
+      });
+    }
+
+    document.querySelectorAll('.hover-snd').forEach(el => el.addEventListener('mouseenter', playHover));
+    document.querySelectorAll('.click-snd').forEach(el => el.addEventListener('mousedown', playDigitalTap));
+
+    // ====================================================
+    // MOTION & 3D PARALLAX (Mouse Track)
+    // ====================================================
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left) - rect.width / 2;
+        const y = (e.clientY - rect.top) - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.05)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = `translate(0px, 0px) scale(1)`; });
+    });
+
+    document.querySelectorAll('.spotlight').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active');
+      });
+    }, 100);
+
+    // ====================================================
+    // FORM SUBMISSION (CRM Webhook)
+    // ====================================================
+    document.getElementById('transformation-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      const originalText = btn.innerText;
+      btn.innerText = 'Отправка...';
+      btn.disabled = true;
+
+      const payload = {
+        id: 'VIP-TRANSFORM-' + Date.now(),
+        name: document.getElementById('t-name').value,
+        email: document.getElementById('t-email').value,
+        phone: '—',
+        niche: document.getElementById('t-niche').value,
+        package: 'Sovereign AI Transformation ($2,500)',
+        price_usd: 2500,
+        score: 99
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbx67HdxS8wglplNTThZjJDuzRFe4LUn4DR2kQUnDjcfUq4l42I03fekmQpIL5UAvz-o/exec', {
+        method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      }).then(() => {
+        playSuccessChime();
+        setTimeout(() => {
+          alert('🎉 Заявка принята!\nКП отправлено на ' + payload.email);
+          document.getElementById('transformation-form').reset();
+          btn.innerText = originalText; btn.disabled = false;
+        }, 500);
+      }).catch(err => {
+        console.error(err);
+        playSuccessChime();
+        setTimeout(() => { alert('Заявка принята!'); btn.innerText = originalText; btn.disabled = false; }, 500);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Видео-Студия 2026 • RAZUM AI</title>
+  <style>
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+    .nav-link {
+      background: #10b981;
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .video-box {
+      width: 100%;
+      height: 380px;
+      background: #111;
+      border: 2px solid #333;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay-text {
+      position: absolute;
+      bottom: 15px;
+      left: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.85);
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #444;
+      pointer-events: none;
+    }
+    .hook { color: #fbbf24; font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+    .body-t { color: #fff; font-size: 11px; }
+
+    .btn-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .input-card {
+      background: #1e293b;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .input-card label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #93c5fd;
+    }
+    .input-card input[type="file"] {
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .timer-btn {
+      background: #10b981;
+      color: #000;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-nav">
+      <a href="teleprompter_studio.html" class="nav-link">🎙️ В Телесуфлер</a>
+      <a href="client_portal.html" class="nav-link" style="background:#334155; color:#fff;">👑 Портал</a>
+    </div>
+
+    <!-- PREVIEW BOX -->
+    <div class="video-box">
+      <video id="vid" playsinline webkit-playsinline controls></video>
+      <div class="overlay-text">
+        <div id="hook-txt" class="hook">«ХВАТИТ ТРАТИТЬ $2,500 НА ПОДПИСКИ»</div>
+        <div id="body-txt" class="body-t">Суверенный Google Workspace окупается за 4 дня.</div>
+      </div>
+    </div>
+
+    <!-- INPUT BLOCKS -->
+    <div class="btn-block">
+      
+      <!-- 1. FRONT SELFIE CAMERA -->
+      <div class="input-card" style="border-color: #f43f5e;">
+        <label>🔴 1. Снять Видео (Селфи / Фронтальная камера):</label>
+        <input type="file" accept="video/*" capture="user" onchange="previewFile(event)">
+      </div>
+
+      <!-- 2. MAIN BACK CAMERA -->
+      <div class="input-card" style="border-color: #f59e0b;">
+        <label>🎥 2. Снять Видео (Основная / Задняя камера):</label>
+        <input type="file" accept="video/*" capture="environment" onchange="previewFile(event)">
+      </div>
+
+      <!-- 3. GALLERY ONLY (NO CAPTURE) -->
+      <div class="input-card" style="border-color: #0ea5e9;">
+        <label>📁 3. Выбрать из Галереи / Файлов:</label>
+        <input type="file" accept="video/*" onchange="previewFile(event)">
+      </div>
+
+      <!-- TIMER -->
+      <button class="timer-btn" onclick="run15sTimer()">⏱️ Запустить Титры (15 сек)</button>
+
+      <div id="status" style="font-size:12px; color:#10b981; text-align:center;">Статус: Готово к съемке</div>
+    </div>
+  </div>
+
+  <script>
+    function previewFile(e) {
+      var file = e.target.files && e.target.files[0];
+      if (!file) return;
+      var url = URL.createObjectURL(file);
+      var v = document.getElementById('vid');
+      v.src = url;
+      v.load();
+      v.play().catch(function(){});
+      document.getElementById('status').innerText = '✓ Загружено: ' + file.name + ' (' + Math.round(file.size/1024) + ' KB)';
+    }
+
+    var t = null;
+    function run15sTimer() {
+      var sec = 15;
+      var b = document.getElementById('body-txt');
+      clearInterval(t);
+      t = setInterval(function() {
+        sec--;
+        if (sec === 10) b.innerText = '1. Разбор счетов за 3 сек в Google Таблицу.';
+        if (sec === 5) b.innerText = '2. 100% суверенно без ежемесячной подписки.';
+        if (sec <= 0) {
+          clearInterval(t);
+          b.innerText = '👉 Напишите СУВЕРЕНИТЕТ в комментариях прямо сейчас!';
+          document.getElementById('status').innerText = '🎉 15 секунд прошло!';
+        }
+      }, 1000);
+      document.getElementById('status').innerText = '● Идет отсчет 15 секунд...';
+    }
+  </script>
+</body>
+</html>

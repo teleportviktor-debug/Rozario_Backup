@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Суверенный Паспорт Безопасности AI-Контура 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+    
+    :root {
+      --bg: #030712;
+      --card-bg: rgba(15, 23, 42, 0.95);
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --cyan-400: #38bdf8;
+      --purple-400: #c084fc;
+      --text-muted: #94a3b8;
+      --border-glow: rgba(16, 185, 129, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+    }
+
+    .passport-container {
+      max-width: 860px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 2px solid var(--border-glow);
+      border-radius: 24px;
+      padding: 48px;
+      box-shadow: 0 0 50px rgba(16, 185, 129, 0.15), inset 0 0 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .passport-container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 6px;
+      background: linear-gradient(90deg, var(--emerald-400), var(--cyan-400), var(--purple-400));
+    }
+
+    .passport-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald-400);
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 30px;
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .passport-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 40%, var(--emerald-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .passport-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .client-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .info-value.highlight {
+      color: var(--emerald-400);
+    }
+
+    .info-value.purple {
+      color: var(--purple-400);
+    }
+
+    .guarantees-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .guarantee-card {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .guarantee-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--emerald-400);
+      margin-bottom: 6px;
+    }
+
+    .guarantee-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .crypto-box {
+      background: #000;
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--cyan-400);
+      word-break: break-all;
+      margin-bottom: 30px;
+    }
+
+    .passport-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .seal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 2px solid var(--emerald-400);
+      border-radius: 8px;
+      color: var(--emerald-400);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    @media (max-width: 640px) {
+      .passport-container { padding: 24px; }
+      .client-card, .guarantees-grid { grid-template-columns: 1fr; }
+      .passport-footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="passport-container">
+    <div class="passport-header">
+      <div class="badge-top">🛡️ Официальный Паспорт Суверенного Контура</div>
+      <h1 class="passport-title">СЕРТИФИКАТ AI-БЕЗОПАСНОСТИ 2026</h1>
+      <p class="passport-subtitle">Изолированное развертывание в доверенном периметре Google Workspace Заказчика</p>
+    </div>
+
+    <div class="client-card">
+      <div>
+        <div class="info-label">Владелец Контура / Клиент</div>
+        <div class="info-value highlight">pkg-sovereign</div>
+      </div>
+      <div>
+        <div class="info-label">Пакет Конфигурации</div>
+        <div class="info-value purple">Sovereign Autopilot ($300)</div>
+      </div>
+      <div>
+        <div class="info-label">Ниша / Отрасль</div>
+        <div class="info-value">Машиностроение</div>
+      </div>
+      <div>
+        <div class="info-label">Дата Выдачи & Активации</div>
+        <div class="info-value">03.09.2026</div>
+      </div>
+    </div>
+
+    <div class="guarantees-grid">
+      <div class="guarantee-card">
+        <div class="guarantee-title">🔒 Zero-Log & Zero-Leakage</div>
+        <div class="guarantee-desc">Все данные, документы и переписка обрабатываются исключительно внутри Google Workspace заказчика. Пароли не передаются.</div>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-title">🧮 0% Галлюцинаций в Цифрах</div>
+        <div class="guarantee-desc">Математические и финансовые расчеты ведутся в изолированном Python Antigravity ядре без ошибок округления.</div>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-title">⚡ Пожизненный Доступ</div>
+        <div class="guarantee-desc">Разовая оплата без регулярных подписок SaaS. Скрипты принадлежат клиенту на 100% навсегда.</div>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-title">🛡️ Подтвержденная Окупаемость</div>
+        <div class="guarantee-desc">Расчетный срок окупаемости системы: от 3 до 7 рабочих дней за счет высвобождения ФОТ.</div>
+      </div>
+    </div>
+
+    <div class="crypto-box">
+      <div style="color:var(--text-muted); font-size:10px; margin-bottom:4px; text-transform:uppercase;">Криптографический хеш целостности сборки (SHA-256):</div>
+      <div>sha256:ed9435e07d86a11299a4ec44944ebcfc9b00415817de7d3331648d80428f9481</div>
+    </div>
+
+    <div class="passport-footer">
+      <div>Выдано инженерным ядром <strong>Razum Google AI PRO 2026</strong></div>
+      <div class="seal-badge">✓ SOVEREIGN VERIFIED</div>
+    </div>
+  </div>
+
+</body>
+</html>

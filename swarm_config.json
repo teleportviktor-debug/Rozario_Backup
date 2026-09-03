@@ -1,0 +1,56 @@
+{
+  "swarm_config": {
+    "project_name": "Razum Google AI PRO",
+    "version": "2.4.0",
+    "cloud_execution": true,
+    "architecture": "Decentralized Autonomous Swarm (DAS)",
+    "orchestrator": "agent_5_spark_coordinator",
+    "integrations": {
+      "telegram": {
+        "bot_token": "8746018179:AAHBqzasizNCw3pw9gMpVb5yvr1uikY07OU",
+        "chat_id": "7655208225"
+      }
+    },
+    "agents": [
+      {
+        "id": "agent_1_lead_scout",
+        "name": "Lead Scout & Hormozi Valuator",
+        "role": "Lead Generation & Hormozi Scoring",
+        "output_drive_folder": "03_CRM",
+        "schedule": "cron(0 */2 * * *)",
+        "instructions": "Parse leads, score via Pain/Power/Decision/Urgency, append to Google Sheets via Workspace Studio."
+      },
+      {
+        "id": "agent_2_spy",
+        "name": "Market Spy & Source Mixer",
+        "role": "Competitor Analysis & Source Mixing",
+        "output_drive_folder": "04_Playbook",
+        "schedule": "cron(0 */4 * * *)",
+        "instructions": "Extract competitor hooks, apply Source Mixing methodology, save insights as Markdown."
+      },
+      {
+        "id": "agent_3_smm",
+        "name": "Neuro-SMM Publisher",
+        "role": "Social Media Image & Copy Creator",
+        "output_drive_folder": "05_Content/Posts",
+        "schedule": "cron(0 9,15,19 * * *)",
+        "instructions": "Generate daily social media posts using Obsidian and Cyan neuro-aesthetics."
+      },
+      {
+        "id": "agent_4_shorts",
+        "name": "Shorts Viral Engineer",
+        "role": "15s Shorts Video Scripting & Generation",
+        "output_drive_folder": "05_Content/Shorts",
+        "schedule": "cron(0 10 * * *)",
+        "instructions": "Generate 15s viral hook scripts. Prepare MoviePy/FFmpeg cloud rendering commands."
+      },
+      {
+        "id": "agent_5_spark_coordinator",
+        "name": "Spark Coordinator & A2UI Overseer",
+        "role": "System Overseer & A2UI Generator",
+        "system_access": ["GitHub Actions", "Workspace Studio", "Antigravity SDK"],
+        "instructions": "Monitor agents 1-4. Auto-heal broken scripts. Generate A2UI approval widgets for the user."
+      }
+    ]
+  }
+}

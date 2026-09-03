@@ -1,0 +1,87 @@
+{
+  "schemas": {
+    "deal_approval_card": {
+      "type": "Card",
+      "props": {
+        "title": "⚡ Согласование Коммерческого Предложения",
+        "badge": "A2UI v0.9 • HUMAN-IN-THE-LOOP",
+        "description": "AI-агент сформировал персонализированное КП на базе Hormozi-скоринга."
+      },
+      "children": [
+        {
+          "type": "AlertBanner",
+          "props": {
+            "icon": "🛡️",
+            "status": "success",
+            "message": "Документ проверен в изолированном контуре Antigravity. Расчет ROI: 340% годовых."
+          }
+        },
+        {
+          "type": "MetricRow",
+          "props": { "label": "Клиент / Отрасль", "value": "ООО 'Вектор' (Оптовая торговля)" }
+        },
+        {
+          "type": "MetricRow",
+          "props": { "label": "Рекомендуемый пакет", "value": "«Sovereign Autopilot» ($300)" }
+        },
+        {
+          "type": "MetricRow",
+          "props": { "label": "Прогнозируемая экономия", "value": "$1,850 / мес", "color": "var(--emerald-400)" }
+        },
+        {
+          "type": "ProgressBar",
+          "props": { "label": "Вероятность закрытия сделки", "value": 87 }
+        },
+        {
+          "type": "ButtonGroup",
+          "children": [
+            {
+              "type": "ActionButton",
+              "props": {
+                "label": "Отправить КП клиенту (Gmail)",
+                "variant": "primary",
+                "icon": "✉️",
+                "action": "send_kp",
+                "confirm": "Подтвердите отправку КП в адрес клиента?"
+              }
+            },
+            {
+              "type": "ActionButton",
+              "props": {
+                "label": "Открыть расчет в Sheets",
+                "variant": "indigo",
+                "icon": "📊",
+                "action": "open_sheets"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "invoice_verification_card": {
+      "type": "Card",
+      "props": {
+        "title": "📑 Верификация Входящего Счета",
+        "badge": "ZERO-LOG PARSER"
+      },
+      "children": [
+        {
+          "type": "MetricRow",
+          "props": { "label": "Контрагент", "value": "Cloud Systems Global Inc." }
+        },
+        {
+          "type": "MetricRow",
+          "props": { "label": "Сумма к оплате", "value": "$1,240", "color": "var(--emerald-400)" }
+        },
+        {
+          "type": "ActionButton",
+          "props": {
+            "label": "Записать в Реестр Sheets",
+            "variant": "primary",
+            "action": "commit_to_registry"
+          }
+        }
+      ]
+    }
+  }
+}

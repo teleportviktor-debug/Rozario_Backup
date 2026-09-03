@@ -1,0 +1,136 @@
+{
+  "project": {
+    "name": "Razum Google AI PRO",
+    "version": "2.4.0",
+    "last_updated": "2026-09-03T22:48:12.181633+03:00",
+    "last_updated_by": "agent_5_spark",
+    "status": "active",
+    "owner": "Razum",
+    "workspace": "c:\\Users\\user\\ГУГЛ ИМПЕРИЯ"
+  },
+  "current_phase": {
+    "id": "phase_3_shared_memory_setup",
+    "description": "Настройка системы общей памяти и синхронизации Zero API Workspace Engine",
+    "started": "2026-09-02",
+    "estimated_completion": "2026-09-03",
+    "next_step": "Проверь DAILY_LOG"
+  },
+  "completed_tasks": [
+    "create_service_account",
+    "deploy_drive_markdown_converter",
+    "init_google_drive_folders",
+    "setup_github_actions_cron",
+    "fix_unicode_logging_windows",
+    "add_daemon_auto_reconnect",
+    "create_swarm_agents_1_to_5",
+    "create_swarm_orchestrator",
+    "design_shared_memory_architecture",
+    "memory_sync_with_drive",
+    "configure_notebooklm_sources",
+    "create_client_packaging_script",
+    "create_production_folder_structure",
+    "create_restore_from_drive_script",
+    "setup_daily_log_automation",
+    "agent5_memory_integration",
+    "memory_sync_with_github"
+  ],
+  "in_progress_tasks": [],
+  "pending_tasks": [],
+  "errors_log": [
+    {
+      "date": "2026-09-01",
+      "agent": "drive_markdown_converter",
+      "error": "UnicodeEncodeError: 'charmap' codec can't encode character in logging",
+      "resolution": "Добавлен sys.stdout.reconfigure(encoding='utf-8') в main.py",
+      "status": "resolved"
+    },
+    {
+      "date": "2026-09-01",
+      "agent": "daemon_24_7",
+      "error": "ConnectionAbortedError: [WinError 10053] разрыв TCP-соединения при опросе Drive API",
+      "resolution": "Добавлен exponential backoff + переинициализация Drive клиента в run_daemon_loop()",
+      "status": "resolved"
+    },
+    {
+      "date": "2026-09-01",
+      "agent": "main.py",
+      "error": "ImportError: cannot import name 'SUPPORTED_EXTENSIONS' from 'config'",
+      "resolution": "Добавлен SUPPORTED_EXTENSIONS dict в config.py",
+      "status": "resolved"
+    }
+  ],
+  "key_decisions": [
+    {
+      "date": "2026-09-01",
+      "decision": "Использовать service_account.json вместо base64 для локального запуска",
+      "reason": "Упрощает деплой на Windows без консольных команд. Base64 для Railway/cloud."
+    },
+    {
+      "date": "2026-09-01",
+      "decision": "Drive Converter работает как 24/7 daemon с polling каждые 30 секунд",
+      "reason": "Нет Pub/Sub триггеров без GCP проекта. Polling — самый надёжный вариант."
+    },
+    {
+      "date": "2026-09-02",
+      "decision": "SSoT = GitHub + локальный _MEMORY/, Drive — зеркало для NotebookLM",
+      "reason": "GitHub даёт версионирование и CI/CD. Локальный файл работает при отключении света."
+    },
+    {
+      "date": "2026-09-02",
+      "decision": "Только Agent 5 (Spark) имеет право записи в MEMORY.json",
+      "reason": "Исключает конфликты записи при параллельном запуске агентов 1-4."
+    }
+  ],
+  "agent_last_run": {
+    "agent_1_lead": "2026-09-03T22:48:12.056494+03:00",
+    "agent_2_spy": "2026-09-03T22:48:12.065841+03:00",
+    "agent_3_smm": "2026-09-03T22:48:12.086336+03:00",
+    "agent_4_shorts": "2026-09-03T22:48:12.105034+03:00",
+    "agent_5_spark": "2026-09-03T22:48:12.157128+03:00"
+  },
+  "agent_status": {
+    "agent_1_lead": "ready",
+    "agent_2_spy": "ready",
+    "agent_3_smm": "ready",
+    "agent_4_shorts": "ready",
+    "agent_5_spark": "active_watchdog"
+  },
+  "integrations": {
+    "google_drive": {
+      "status": "active",
+      "auth_method": "service_account_json",
+      "service_account_email": "sheets-integration-bot@gen-lang-client-0207478259.iam.gserviceaccount.com",
+      "inbox_folder_id": "1j5yTtPPBebSVkrkssqk3DfVdTnvGBt1p",
+      "notebook_folder_id": "12_Bk_tguFm3pNeIdxahyAOlkI5Ex-V9p",
+      "archive_folder_id": "1i32vmG2E3SbdxGhAQvm5te10C2VVMshc"
+    },
+    "github": {
+      "status": "configured",
+      "workflows_path": ".github/workflows/swarm_cron.yml",
+      "note": "Требует git remote add origin <repo-url>"
+    },
+    "notebooklm": {
+      "status": "semi_automatic",
+      "note": "Нет публичного API. Схема: Drive Converter → 02_FOR_NOTEBOOK → ручное добавление источника в NLM UI один раз"
+    },
+    "google_sheets": {
+      "status": "active",
+      "webhook_url": "https://script.google.com/macros/s/AKfycbx67HdxS8wglplNTThZjJDuzRFe4LUn4DR2kQUnDjcfUq4l42I03fekmQpIL5UAvz-o/exec",
+      "sheet_name": "CRM_LEADS_2026",
+      "note": "Прямая двусторонняя запись заявок из витрины store_packages.html и роя агентов"
+    },
+    "drive_markdown_daemon": {
+      "status": "running",
+      "poll_interval_sec": 30,
+      "auto_reconnect": true,
+      "task_id": "task-218"
+    }
+  },
+  "workspace_structure": {
+    "local_root": "c:\\Users\\user\\ГУГЛ ИМПЕРИЯ",
+    "drive_root": "g:\\Мой диск\\AI_WORK_SYSTEM",
+    "memory_dir": "_MEMORY",
+    "production_dir": "10_PRODUCTION",
+    "agents_dir": "python_engine/agents"
+  }
+}

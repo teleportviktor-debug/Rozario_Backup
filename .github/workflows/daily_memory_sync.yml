@@ -1,0 +1,109 @@
+name: Daily Memory Sync & Swarm Health Check
+
+on:
+  schedule:
+    # Каждый день в 22:00 UTC+3 (19:00 UTC)
+    - cron: "0 19 * * *"
+  # Ручной запуск из GitHub UI
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: "Запустить конкретного агента (1-5 или пусто для всех)"
+        required: false
+        default: ""
+
+jobs:
+  daily-memory-sync:
+    name: Daily Memory Sync
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install google-api-python-client google-auth google-auth-httplib2 python-dotenv
+
+      - name: Write Service Account credentials
+        env:
+          GCP_SERVICE_ACCOUNT_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$GCP_SERVICE_ACCOUNT_JSON" > drive_markdown_converter/service_account.json
+          echo "Credentials written."
+
+      - name: Update DAILY_LOG with today's date
+        run: |
+          python -c "
+          import sys, os
+          sys.path.insert(0, '.')
+          from python_engine.memory_manager import daily_log, _now_iso
+          daily_log('github_actions', 'Daily sync started', f'Run at {_now_iso()}')
+          print('Daily log updated.')
+          "
+
+      - name: Commit updated memory to GitHub
+        run: |
+          git config user.name "Antigravity Bot"
+          git config user.email "teleportviktor-debug@users.noreply.github.com"
+          git add _MEMORY/ 10_PRODUCTION/ || true
+          git diff --staged --quiet || git commit -m "memory: daily sync $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push || echo "Nothing to push."
+
+      - name: Cleanup secrets
+        if: always()
+        run: |
+          rm -f drive_markdown_converter/service_account.json
+          echo "Secrets cleaned up."
+
+  swarm-health-check:
+    name: Swarm Health Check
+    runs-on: ubuntu-latest
+    needs: daily-memory-sync
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check memory files exist
+        run: |
+          python -c "
+          import json, sys
+          files = ['_MEMORY/MEMORY.json', '_MEMORY/TASK_REGISTRY.json']
+          ok = True
+          for f in files:
+              try:
+                  with open(f) as fh:
+                      json.load(fh)
+                  print(f'[OK] {f}')
+              except Exception as e:
+                  print(f'[ERROR] {f}: {e}')
+                  ok = False
+          sys.exit(0 if ok else 1)
+          "
+
+      - name: Show project snapshot
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, '.')
+          from python_engine.memory_manager import get_project_snapshot
+          print(get_project_snapshot())
+          "

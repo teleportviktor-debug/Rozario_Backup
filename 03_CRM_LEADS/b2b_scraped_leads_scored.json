@@ -1,0 +1,82 @@
+{
+  "agent": "agent_1_lead",
+  "cron": "0 */4 * * *",
+  "count": 3,
+  "leads": [
+    {
+      "id": "B2B-2026-881",
+      "company": "Smarty Marketing SEO",
+      "contact_person": "Анна Смарти",
+      "role": "Managing Director",
+      "email": "anna@smarty-marketing.com",
+      "website": "smarty-marketing-seo.io",
+      "pain": 9,
+      "authority": 10,
+      "budget": 9,
+      "urgency": 9,
+      "lead_source": "Google Workspace Inbound Triage",
+      "processed_at": "2026-09-03T22:48:12.053052",
+      "scoring": {
+        "score_percent": 92,
+        "tier": "TIER 1 (VIP - Immediate Outreach)",
+        "action": "GENERATE_OFFER_DECK_AND_A2UI_CARD",
+        "metrics": {
+          "pain": 9,
+          "authority": 10,
+          "budget": 9,
+          "urgency": 9
+        }
+      }
+    },
+    {
+      "id": "B2B-2026-882",
+      "company": "Nordic Growth Media",
+      "contact_person": "Lars Lindqvist",
+      "role": "Head of Growth",
+      "email": "lars@nordicgrowth.se",
+      "website": "nordicgrowth.se",
+      "pain": 8,
+      "authority": 8,
+      "budget": 8,
+      "urgency": 8,
+      "lead_source": "Cold B2B Crawler",
+      "processed_at": "2026-09-03T22:48:12.053080",
+      "scoring": {
+        "score_percent": 80,
+        "tier": "TIER 1 (VIP - Immediate Outreach)",
+        "action": "GENERATE_OFFER_DECK_AND_A2UI_CARD",
+        "metrics": {
+          "pain": 8,
+          "authority": 8,
+          "budget": 8,
+          "urgency": 8
+        }
+      }
+    },
+    {
+      "id": "B2B-2026-883",
+      "company": "Apex Ecom Brands",
+      "contact_person": "Дмитрий Воронов",
+      "role": "Ecom Founder",
+      "email": "dmitry@apex-ecom.ru",
+      "website": "apex-brands.store",
+      "pain": 7,
+      "authority": 9,
+      "budget": 6,
+      "urgency": 7,
+      "lead_source": "Telegram Bot Inbound",
+      "processed_at": "2026-09-03T22:48:12.053086",
+      "scoring": {
+        "score_percent": 73,
+        "tier": "TIER 2 (Standard - Teleprompter Demo)",
+        "action": "SEND_AUTOMATED_VIDEO_AUDIT",
+        "metrics": {
+          "pain": 7,
+          "authority": 9,
+          "budget": 6,
+          "urgency": 7
+        }
+      }
+    }
+  ]
+}

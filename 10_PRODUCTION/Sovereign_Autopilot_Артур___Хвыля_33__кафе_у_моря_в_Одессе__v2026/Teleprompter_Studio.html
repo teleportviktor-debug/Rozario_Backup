@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teleprompter Studio 2026 | Динамический AI-Телесуфлер</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .teleprompter-toolbar {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+    }
+
+    .teleprompter-content-area {
+      flex: 1;
+      overflow-y: scroll;
+      padding: 100px 15% 300px 15%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.7;
+      text-align: center;
+      transition: font-size 0.2s ease;
+      scroll-behavior: smooth;
+    }
+
+    .teleprompter-content-area.mirrored {
+      transform: scaleX(-1);
+    }
+
+    .cue-marker {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: rgba(16, 185, 129, 0.3);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    .cue-marker::before {
+      content: '▶ CUE';
+      position: absolute;
+      left: 10px;
+      top: -10px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--emerald-400);
+      background: #000;
+      padding: 0 4px;
+    }
+
+    .highlight-hook {
+      color: var(--amber-400);
+      font-weight: 800;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .highlight-fact {
+      color: var(--emerald-400);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP CONTROL TOOLBAR -->
+  <header class="teleprompter-toolbar">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="index.html" class="btn btn-secondary btn-sm">⬅ В Дашборд</a>
+      <div style="font-weight:800; font-size:16px; color:var(--emerald-400);">🎙️ TELEPROMPTER STUDIO 2026</div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div style="display:flex; align-items:center; gap:20px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:var(--text-muted);">Размер шрифта:</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeFontSize(-4)">A-</button>
+        <span id="font-size-val" class="range-badge">42px</span>
+        <button class="btn btn-secondary btn-sm" onclick="changeFontSize(4)">A+</button>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:var(--text-muted);">Скорость:</span>
+        <input type="range" id="speed-slider" min="1" max="10" value="3" style="width:100px;">
+        <span id="speed-badge" class="range-badge">3x</span>
+      </div>
+
+      <button id="btn-mirror" class="btn btn-secondary btn-sm" onclick="toggleMirror()">
+        🪞 Зеркало (Off)
+      </button>
+
+      <button id="btn-play-pause" class="btn btn-primary" onclick="togglePlay()">
+        ▶ Старт (Пробел)
+      </button>
+    </div>
+  </header>
+
+  <!-- CUE LINE -->
+  <div class="cue-marker"></div>
+
+  <!-- SCROLLING TEXT CONTAINER -->
+  <main id="teleprompter-box" class="teleprompter-content-area" style="font-size:42px;">
+    <div class="highlight-hook">
+      [ХУК 0-3 СЕК] «80% компаний, внедривших AI в 2025 году, выкинули деньги на ветер! Вот почему...»
+    </div>
+
+    <p style="margin-bottom:30px; color:#cbd5e1;">
+      Большинство думает, что для автоматизации нужны сложные платформы с подпиской по сто долларов за сотрудника и бесконечные кредиты.
+    </p>
+
+    <p style="margin-bottom:30px;">
+      Но в 2026 году выигрывает тот, кто использует <span class="highlight-fact">СУВЕРЕННЫЙ КОНТУР GOOGLE WORKSPACE</span>.
+    </p>
+
+    <p style="margin-bottom:30px; color:#cbd5e1;">
+      1. Все счета и первичка разбираются за 3 секунды без риска утечки коммерческой тайны.
+    </p>
+
+    <p style="margin-bottom:30px; color:#cbd5e1;">
+      2. Математический скоринг лидов считает окупаемость на Python со 100% точностью и без галлюцинаций.
+    </p>
+
+    <p style="margin-bottom:30px; color:#cbd5e1;">
+      3. Никаких подписок. Один разовый платёж — и система работает в вашем аккаунте навсегда.
+    </p>
+
+    <div style="color:var(--cyan-400); font-weight:800; margin-top:40px;">
+      [CTA] «Напишите слово "СУВЕРЕНИТЕТ" в комментарии — я пришлю вам живой расчет экономии для вашего бизнеса прямо сейчас!»
+    </div>
+  </main>
+
+  <script>
+    let isPlaying = false;
+    let scrollSpeed = 3;
+    let currentFontSize = 42;
+    let isMirrored = false;
+    let scrollInterval = null;
+
+    const box = document.getElementById('teleprompter-box');
+    const playBtn = document.getElementById('btn-play-pause');
+    const speedSlider = document.getElementById('speed-slider');
+    const speedBadge = document.getElementById('speed-badge');
+    const fontSizeBadge = document.getElementById('font-size-val');
+    const mirrorBtn = document.getElementById('btn-mirror');
+
+    speedSlider.addEventListener('input', (e) => {
+      scrollSpeed = parseInt(e.target.value, 10);
+      speedBadge.innerText = `${scrollSpeed}x`;
+    });
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playBtn.innerText = '⏸ Пауза (Пробел)';
+        playBtn.classList.remove('btn-primary');
+        playBtn.classList.add('btn-indigo');
+        startScrolling();
+      } else {
+        playBtn.innerText = '▶ Старт (Пробел)';
+        playBtn.classList.add('btn-primary');
+        playBtn.classList.remove('btn-indigo');
+        stopScrolling();
+      }
+    }
+
+    function startScrolling() {
+      if (scrollInterval) clearInterval(scrollInterval);
+      scrollInterval = setInterval(() => {
+        box.scrollTop += (scrollSpeed * 0.8);
+      }, 20);
+    }
+
+    function stopScrolling() {
+      if (scrollInterval) clearInterval(scrollInterval);
+    }
+
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(72, Math.max(24, currentFontSize + delta));
+      box.style.fontSize = `${currentFontSize}px`;
+      fontSizeBadge.innerText = `${currentFontSize}px`;
+    }
+
+    function toggleMirror() {
+      isMirrored = !isMirrored;
+      if (isMirrored) {
+        box.classList.add('mirrored');
+        mirrorBtn.innerText = '🪞 Зеркало (On)';
+        mirrorBtn.classList.add('btn-primary');
+      } else {
+        box.classList.remove('mirrored');
+        mirrorBtn.innerText = '🪞 Зеркало (Off)';
+        mirrorBtn.classList.remove('btn-primary');
+      }
+    }
+
+    // Keyboard Shortcuts (Space = Play/Pause, Esc = Reset)
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.code === 'Escape') {
+        stopScrolling();
+        isPlaying = false;
+        playBtn.innerText = '▶ Старт (Пробел)';
+        box.scrollTop = 0;
+      }
+    });
+  </script>
+</body>
+</html>

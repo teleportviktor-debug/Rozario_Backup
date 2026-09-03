@@ -1,0 +1,46 @@
+{
+  "antigravity_swarm_init": {
+    "project": "Razum Google AI PRO",
+    "version": "2026.4.1",
+    "deployment": "cloud_github_actions_cron",
+    "auto_heal": true,
+    "system_controller": "agent_5_spark",
+    "agents": [
+      {
+        "id": "agent_1_lead",
+        "name": "Lead Scraper & Hormozi Valuator",
+        "task": "Scrape B2B contacts, apply Hormozi scoring, append to 03_CRM/Sheets via Workspace Studio integration",
+        "output_directory": "03_CRM",
+        "cron": "0 */4 * * *"
+      },
+      {
+        "id": "agent_2_spy",
+        "name": "Market Spy & Source Mixer",
+        "task": "Extract competitor hooks, apply Source Mixing, save to 04_Playbook/Markdown",
+        "output_directory": "04_Playbook",
+        "cron": "0 10 * * *"
+      },
+      {
+        "id": "agent_3_smm",
+        "name": "Neuro-SMM Tri-Publisher",
+        "task": "Generate daily posts (Obsidian & Cyan aesthetic), save to 05_Content/Posts",
+        "output_directory": "05_Content/Posts",
+        "cron": "0 9,15,19 * * *"
+      },
+      {
+        "id": "agent_4_video",
+        "name": "15s Shorts & MoviePy Cloud Video Engine",
+        "task": "Generate 15s Shorts scripts & MoviePy cloud render commands, save to 05_Content/Video",
+        "output_directory": "05_Content/Video",
+        "cron": "0 12 * * *"
+      },
+      {
+        "id": "agent_5_spark",
+        "name": "Spark Autonomous Watchdog & Auto-Healer",
+        "task": "Monitor agents 1-4, auto-fix broken Python code, send A2UI approval widgets to user email",
+        "system_access": ["GitHub Actions", "Workspace Studio", "Antigravity SDK", "Gmail API"],
+        "cron": "* * * * *"
+      }
+    ]
+  }
+}

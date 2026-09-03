@@ -1,0 +1,36 @@
+[
+  {
+    "lead_id": "LEAD-2026-001",
+    "company_name": "ООО 'ОптТорг Сибирь'",
+    "contact_person": "Сергей Викторович (Генеральный директор)",
+    "niche": "Оптовые поставки стройматериалов",
+    "employees_count": 12,
+    "current_pains": "Бухгалтер и 3 менеджера вручную заносят 80 PDF-счетов в день в 1С и Excel. Постоянные ошибки в суммах и потерянные заявки в почте.",
+    "monthly_salary_budget": 95000,
+    "budget_readiness": "Готовы оплатить внедрение сразу, если оно решит проблему до конца недели.",
+    "hormozi_scores": {
+      "pain": 9,
+      "purchasing_power": 8,
+      "decision_maker": 10,
+      "urgency": 9
+    },
+    "recommended_package": "«Бухгалтер на автопилоте» (14 900 ₽) + «Sales Intelligence» (19 900 ₽)"
+  },
+  {
+    "lead_id": "LEAD-2026-002",
+    "company_name": "Студия Красоты 'Gloss Studio'",
+    "contact_person": "Екатерина (Владелец)",
+    "niche": "Бьюти-услуги и косметология",
+    "employees_count": 4,
+    "current_pains": "Клиенты пишут в Telegram и WhatsApp ночью. Забывают о записи, мастер простаивает.",
+    "monthly_salary_budget": 60000,
+    "budget_readiness": "Ищет недорогое решение без ежемесячной платы.",
+    "hormozi_scores": {
+      "pain": 8,
+      "purchasing_power": 7,
+      "decision_maker": 10,
+      "urgency": 8
+    },
+    "recommended_package": "«Помощник для самозанятой» (2 900 ₽)"
+  }
+]

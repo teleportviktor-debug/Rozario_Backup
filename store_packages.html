@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Магазин Суверенных Пакетов AI 2026 | Разовая оплата без подписки</title>
+  <meta name="description" content="Узкоспециализированные AI-пакеты для бизнеса, самозанятых и студентов. Разовая оплата. Работает внутри вашего Google Workspace.">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .store-hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald-400);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, var(--emerald-400), var(--cyan-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+      font-size: 14px;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-glass);
+      text-align: left;
+    }
+    .comparison-table th {
+      color: var(--text-dim);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    /* SPOTLIGHT EFFECT */
+    .spotlight {
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 242, 254, 0.12), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .spotlight:hover::before { opacity: 1; }
+    .spotlight > * { position: relative; z-index: 2; }
+    
+    .sound-toggle {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      outline: none;
+    }
+    .sound-toggle.on {
+      background: rgba(16,185,129,0.1);
+      color: var(--emerald-400);
+      border-color: rgba(16,185,129,0.3);
+      box-shadow: 0 0 15px rgba(16,185,129,0.2);
+    }
+    .live-pill {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .sound-toggle.on .live-pill {
+      background: var(--emerald-400);
+      box-shadow: 0 0 8px var(--emerald-400);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="top-header" style="max-width:1200px; margin:0 auto; background:transparent; border:none; padding: 24px 20px;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="brand-logo" style="font-weight:800; font-size:24px;">R</div>
+      <div style="font-weight:800; font-size:18px; letter-spacing:-0.02em;">RAZUM AI STORE</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <button id="btn-sound" class="sound-toggle on hover-snd" title="Выключить звуковой отклик интерфейса">
+        <div class="live-pill"></div> Sound: ON
+      </button>
+      <a href="index.html" class="btn btn-secondary btn-sm hover-snd click-snd">В Центр Управления ⚙️</a>
+    </div>
+  </header>
+
+  <div class="store-hero">
+    <div class="hero-badge">🛡️ СУВЕРЕННЫЙ GOOGLE WORKSPACE КОНТУР • БЕЗ ПОДПИСКИ</div>
+    <h1 class="hero-title">AI-Автоматизация 2026,<br>которая <span>не вытягивает деньги каждый месяц</span></h1>
+    <p class="hero-subtitle">
+      Пока 80% компаний разочаровываются в хрупких SaaS и бесконечных кредитах — получите автономные инструменты в вашем собственном Google аккаунте. Один платеж. Результат через 24 часа.
+    </p>
+
+    <!-- LIVE SAVINGS CALCULATOR -->
+    <div class="panel" style="text-align:left; max-width:800px; margin:0 auto 50px;">
+      <div class="panel-header">
+        <div class="panel-title">🧮 Интерактивный Калькулятор Потерь на Рутине</div>
+        <span class="range-badge" style="font-size:12px;">РАСЧЕТ В РЕАЛЬНОМ ВРЕМЕНИ (USD)</span>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="form-group">
+            <label class="form-label">Сколько сотрудников тратят время на рутину?</label>
+            <div class="range-wrapper">
+              <input type="range" id="store-calc-people" min="1" max="30" value="3">
+              <span id="store-badge-people" class="range-badge">3 чел</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="display:flex; justify-content:space-between;">
+              <span>Средняя зарплата в месяц:</span>
+              <span id="store-badge-salary" class="range-badge" style="color:var(--emerald-400);">$1,200</span>
+            </label>
+            <div class="range-wrapper">
+              <input type="range" id="store-calc-salary" min="300" max="5000" step="100" value="1200">
+            </div>
+          </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; border:1px solid var(--border-glass);">
+          <div style="font-size:12px; color:var(--text-dim); margin-bottom:4px;">Вы теряете на ручном труде:</div>
+          <div id="store-calc-loss" style="font-size:26px; font-weight:800; color:var(--rose-500); font-family:var(--font-mono); margin-bottom:12px;">
+            $10,800 / год
+          </div>
+
+          <div style="font-size:12px; color:var(--text-dim); margin-bottom:4px;">Рекомендуемый пакет (разово):</div>
+          <div style="font-size:20px; font-weight:800; color:var(--emerald-400); font-family:var(--font-mono); margin-bottom:8px;">
+            $200 («Intelligence Module»)
+          </div>
+
+          <div style="font-size:12px; color:var(--cyan-400); font-weight:700;">
+            ✓ Окупаемость инвестиции: 7 дней
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGES SECTION -->
+  <div style="max-width:1200px; margin:0 auto; padding:0 20px 80px;">
+    
+    <!-- PREMIUM TRANSFORMATION BANNER -->
+    <a href="sovereign_transformation.html" class="spotlight hover-snd click-snd" style="display:block; text-decoration:none; background:var(--bg-card); backdrop-filter:blur(20px); border:1px solid rgba(16,185,129,0.4); border-radius:24px; padding:32px; text-align:center; margin-bottom:40px; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+      <div style="font-size:12px; font-weight:800; color:var(--emerald-400); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">💎 Эксклюзивный Оффер</div>
+      <h3 style="font-size:28px; font-weight:900; color:#fff; margin-bottom:12px;">Sovereign AI Transformation ($2,500)</h3>
+      <p style="color:var(--text-main); margin:0 auto; max-width:600px; font-size:15px;">Полный цикл автоматизации: 5 агентов, CRM, Webhook, и кастомные решения под ключ в вашем собственном Google-аккаунте. Отдел продаж, который никогда не увольняется.</p>
+      <div style="margin-top:24px;">
+        <span style="display:inline-block; padding:12px 24px; background:var(--emerald-400); color:#000; font-weight:800; border-radius:12px; font-size:14px;">Посмотреть детали трансформации →</span>
+      </div>
+    </a>
+
+    <div style="text-align:center; margin-bottom:30px;">
+      <h2 style="font-size:32px; font-weight:800;">5 Премиальных AI-Пакетов для Бизнеса</h2>
+      <p style="color:var(--text-muted); font-size:15px;">Разовая оплата в USD • Работает в вашем Google Workspace • Без подписок</p>
+    </div>
+
+    <div class="filter-tabs" style="justify-content:center;">
+      <button class="filter-btn active" data-filter="all">Все Решения (5)</button>
+      <button class="filter-btn" data-filter="micro">Фриланс & Старт ($50)</button>
+      <button class="filter-btn" data-filter="smb">Малый Бизнес ($100)</button>
+      <button class="filter-btn" data-filter="sales">B2B Продажи ($200)</button>
+      <button class="filter-btn" data-filter="agency">Автономный Рой ($300)</button>
+      <button class="filter-btn" data-filter="enterprise">Enterprise ($500)</button>
+    </div>
+
+    <div id="packages-grid-container" class="grid-3"></div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="panel" style="margin-top:60px;">
+      <div class="panel-header">
+        <div class="panel-title">🛡️ Чем Суверенный Контур Превосходит Классический SaaS</div>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Параметр</th>
+            <th style="color:var(--rose-500);">Обычные AI-сервисы (Lindy, Relevance)</th>
+            <th style="color:var(--emerald-400);">Суверенная AI-Экосистема 2026</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Модель оплаты</strong></td>
+            <td>Ежемесячно $49–$200/мес + непредсказуемые кредиты</td>
+            <td style="color:var(--emerald-400); font-weight:700;">Разовая оплата от $50 (Без подписок)</td>
+          </tr>
+          <tr>
+            <td><strong>Безопасность данных</strong></td>
+            <td>Файлы уходят на сторонние облачные серверы</td>
+            <td style="color:var(--emerald-400); font-weight:700;">Zero-Log: данные только в вашем Google Drive</td>
+          </tr>
+          <tr>
+            <td><strong>Точность расчетов</strong></td>
+            <td>Галлюцинации языковых моделей</td>
+            <td style="color:var(--emerald-400); font-weight:700;">Изолированный Python Antigravity (100% точность)</td>
+          </tr>
+          <tr>
+            <td><strong>Работа 24/7</strong></td>
+            <td>Требует включенного ПК / браузера</td>
+            <td style="color:var(--emerald-400); font-weight:700;">Фоновые агенты Gemini Spark на серверах Google</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GUARANTEE BADGE -->
+    <div style="text-align:center; padding:40px; background:linear-gradient(135deg, rgba(16,185,129,0.1), rgba(99,102,241,0.1)); border:1px solid var(--border-active); border-radius:20px; margin-top:40px;">
+      <div style="font-size:36px; margin-bottom:12px;">🤝</div>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:8px;">100% Гарантия Возврата Денег</h3>
+      <p style="color:var(--text-muted); max-width:600px; margin:0 auto; font-size:14px;">
+        Если в течение 14 дней после развертывания пакета система не сэкономит вам заявленное время — мы вернем 100% стоимости без лишних вопросов.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ORDER MODAL -->
+  <div id="order-modal" class="modal-backdrop">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+      <div style="font-size:20px; font-weight:800; color:#fff; margin-bottom:4px;">
+        🚀 Заказ Пакета: <span id="modal-pkg-name" style="color:var(--emerald-400);"></span>
+      </div>
+      <div style="font-size:14px; color:var(--text-muted); margin-bottom:20px;">
+        Стоимость: <strong id="modal-pkg-price" style="color:#fff; font-family:var(--font-mono);"></strong> (Разовый платеж, без подписки)
+      </div>
+
+      <form onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label class="form-label">Ваше Имя / Название Компании:</label>
+          <input type="text" id="order-name" class="form-control" placeholder="Иван Иванов / ИП Петров" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email для получения скриптов и паспорта:</label>
+          <input type="email" id="order-email" class="form-control" placeholder="ivan@gmail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Телефон / Telegram для связи:</label>
+          <input type="text" id="order-phone" class="form-control" placeholder="+7 999 123-45-67 или @username" required>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">Отмена</button>
+          <button type="submit" class="btn btn-primary">Получить Суверенный Паспорт 🚀</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/hormozi_engine.js"></script>
+  <script src="js/doc_parser.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Live Store Calculator in USD
+    const peopleSlider = document.getElementById('store-calc-people');
+    const salaryInput = document.getElementById('store-calc-salary');
+    const peopleBadge = document.getElementById('store-badge-people');
+    const lossEl = document.getElementById('store-calc-loss');
+
+    function updateStoreLoss() {
+      if (!peopleSlider || !salaryInput || !lossEl) return;
+      const p = parseInt(peopleSlider.value, 10);
+      const s = parseInt(salaryInput.value, 10);
+      if (peopleBadge) peopleBadge.innerText = `${p} чел`;
+      const salaryBadge = document.getElementById('store-badge-salary');
+      if (salaryBadge) salaryBadge.innerText = `$${s.toLocaleString('en-US')}`;
+
+      // 2 hours/day per person on routine = ~25% of salary wasted
+      const annualLoss = Math.round(p * (s * 0.25) * 12);
+      lossEl.innerText = `$${annualLoss.toLocaleString('en-US')} / год`;
+    }
+
+    if (peopleSlider && salaryInput) {
+      peopleSlider.addEventListener('input', () => { updateStoreLoss(); playTick(); });
+      salaryInput.addEventListener('input', () => { updateStoreLoss(); playTick(); });
+      updateStoreLoss();
+    }
+
+    // Explicit load
+    if (typeof initPackagesCatalog === 'function') {
+      initPackagesCatalog();
+    }
+
+    // ====================================================
+    // WEB AUDIO API SOUND ENGINE
+    // ====================================================
+    let audioCtx = null;
+    let masterGain = null;
+    let isSoundOn = true;
+
+    const btnSound = document.getElementById('btn-sound');
+
+    function initAudio() {
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.5;
+      masterGain.connect(audioCtx.destination);
+    }
+
+    // Initialize audio context on first interaction if Sound is ON
+    document.body.addEventListener('mousedown', () => {
+      if (isSoundOn) {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+    }, { once: true });
+
+    btnSound.addEventListener('click', () => {
+      isSoundOn = !isSoundOn;
+      if(isSoundOn) {
+        initAudio();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        btnSound.classList.add('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: ON`;
+        playDigitalTap();
+      } else {
+        btnSound.classList.remove('on');
+        btnSound.innerHTML = `<div class="live-pill"></div> Sound: OFF`;
+      }
+    });
+
+    function playOscillator(type, freq, duration, volMod = 1, volDecay = true) {
+      if(!isSoundOn || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(volMod, audioCtx.currentTime);
+      if(volDecay) gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playTick() {
+      if(!isSoundOn || !audioCtx || audioCtx.state === 'suspended') return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(2000, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+      osc.connect(gain);
+      gain.connect(masterGain); 
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.02);
+    }
+    
+    window.playHover = () => playOscillator('sine', 800, 0.05, 0.1);
+    window.playDigitalTap = () => playOscillator('square', 1200, 0.05, 0.3);
+
+    // Apply sounds and spotlight to existing and dynamically added elements
+    function attachEffects() {
+      document.querySelectorAll('.hover-snd').forEach(el => {
+        el.removeEventListener('mouseenter', playHover);
+        el.addEventListener('mouseenter', playHover);
+      });
+      document.querySelectorAll('.click-snd').forEach(el => {
+        el.removeEventListener('mousedown', playDigitalTap);
+        el.addEventListener('mousedown', playDigitalTap);
+      });
+      document.querySelectorAll('.spotlight').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          btn.style.setProperty('--mouse-x', `${x}px`);
+          btn.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    // Since packages are loaded dynamically, run attachEffects after a short delay
+    setTimeout(attachEffects, 500);
+    // Also re-attach when filters change
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.addEventListener('click', () => { setTimeout(attachEffects, 100); playDigitalTap(); });
+      b.classList.add('hover-snd');
+    });
+  </script>
+</body>
+</html>

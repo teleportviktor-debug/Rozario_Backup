@@ -1,0 +1,11 @@
+{
+  "agent_id": "agent_1_lead",
+  "timestamp": "2026-09-03T22:48:12.054383+03:00",
+  "output": {
+    "status": "SUCCESS",
+    "agent_id": "agent_1_lead",
+    "leads_count": 3,
+    "json_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\03_CRM_LEADS\\b2b_scraped_leads_scored.json",
+    "csv_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\03_CRM_LEADS\\WORKSPACE_STUDIO_SHEETS_EXPORT.csv"
+  }
+}

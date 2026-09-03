@@ -1,0 +1,40 @@
+name: Antigravity Swarm • Cloud GitHub Actions Cron
+
+on:
+  schedule:
+    # 1. agent_5_spark heartbeat: every 5 minutes (GitHub Actions cron limit)
+    - cron: '*/5 * * * *'
+    # 2. agent_1_lead: every 4 hours
+    - cron: '0 */4 * * *'
+    # 3. agent_3_smm: at 09:00, 15:00, 19:00 UTC
+    - cron: '0 9,15,19 * * *'
+    # 4. agent_2_spy: at 10:00 UTC
+    - cron: '0 10 * * *'
+    # 5. agent_4_video: at 12:00 UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    inputs:
+      target_agent:
+        description: 'Specify agent to run (all, agent_1_lead, agent_2_spy, agent_3_smm, agent_4_video, agent_5_spark)'
+        required: false
+        default: 'all'
+
+jobs:
+  antigravity-swarm-executor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Antigravity Swarm Orchestrator
+        run: |
+          python -m python_engine.swarm_orchestrator --agent "${{ github.event.inputs.target_agent || 'all' }}"
+
+      - name: Validate Integrity & Auto-Heal Check
+        run: |
+          python run_full_system_check.py

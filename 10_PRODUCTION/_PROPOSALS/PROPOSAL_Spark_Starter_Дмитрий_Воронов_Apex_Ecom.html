@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Коммерческое Предложение | Дмитрий Воронов (Apex Ecom) • Spark Starter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --emerald: #10b981;
+      --cyan: #06b6d4;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .proposal-card {
+      max-width: 860px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .proposal-card::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent 70%);
+      pointer-events: none;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 12px;
+    }
+    .title { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); font-size: 16px; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .metric-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 4px;
+    }
+    .features-list {
+      list-style: none;
+      margin: 24px 0 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    .features-list li::before {
+      content: '✓';
+      color: var(--emerald);
+      font-weight: 800;
+    }
+    .offer-box {
+      background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(99,102,241,0.12));
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-action {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--emerald);
+      color: #000;
+      font-weight: 800;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="proposal-card">
+    <div class="header">
+      <div>
+        <div class="badge">💎 ПЕРСОНАЛЬНЫЙ GRAND SLAM ОФФЕР</div>
+        <div class="title">Автоматизация для «Дмитрий Воронов (Apex Ecom)»</div>
+        <div class="subtitle">Отрасль: <strong>E-commerce & Retail</strong> • Дата: <strong>03.09.2026</strong></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-muted);">HASH: 575BC3704F848A0DD4CEBFD4</div>
+        <div style="color:var(--emerald); font-size:12px; font-weight:700; margin-top:4px;">🛡️ SOVEREIGN VERIFIED</div>
+      </div>
+    </div>
+
+    <p style="color:#cbd5e1; font-size:15px; line-height:1.6;">
+      Предлагаем внедрение суверенного контура <strong>Spark Starter</strong> на базе защищенного облака Google Workspace. 
+      Все данные компании обрабатываются изолированно без риска утечек и без скрытых ежемесячных подписок.
+    </p>
+
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="metric-val">$300/мес</div>
+        <div style="font-size:12px; color:var(--text-muted);">Экономия на рутине</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val">5 дней</div>
+        <div style="font-size:12px; color:var(--text-muted);">Срок окупаемости</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val">$3,600</div>
+        <div style="font-size:12px; color:var(--text-muted);">Чистая выгода / год</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px; font-weight:800; margin-bottom:12px; color:#fff;">📦 Что входит в комплект поставки под ключ:</h3>
+    <ul class="features-list">
+      <li>Парсинг вложений почты Gmail прямо в Google Таблицу</li><li>Zero-Log архитектура: доступ строго по правам вашего аккаунта</li><li>Развертывание через Apps Script за 15 минут без программистов</li><li>Пожизненная лицензия без ежемесячных подписок</li>
+    </ul>
+
+    <div class="offer-box">
+      <div>
+        <div style="font-size:13px; color:var(--text-muted);">Единоразовая инвестиция (без подписок):</div>
+        <div style="font-size:32px; font-weight:800; color:#fff; font-family:'JetBrains Mono', monospace;">
+          $50 <span style="font-size:14px; color:var(--emerald); font-weight:600;">(Разово навсегда)</span>
+        </div>
+      </div>
+      <a href="mailto:ceo@company.com?subject=Согласование внедрения Spark Starter" class="btn-action">
+        Утвердить и Развернуть 🚀
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+service_account.json
+gen-lang-client-*.json
+base64_key.txt
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+drive_markdown_converter/__pycache__/
+python_engine/__pycache__/

@@ -1,0 +1,55 @@
+{
+  "agent": "agent_3_smm",
+  "created_at": "2026-09-03T22:48:12.083441",
+  "posts": [
+    {
+      "slot": "09:00 MORNING PARADIGM SHIFT",
+      "theme": "Будущее SEO и AI в 2026: почему старые агентства теряют до 70% клиентов",
+      "hook": "🚨 9 из 10 SEO-агентств в 2026 году закрываются по одной и той же глупой причине.",
+      "body": "Они продолжают продавать ручные ссылки и бесконечные 90-дневные аудиты, когда клиенту нужен автономный поток лидов за 5 дней.\n\nРазница между выживанием и доминированием — в суверенном ИИ-конвейере:\n1. Генерация 45-секундных виральных офферов.\n2. Телесуфлер со скоростью 180 WPM для идеального дубля с первого раза.\n3. Автоматический скоринг лидов по формуле Алекса Хормози.",
+      "cta": "👇 Напишите 'СУФЛЕР' в комментарии или откройте демо-студию по ссылке в профиле.",
+      "visual_prompt": {
+        "engine": "Nano Banana Pro / FLUX 1.1",
+        "prompt": "Hyper-futuristic cybernetic office in 2026, glowing obsidian glass desk, holographic UI floating with neon cyan (#00F2FE) and mint green (#00FF87) graphs, cinematic lighting, ultra-detailed 8k render, octane render style, dark mood --ar 1:1",
+        "palette": [
+          "#0B0E14",
+          "#00F2FE",
+          "#00FF87",
+          "#7928CA"
+        ]
+      }
+    },
+    {
+      "slot": "15:00 AFTERNOON CASE BREAKDOWN",
+      "theme": "Разбор кейса: Как Smarty Marketing SEO сократил время производства контента на 82%",
+      "hook": "📊 Реальные цифры: от 40 часов рутины до 4 часов контроля в неделю.",
+      "body": "Кейс агентства Smarty Marketing SEO:\n\n❌ До внедрения: 3 копирайтера, постоянные срывы дедлайнов, средняя конверсия оффера 2.1%.\n✅ После развертывания Razum AI Work System:\n• 15 готовых сценариев рилс в неделю генерируются за 3 минуты.\n• Голосовой скоринг лидов в CRM с мгновенным пушем в Telegram.\n• Окупаемость системы составила ровно 4 календарных дня.",
+      "cta": "💡 Хотите рассчитать окупаемость для вашего агентства? Калькулятор доступен на нашем портале.",
+      "visual_prompt": {
+        "engine": "FLUX / Midjourney",
+        "prompt": "Sleek analytics dashboard mockup on high-end bezel-less tablet, dark UI with vibrant neon green upward trends (+340%), neon cyan accents, studio depth of field, photorealistic, minimal cyberpunk aesthetic --ar 1:1",
+        "palette": [
+          "#0B0E14",
+          "#00FF87",
+          "#00F2FE"
+        ]
+      }
+    },
+    {
+      "slot": "19:00 EVENING GRAND SLAM CONVERSION",
+      "theme": "Предложение, от которого глупо отказаться: Тест-драйв суверенной студии",
+      "hook": "🔥 Бесплатный доступ в закрытую Веб-Студию Телесуфлера 2026 открыт на 24 часа.",
+      "body": "Вы когда-нибудь записывали видео с 1-го дубля без запинок и монтажа?\n\nНаша Студия Телесуфлера автоматически рассчитывает темп (5 секунд на каждые 15 слов), накладывает веб-камеру прямо в браузере и экспортирует чистовой ролик в 1 клик.\n\nБез установки тяжелых программ. Без абонентских плат за сторонний софт.",
+      "cta": "🚀 Переходите по ссылке и протестируйте прямо сейчас: Teleprompter Studio Live.",
+      "visual_prompt": {
+        "engine": "Nano Banana Pro / Veo 3.1",
+        "prompt": "Close-up of a professional modern video creator studio, teleprompter monitor reflecting glowing green and cyan text lines, high-end 4K cinema lens, moody neon background bokeh --ar 1:1",
+        "palette": [
+          "#0B0E14",
+          "#00F2FE",
+          "#7928CA"
+        ]
+      }
+    }
+  ]
+}

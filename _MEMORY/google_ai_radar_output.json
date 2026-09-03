@@ -1,0 +1,69 @@
+{
+  "agent_id": "agent_google_radar",
+  "timestamp": "2026-09-03T22:48:12.062454+03:00",
+  "channel_monitored": "https://www.youtube.com/@JulianGoldieSEO",
+  "tools_count": 6,
+  "tools": [
+    {
+      "id": "tool-pomelli",
+      "name": "Google Pomelli",
+      "domain": "Marketing & Business DNA",
+      "official_desc": "AI marketing system that scans client websites to generate a coherent Business DNA and produces branded multi-channel campaigns.",
+      "julian_goldie_angle": "How to replace $3,000/mo marketing agencies with Google's free Pomelli Business DNA stack.",
+      "target_package": "pkg-sovereign ($300) & pkg-intelligence ($200)",
+      "commercial_feature": "Автоматическое извлечение ДНК бизнеса клиента из его сайта и генерация персонализированного контент-плана за 60 секунд.",
+      "offer_hook": "«Внедрим Google Pomelli Business DNA в ваш отдел маркетинга: единый стиль всех постов и рекламы без копирайтеров»"
+    },
+    {
+      "id": "tool-stitch",
+      "name": "Google Stitch",
+      "domain": "UI/UX & Interface Generation",
+      "official_desc": "Generates complete, production-ready desktop and mobile UI designs and interactive mockups from simple natural language prompts.",
+      "julian_goldie_angle": "Figma is dead? Google Stitch generates complete UI prototypes in 5 seconds for free.",
+      "target_package": "pkg-genesis ($500) & pkg-sovereign ($300)",
+      "commercial_feature": "Генерация мобильных интерфейсов и клиентских порталов прямо в Google Workspace без найма UI/UX дизайнеров.",
+      "offer_hook": "«Разработаем интерактивный прототип вашего корпоративного приложения на Google Stitch за 1 день»"
+    },
+    {
+      "id": "tool-opal",
+      "name": "Google Opal",
+      "domain": "No-Code Enterprise App Generation",
+      "official_desc": "Empowers non-technical users to build full-stack enterprise mini-apps and workflows by describing logic in plain conversational language.",
+      "julian_goldie_angle": "Build full software without coding using Google Opal — complete agency in a box.",
+      "target_package": "pkg-genesis ($500)",
+      "commercial_feature": "Сборка внутренних микро-сервисов и CRM-панелей для заказчиков без программирования и абонентской платы.",
+      "offer_hook": "«Создаем суверенные корпоративные базы данных и микро-приложения на Google Opal под ключ»"
+    },
+    {
+      "id": "tool-antigravity",
+      "name": "Google Antigravity & Jules",
+      "domain": "Autonomous Agentic Coding & Dev Swarms",
+      "official_desc": "Google's flagship agentic IDE & async GitHub issue solver for autonomous execution, terminal workflows, and self-healing systems.",
+      "julian_goldie_angle": "The greatest AI coding tool Google ever released: 24/7 autonomous agents that build your entire business.",
+      "target_package": "pkg-genesis ($500 Enterprise)",
+      "commercial_feature": "5 автономных Python-агентов, работающих 24/7 по расписанию cron без ручного контроля.",
+      "offer_hook": "«Развертывание автономного роя Google Antigravity для полной автоматизации рутины вашей компании»"
+    },
+    {
+      "id": "tool-notebooklm",
+      "name": "Google NotebookLM & Audio Overviews",
+      "domain": "Knowledge Base & Source-Grounded Synthesis",
+      "official_desc": "Zero-hallucination research notebook with deep document synthesis and interactive 2-speaker podcast generation.",
+      "julian_goldie_angle": "Turn all your company PDFs into interactive audio briefings and expert AI agents.",
+      "target_package": "pkg-starter ($50) & pkg-intelligence ($200)",
+      "commercial_feature": "Превращение первичных документов, договоров и инструкций компании в персонального голосового консультанта.",
+      "offer_hook": "«Обучим суверенный NotebookLM на всех ваших регламентах: ответы сотрудникам за 2 секунды со 100% точностью»"
+    },
+    {
+      "id": "tool-mixboard",
+      "name": "Google Mixboard & Canvas",
+      "domain": "Collaborative Visual Ideation",
+      "official_desc": "Infinite collaborative AI canvas mixing text, visual moodboards, logic diagrams, and dynamic layout synthesis.",
+      "julian_goldie_angle": "Visual AI workflows that 10x agency productivity and client presentation closures.",
+      "target_package": "pkg-sovereign ($300)",
+      "commercial_feature": "Интерактивная визуализация коммерческих предложений и карт внедрения на бесконечной доске.",
+      "offer_hook": "«Интерактивные презентации проектов на Google Canvas с конверсией в оплату от 35%»"
+    }
+  ],
+  "markdown_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\04_SALES_PLAYBOOK\\GOOGLE_AI_ECOSYSTEM_RADAR.md"
+}
