@@ -117,10 +117,16 @@ def sync_all(token: str = None):
         token = os.environ.get("GITHUB_TOKEN")
 
     if not token:
-        token = input("Введите ваш GitHub Personal Access Token (PAT): ").strip()
+        env_file = os.path.join(ROOT_DIR, ".env")
+        if os.path.exists(env_file):
+            with open(env_file, "r", encoding="utf-8") as ef:
+                for line in ef:
+                    if line.startswith("GITHUB_TOKEN="):
+                        token = line.split("=", 1)[1].strip()
+                        break
 
     if not token:
-        print("❌ Токен не указан. Синхронизация отменена.")
+        print("❌ Токен не найден в .env или GITHUB_TOKEN. Синхронизация отменена.")
         return
 
     success_count = 0
