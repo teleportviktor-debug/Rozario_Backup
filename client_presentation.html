@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Razum Google AI PRO • Sovereign Pitch Deck 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: rgba(15, 23, 42, 0.75);
+      --surface-border: rgba(255, 255, 255, 0.12);
+      --emerald: #10b981;
+      --cyan: #06b6d4;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* BACKGROUND GLOWS */
+    .ambient-glow-1 {
+      position: fixed;
+      top: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ambient-glow-2 {
+      position: fixed;
+      bottom: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* TOP BAR */
+    .deck-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, var(--emerald), var(--cyan));
+      color: #000;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--surface-border);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+
+    /* SLIDE CONTAINER */
+    .slides-wrapper {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 10;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 84px 48px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(20px);
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+    }
+
+    .slide-content {
+      max-width: 1120px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .slide-content.single-col {
+      grid-template-columns: 1fr;
+      text-align: center;
+      max-width: 860px;
+    }
+
+    /* TYPOGRAPHY */
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 20px;
+    }
+    .slide-title {
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+    .slide-title span {
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slide-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* VISUAL CARDS */
+    .slide-visual-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .slide-visual-box:hover {
+      transform: translateY(-4px);
+      border-color: rgba(6, 182, 212, 0.4);
+    }
+    .slide-visual-box img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* METRIC CHIPS */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .metric-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+    }
+    .metric-chip .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+    .metric-chip .label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ROI SLIDER BOX */
+    .roi-interactive-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    /* BOTTOM NAV */
+    .deck-bottombar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--surface-border);
+    }
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-dot.active {
+      width: 32px;
+      background: linear-gradient(90deg, var(--emerald), var(--cyan));
+    }
+
+    .key-hints {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .key-hint-badge {
+      background: rgba(255,255,255,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--surface-border);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- TOP BAR -->
+  <header class="deck-topbar">
+    <div class="brand-logo">
+      <span class="brand-badge">R</span>
+      <span>RAZUM GOOGLE AI PRO</span>
+      <span style="color:var(--text-muted); font-weight:400; font-size:13px;">| Sovereign Pitch Deck 2026</span>
+    </div>
+    <div class="top-controls">
+      <button class="btn-icon" id="btn-sound-toggle" onclick="toggleSound()">🔊 Звук: ВКЛ</button>
+      <button class="btn-icon" onclick="toggleFullScreen()">⛶ На весь экран</button>
+      <a href="store_packages.html" class="btn-icon" style="background:var(--emerald); color:#000; font-weight:800; border:none; text-decoration:none;">Тарифы 🚀</a>
+    </div>
+  </header>
+
+  <!-- SLIDES WRAPPER -->
+  <div class="slides-wrapper" id="slides-wrapper">
+
+    <!-- SLIDE 1: INTRO / HOOK -->
+    <section class="slide active" data-slide="0">
+      <div class="slide-content">
+        <div>
+          <div class="slide-tag">🔒 ZERO-LOG BUSINESS ARCHITECTURE 2026</div>
+          <h1 class="slide-title">Конец рабства <span>SaaS-подписок</span> в B2B</h1>
+          <p class="slide-desc">
+            Разверните автономный искусственный интеллект на защищенном контуре Google Workspace вашей компании. Единоразовая инвестиция. Без утечек данных и ежемесячных поборов.
+          </p>
+          <div class="metrics-row">
+            <div class="metric-chip">
+              <div class="val">4 дня</div>
+              <div class="label">Окупаемость системы</div>
+            </div>
+            <div class="metric-chip">
+              <div class="val">$0/мес</div>
+              <div class="label">Скрытых подписок</div>
+            </div>
+            <div class="metric-chip">
+              <div class="val">2.4 сек</div>
+              <div class="label">Разбор первички в CRM</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-visual-box">
+          <img src="assets/launch_visuals/sovereign_architecture.jpg" alt="Sovereign Architecture">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: CONTRAST (OLD CHAOS VS NEW CONSOLE) -->
+    <section class="slide" data-slide="1">
+      <div class="slide-content">
+        <div>
+          <div class="slide-tag" style="color:var(--rose); background:rgba(244,63,94,0.15); border-color:rgba(244,63,94,0.3);">
+            ⚠️ СРАВНЕНИЕ ЭФФЕКТИВНОСТИ
+          </div>
+          <h2 class="slide-title">Хаос подписок <span>против</span> единой консоли</h2>
+          <p class="slide-desc">
+            Обычный бизнес платит за 7+ сервисов: CRM, парсер документов, таск-трекер, нейросети. Данные размазаны по чужим облакам. 
+            Суверенный контур объединяет всё в единый реестр Google Sheets + Gemini Flash Lite.
+          </p>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; font-size:15px; color:#cbd5e1;">
+            <li>❌ <strong>SaaS:</strong> Рост команды увеличивает ежемесячный чек на 300%.</li>
+            <li>✅ <strong>Razum Контур:</strong> Пожизненная лицензия на вашем Google Диске.</li>
+            <li>✅ <strong>Безопасность:</strong> Соответствие 152-ФЗ / GDPR (Zero-Log изоляция).</li>
+          </ul>
+        </div>
+        <div class="slide-visual-box">
+          <img src="assets/launch_visuals/saas_vs_sovereign.jpg" alt="SaaS vs Sovereign">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: 5 AUTONOMOUS AGENTS -->
+    <section class="slide" data-slide="2">
+      <div class="slide-content">
+        <div>
+          <div class="slide-tag">🧠 ANTIGRAVITY SWARM NETWORK</div>
+          <h2 class="slide-title">Рой из <span>5 AI-Агентов</span> работает 24/7</h2>
+          <p class="slide-desc">
+            Пока руководство и менеджеры отдыхают, автономный рой выполняет регулярные рутинные циклы в фоновом облаке Google Cloud.
+          </p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="metric-chip">
+              <strong style="color:var(--cyan);">1. Lead Scout</strong>
+              <div class="label">Поиск B2B контактов и скоринг</div>
+            </div>
+            <div class="metric-chip">
+              <strong style="color:var(--emerald);">2. Competitor Spy</strong>
+              <div class="label">Разведка цен и Google Radar</div>
+            </div>
+            <div class="metric-chip">
+              <strong style="color:#a855f7;">3. Neuro-SMM</strong>
+              <div class="label">Генерация контентных матриц</div>
+            </div>
+            <div class="metric-chip">
+              <strong style="color:var(--amber);">4. Shorts Pipeline</strong>
+              <div class="label">Скрипты вирусных промо-роликов</div>
+            </div>
+          </div>
+          <div class="metric-chip" style="margin-top:12px;">
+            <strong style="color:#fff;">5. Spark Watchdog Coordinator</strong>
+            <div class="label">Самовосстановление (Self-Healing) и единая память MEMORY.json</div>
+          </div>
+        </div>
+        <div class="slide-visual-box">
+          <img src="assets/launch_visuals/ai_swarm_agents.jpg" alt="AI Swarm Agents">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: DYNAMIC ROI CALCULATOR -->
+    <section class="slide" data-slide="3">
+      <div class="slide-content single-col">
+        <div class="slide-tag">🧮 ЖИВОЙ РАСЧЕТ НА ЗУМ-СОЗВОНЕ</div>
+        <h2 class="slide-title">Интерактивная <span>Окупаемость (ROI)</span></h2>
+        <p class="slide-desc" style="margin-bottom:24px;">
+          Передвигайте ползунки прямо во время демонстрации клиенту, чтобы показать точную выгоду в цифрах.
+        </p>
+
+        <div class="roi-interactive-card">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:20px; text-align:left;">
+            <div>
+              <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:8px;">
+                Сотрудников на рутине: <strong id="deck-lbl-team" style="color:#fff; font-size:16px;">5 чел</strong>
+              </label>
+              <input type="range" id="deck-slider-team" min="1" max="50" value="5" style="width:100%; accent-color:var(--emerald);" oninput="updateDeckCalc()">
+            </div>
+            <div>
+              <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:8px;">
+                Средняя зарплата: <strong id="deck-lbl-salary" style="color:#fff; font-size:16px;">$900/мес</strong>
+              </label>
+              <input type="range" id="deck-slider-salary" min="300" max="3000" step="50" value="900" style="width:100%; accent-color:var(--cyan);" oninput="updateDeckCalc()">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; background:rgba(0,0,0,0.5); padding:18px; border-radius:14px; text-align:center;">
+            <div>
+              <div style="font-size:11px; color:var(--text-muted);">Часов сберегается:</div>
+              <div id="deck-res-hours" style="font-size:22px; font-weight:800; color:var(--cyan); font-family:'JetBrains Mono';">125 ч/мес</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--text-muted);">Чистая выгода в месяц:</div>
+              <div id="deck-res-money" style="font-size:22px; font-weight:800; color:var(--emerald); font-family:'JetBrains Mono';">$703/мес</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--text-muted);">Срок окупаемости ($300):</div>
+              <div id="deck-res-payback" style="font-size:22px; font-weight:800; color:var(--amber); font-family:'JetBrains Mono';">4 дня</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: GRAND SLAM OFFER & CALL TO ACTION -->
+    <section class="slide" data-slide="4">
+      <div class="slide-content single-col">
+        <div class="slide-tag">🚀 УТВЕРЖДЕНИЕ И ЗАПУСК</div>
+        <h2 class="slide-title">Выберите ваш <span>Суверенный Пакет</span></h2>
+        <p class="slide-desc" style="margin-bottom:28px;">
+          Все пакеты включают официальный паспорт безопасности Zero-Log и пожизненную лицензию.
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:32px;">
+          <div class="metric-chip" style="background:rgba(15,23,42,0.9);">
+            <div style="font-size:12px; color:var(--text-muted);">СТАРТОВЫЙ</div>
+            <div style="font-size:20px; font-weight:800; color:#fff; margin:6px 0;">Command Center</div>
+            <div class="val">$100</div>
+            <div class="label">Парсер счетов и актов из PDF в 1 клик</div>
+          </div>
+          <div class="metric-chip" style="border-color:var(--emerald); background:rgba(16,185,129,0.08);">
+            <div style="font-size:12px; color:var(--emerald); font-weight:800;">ХИТ ПРОДАЖ ⭐</div>
+            <div style="font-size:20px; font-weight:800; color:#fff; margin:6px 0;">Sovereign Autopilot</div>
+            <div class="val" style="color:var(--emerald);">$300</div>
+            <div class="label">Рой из 5 AI-агентов + CRM + Watchdog</div>
+          </div>
+          <div class="metric-chip" style="background:rgba(15,23,42,0.9);">
+            <div style="font-size:12px; color:var(--text-muted);">ENTERPRISE</div>
+            <div style="font-size:20px; font-weight:800; color:#fff; margin:6px 0;">Transformation</div>
+            <div class="val">$2,500</div>
+            <div class="label">Полная оцифровка компании + 60 дней поддержки</div>
+          </div>
+        </div>
+
+        <div>
+          <a href="sovereign_transformation.html" class="btn-icon" style="background:linear-gradient(135deg, var(--emerald), var(--cyan)); color:#000; font-size:16px; font-weight:900; padding:16px 36px; border:none; text-decoration:none; display:inline-block;">
+            Забронировать Внедрение 🚀
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <footer class="deck-bottombar">
+    <div class="nav-dots" id="nav-dots">
+      <div class="nav-dot active" onclick="goToSlide(0)"></div>
+      <div class="nav-dot" onclick="goToSlide(1)"></div>
+      <div class="nav-dot" onclick="goToSlide(2)"></div>
+      <div class="nav-dot" onclick="goToSlide(3)"></div>
+      <div class="nav-dot" onclick="goToSlide(4)"></div>
+    </div>
+
+    <div class="key-hints">
+      Навигация: <span class="key-hint-badge">←</span> <span class="key-hint-badge">→</span> или <span class="key-hint-badge">Пробел</span>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <button class="btn-icon" onclick="prevSlide()">◀ Назад</button>
+      <button class="btn-icon" style="background:rgba(16,185,129,0.2); border-color:var(--emerald); color:#fff;" onclick="nextSlide()">Далее ▶</button>
+    </div>
+  </footer>
+
+  <script src="js/sound_lab.js"></script>
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.nav-dot');
+    let isSoundEnabled = true;
+
+    function goToSlide(idx) {
+      if (idx < 0 || idx >= slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = idx;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+      
+      if (isSoundEnabled && window.ProceduralSoundLab) {
+        try {
+          if (!window.ProceduralSoundLab.isActive()) window.ProceduralSoundLab.init();
+          window.ProceduralSoundLab.playClick();
+        } catch(e) {}
+      }
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      }
+    });
+
+    function toggleSound() {
+      isSoundEnabled = !isSoundEnabled;
+      const btn = document.getElementById('btn-sound-toggle');
+      btn.innerText = isSoundEnabled ? '🔊 Звук: ВКЛ' : '🔇 Звук: ВЫКЛ';
+      if (isSoundEnabled && window.ProceduralSoundLab) {
+        window.ProceduralSoundLab.init();
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function updateDeckCalc() {
+      const team = parseInt(document.getElementById('deck-slider-team').value);
+      const salary = parseInt(document.getElementById('deck-slider-salary').value);
+      document.getElementById('deck-lbl-team').innerText = team + ' чел';
+      document.getElementById('deck-lbl-salary').innerText = '$' + salary + '/мес';
+
+      const hours = team * 25;
+      const hourly = salary / 160;
+      const monthly = Math.round(hours * hourly);
+      const daily = monthly / 22;
+      const payback = Math.max(1, Math.round(300 / (daily || 1)));
+
+      document.getElementById('deck-res-hours').innerText = hours + ' ч/мес';
+      document.getElementById('deck-res-money').innerText = '$' + monthly.toLocaleString() + '/мес';
+      document.getElementById('deck-res-payback').innerText = payback + (payback === 1 ? ' день' : (payback < 5 ? ' дня' : ' дней'));
+    }
+
+    updateDeckCalc();
+  </script>
+</body>
+</html>
