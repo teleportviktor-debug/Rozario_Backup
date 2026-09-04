@@ -1,0 +1,18 @@
+======================================================================
+ИНСТРУКЦИЯ ПО ПУБЛИКАЦИИ: КАМПАНИЯ 2026-09-04
+======================================================================
+1. INSTAGRAM:
+   - Картинка: visuals/saas_vs_sovereign.jpg
+   - Текст: См. Пост 2 в LAUNCH_CAMPAIGN_PACK.md
+   - Ссылка в профиле: https://teleportviktor-debug.github.io/Rozario_Backup/sovereign_transformation.html
+
+2. LINKEDIN:
+   - Картинка: visuals/sovereign_architecture.jpg
+   - Текст: См. Пост 1 в LAUNCH_CAMPAIGN_PACK.md
+   - Призыв: Написать в ЛС для получения интерактивного ROI
+
+3. TELEGRAM:
+   - Картинка: visuals/ai_swarm_agents.jpg
+   - Текст: См. Пост 3 в LAUNCH_CAMPAIGN_PACK.md
+   - Кнопка: https://teleportviktor-debug.github.io/Rozario_Backup/client_presentation.html
+======================================================================

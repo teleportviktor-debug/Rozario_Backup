@@ -26,7 +26,8 @@ INCLUDE_FILES = [
     "client_portal.html",
     "README.md",
     "swarm_config.json",
-    "sovereign_transformation.html"
+    "sovereign_transformation.html",
+    "client_presentation.html"
 ]
 
 INCLUDE_DIRS = [

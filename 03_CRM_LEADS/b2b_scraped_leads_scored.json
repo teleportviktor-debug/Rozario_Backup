@@ -15,7 +15,7 @@
       "budget": 9,
       "urgency": 9,
       "lead_source": "Google Workspace Inbound Triage",
-      "processed_at": "2026-09-04T03:25:45.797752",
+      "processed_at": "2026-09-04T03:36:19.543732",
       "scoring": {
         "score_percent": 92,
         "tier": "TIER 1 (VIP - Immediate Outreach)",
@@ -40,7 +40,7 @@
       "budget": 8,
       "urgency": 8,
       "lead_source": "Cold B2B Crawler",
-      "processed_at": "2026-09-04T03:25:45.797822",
+      "processed_at": "2026-09-04T03:36:19.543755",
       "scoring": {
         "score_percent": 80,
         "tier": "TIER 1 (VIP - Immediate Outreach)",
@@ -65,7 +65,7 @@
       "budget": 6,
       "urgency": 7,
       "lead_source": "Telegram Bot Inbound",
-      "processed_at": "2026-09-04T03:25:45.797826",
+      "processed_at": "2026-09-04T03:36:19.543759",
       "scoring": {
         "score_percent": 73,
         "tier": "TIER 2 (Standard - Teleprompter Demo)",
