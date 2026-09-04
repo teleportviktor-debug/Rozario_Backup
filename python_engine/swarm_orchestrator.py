@@ -29,7 +29,8 @@ if ROOT_DIR not in sys.path:
 # Memory Manager — общая память всех агентов
 from python_engine.memory_manager import (
     read_memory, get_project_snapshot, is_task_done,
-    write_agent_output, update_memory, mark_task_done, daily_log
+    write_agent_output, update_memory, mark_task_done, daily_log,
+    log_error
 )
 
 # Agent Engine Imports
@@ -43,6 +44,27 @@ from python_engine.agents.agent_5_spark import run_spark_watchdog
 def _now_iso() -> str:
     tz = timezone(timedelta(hours=3))
     return datetime.now(tz).isoformat()
+
+def run_agent_resilient(agent_name: str, fn, max_retries: int = 2):
+    """
+    Выполняет запуск агента с защитой от сбоев и механизмом самовосстановления (Self-Healing).
+    В случае ошибки делает повторную попытку, а при фатальном сбое регистрирует в ERRORS.md.
+    """
+    import time
+    last_err = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            return fn()
+        except Exception as e:
+            last_err = e
+            print(f"  [ATTEMPT {attempt}/{max_retries} FAILED] {agent_name}: {e}")
+            if attempt < max_retries:
+                time.sleep(1.0)
+    
+    # Все попытки исчерпаны
+    print(f"  [SELF-HEALING LOGGED] {agent_name}: {last_err}")
+    log_error(agent_name, f"Failed after {max_retries} attempts: {last_err}", resolution="Auto-heal queued for next cycle")
+    return {"status": "error", "error": str(last_err)}
 
 def execute_antigravity_swarm(agent_filter=None, sync_drive=True):
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -63,69 +85,57 @@ def execute_antigravity_swarm(agent_filter=None, sync_drive=True):
         task_id = f"agent_1_lead_{_now_iso()[:10]}"
         if not is_task_done(task_id):
             print("\n[1/5] [agent_1_lead] Scraping B2B contacts & applying Hormozi scoring...")
-            try:
-                res1 = run_lead_scraper()
+            res1 = run_agent_resilient("agent_1_lead", run_lead_scraper)
+            if res1.get("status") != "error":
                 write_agent_output("agent_1_lead", res1)
                 update_memory({"agent_last_run": {"agent_1_lead": _now_iso()}})
                 daily_log("agent_1_lead", "Scraping & Hormozi scoring", f"Leads: {res1.get('leads_count', 0)}")
                 print(f"  [OK] Leads: {res1.get('leads_count', 0)} -> 03_CRM/Sheets")
                 results["agent_1_lead"] = res1
-            except Exception as e:
-                print(f"  [ERROR] agent_1_lead: {e}")
-                daily_log("agent_1_lead", "Scraping failed", str(e), level="ERROR")
         else:
             print(f"  [SKIP] agent_1_lead: задача {task_id} уже выполнена сегодня")
 
     # ── 3. Agent 2: Competitor Spy & Google AI Radar [cron(0 10 * * *)] ──
     if not agent_filter or agent_filter in ["2", "agent_2_spy", "agent_google_radar"]:
         print("\n[2/5] [agent_2_spy] Competitor Spy & Google AI Radar (Julian Goldie)...")
-        try:
-            res2 = run_spy_agent()
-            radar_res = analyze_google_ecosystem()
-            res2["google_radar"] = radar_res
+        def _run_spy_and_radar():
+            res = run_spy_agent()
+            res["google_radar"] = analyze_google_ecosystem()
+            return res
+        res2 = run_agent_resilient("agent_2_spy", _run_spy_and_radar)
+        if res2.get("status") != "error":
             write_agent_output("agent_2_spy", res2)
             update_memory({"agent_last_run": {"agent_2_spy": _now_iso()}})
-            daily_log("agent_2_spy", "Competitor & Google Radar analysis", f"Competitors: {res2.get('competitors_analyzed', 0)}, Google Tools: {radar_res.get('tools_analyzed', 0)}")
+            daily_log("agent_2_spy", "Competitor & Google Radar analysis", f"Competitors: {res2.get('competitors_analyzed', 0)}")
             print(f"  [OK] Competitors: {res2.get('competitors_analyzed', 0)} -> 04_Playbook/")
-            print(f"  [OK] Google AI Radar: {radar_res.get('tools_analyzed', 0)} tools analyzed -> 04_Playbook/GOOGLE_AI_ECOSYSTEM_RADAR.md")
             results["agent_2_spy"] = res2
-        except Exception as e:
-            print(f"  [ERROR] agent_2_spy: {e}")
-            daily_log("agent_2_spy", "Spy analysis failed", str(e), level="ERROR")
 
     # ── 4. Agent 3: Neuro-SMM Post Generator [cron(0 9,15,19 * * *)] ────
     if not agent_filter or agent_filter in ["3", "agent_3_smm"]:
         print("\n[3/5] [agent_3_smm] Generating daily posts (Obsidian/Cyan aesthetic)...")
-        try:
-            res3 = run_smm_agent()
+        res3 = run_agent_resilient("agent_3_smm", run_smm_agent)
+        if res3.get("status") != "error":
             write_agent_output("agent_3_smm", res3)
             update_memory({"agent_last_run": {"agent_3_smm": _now_iso()}})
             daily_log("agent_3_smm", "SMM post generation", f"Posts: {res3.get('posts_generated', 0)}")
             print(f"  [OK] Posts: {res3.get('posts_generated', 0)} -> 05_Content/Posts/")
             results["agent_3_smm"] = res3
-        except Exception as e:
-            print(f"  [ERROR] agent_3_smm: {e}")
-            daily_log("agent_3_smm", "SMM generation failed", str(e), level="ERROR")
 
     # ── 5. Agent 4: 15s Shorts & MoviePy [cron(0 12 * * *)] ─────────────
     if not agent_filter or agent_filter in ["4", "agent_4_video", "agent_4_shorts"]:
         print("\n[4/5] [agent_4_video] Scripting 15s Shorts & MoviePy render commands...")
-        try:
-            res4 = run_video_agent()
+        res4 = run_agent_resilient("agent_4_video", run_video_agent)
+        if res4.get("status") != "error":
             write_agent_output("agent_4_video", res4)
             update_memory({"agent_last_run": {"agent_4_shorts": _now_iso()}})
             daily_log("agent_4_video", "Shorts scripting", f"Videos ready: {res4.get('videos_ready', 0)}")
             print(f"  [OK] Videos: {res4.get('videos_ready', 0)} -> 05_Content/Video/")
             results["agent_4_video"] = res4
-        except Exception as e:
-            print(f"  [ERROR] agent_4_video: {e}")
-            daily_log("agent_4_video", "Video scripting failed", str(e), level="ERROR")
 
     # ── 6. Agent 5: Spark Watchdog — консолидирует MEMORY.json ───────────
     print("\n[5/5] [agent_5_spark] Watchdog + MEMORY.json consolidation...")
-    try:
-        res5 = run_spark_watchdog()
-        # Spark — единственный агент с правом обновления MEMORY.json
+    res5 = run_agent_resilient("agent_5_spark", run_spark_watchdog)
+    if res5.get("status") != "error":
         update_memory({
             "agent_last_run": {"agent_5_spark": _now_iso()},
             "current_phase": {"next_step": res5.get("recommended_next_step", "Проверь DAILY_LOG")}
@@ -133,9 +143,6 @@ def execute_antigravity_swarm(agent_filter=None, sync_drive=True):
         daily_log("agent_5_spark", "Watchdog cycle complete", f"A2UI: {res5.get('email_widget', 'none')}")
         print(f"  [OK] Watchdog OK | Email Widget: {res5.get('email_widget', 'none')}")
         results["agent_5_spark"] = res5
-    except Exception as e:
-        print(f"  [ERROR] agent_5_spark: {e}")
-        daily_log("agent_5_spark", "Watchdog failed", str(e), level="ERROR")
 
     # ── 7. Sync _MEMORY/ to Drive ─────────────────────────────────────────
     if sync_drive:

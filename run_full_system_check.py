@@ -127,6 +127,21 @@ def run_tests():
         print(f"  ❌ Ошибка исполнения Роя: {e}")
         all_passed = False
 
+    # 6. Test Proposal Generator & Interactive ROI Calculator
+    print("\n💼 [6/6] Тестирование генератора КП и интерактивного ROI калькулятора...")
+    try:
+        from python_engine.proposal_generator import generate_proposal_html, PACKAGES
+        test_file = generate_proposal_html("ТестКлиент", "Финтех", "pkg-sovereign")
+        assert os.path.exists(test_file)
+        with open(test_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+            assert "Интерактивный Калькулятор Окупаемости" in content
+            assert "slider-team" in content
+        print(f"  ✓ Сгенерировано КП: {os.path.basename(test_file)} (ROI калькулятор интегрирован)")
+    except Exception as e:
+        print(f"  ❌ Ошибка генератора КП: {e}")
+        all_passed = False
+
     print("\n" + "="*60)
     if all_passed:
         print("🎉 ВСЕ ТЕСТЫ РОЯ И ЭКОСИСТЕМЫ ПРОЙДЕНЫ! СИСТЕМА 100% ГОТОВА К ПРОДАКШЕНУ.")

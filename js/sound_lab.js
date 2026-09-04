@@ -52,8 +52,11 @@ function initSoundLab() {
   }
   
   isSoundOn = true;
-  document.getElementById('btn-sound-lab').innerText = "Аудио Движок АКТИВЕН 🔊";
-  document.getElementById('btn-sound-lab').classList.add('btn-indigo');
+  const btnSound = document.getElementById('btn-sound-lab');
+  if (btnSound) {
+    btnSound.innerText = "Аудио Движок АКТИВЕН 🔊";
+    btnSound.classList.add('btn-indigo');
+  }
 }
 
 function drawOscilloscope() {
@@ -174,3 +177,23 @@ if (cockpitWrapper && cockpit) {
   });
   cockpitWrapper.addEventListener('mouseleave', () => { cockpit.style.transform = `rotateX(0deg) rotateY(0deg)`; });
 }
+
+// Universal Global API
+window.ProceduralSoundLab = {
+  init: initSoundLab,
+  isActive: () => isSoundOn,
+  playHover: () => playOscillatorLab('sine', 800, 0.08, 0.15),
+  playClick: () => playOscillatorLab('square', 1200, 0.05, 0.25),
+  playSuccess: () => {
+    if(!isSoundOn || !audioCtx) return;
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, i) => {
+      setTimeout(() => playOscillatorLab('sine', freq, 0.3, 0.2), i * 70);
+    });
+  },
+  playLowPassSweep: (startFreq = 200, endFreq = 2400, duration = 0.5) => {
+    if(!isSoundOn || !audioCtx || !biquadFilter) return;
+    biquadFilter.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+    biquadFilter.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + duration);
+  }
+};

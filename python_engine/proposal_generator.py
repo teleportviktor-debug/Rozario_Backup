@@ -279,7 +279,7 @@ def generate_proposal_html(client_name: str, niche: str, package_id: str = "pkg-
     <div class="metrics-grid">
       <div class="metric-box">
         <div class="metric-val">{pkg['monthly_savings']}/мес</div>
-        <div style="font-size:12px; color:var(--text-muted);">Экономия на рутине</div>
+        <div style="font-size:12px; color:var(--text-muted);">Базовая экономия</div>
       </div>
       <div class="metric-box">
         <div class="metric-val">{pkg['payback']}</div>
@@ -288,6 +288,42 @@ def generate_proposal_html(client_name: str, niche: str, package_id: str = "pkg-
       <div class="metric-box">
         <div class="metric-val">{pkg['annual_savings']}</div>
         <div style="font-size:12px; color:var(--text-muted);">Чистая выгода / год</div>
+      </div>
+    </div>
+
+    <!-- ИНТЕРАКТИВНЫЙ ROI КАЛЬКУЛЯТОР ДЛЯ КЛИЕНТА -->
+    <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 18px; padding: 24px; margin-bottom: 32px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+        <h3 style="font-size:17px; font-weight:800; color:var(--cyan); display:flex; align-items:center; gap:8px;">
+          🧮 Интерактивный Калькулятор Окупаемости (ROI) для вашей команды
+        </h3>
+        <span style="font-size:12px; color:var(--emerald); font-weight:700; background:rgba(16,185,129,0.15); padding:4px 10px; border-radius:999px;">
+          Динамический расчет
+        </span>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px;">
+        <div>
+          <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:6px;">Сотрудников на рутине: <strong id="lbl-team-size" style="color:#fff;">5 чел</strong></label>
+          <input type="range" id="slider-team" min="1" max="50" value="5" style="width:100%; accent-color:var(--emerald);">
+        </div>
+        <div>
+          <label style="font-size:13px; color:var(--text-muted); display:block; margin-bottom:6px;">Средняя зарплата: <strong id="lbl-salary" style="color:#fff;">$800/мес</strong></label>
+          <input type="range" id="slider-salary" min="300" max="3000" step="50" value="800" style="width:100%; accent-color:var(--cyan);">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; background:rgba(0,0,0,0.4); padding:16px; border-radius:12px; text-align:center;">
+        <div>
+          <div style="font-size:11px; color:var(--text-muted);">Часов сэкономлено:</div>
+          <div id="calc-hours" style="font-size:18px; font-weight:800; color:var(--cyan); font-family:'JetBrains Mono', monospace;">125 ч/мес</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--text-muted);">Ваша выгода:</div>
+          <div id="calc-savings" style="font-size:18px; font-weight:800; color:var(--emerald); font-family:'JetBrains Mono', monospace;">$625/мес</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--text-muted);">Окупаемость инвестиции:</div>
+          <div id="calc-payback" style="font-size:18px; font-weight:800; color:#f59e0b; font-family:'JetBrains Mono', monospace;">{pkg['payback']}</div>
+        </div>
       </div>
     </div>
 
@@ -308,6 +344,40 @@ def generate_proposal_html(client_name: str, niche: str, package_id: str = "pkg-
       </a>
     </div>
   </div>
+
+  <script>
+    const packageCost = {pkg['price_val']};
+    const sTeam = document.getElementById('slider-team');
+    const sSalary = document.getElementById('slider-salary');
+    const lTeam = document.getElementById('lbl-team-size');
+    const lSalary = document.getElementById('lbl-salary');
+    const cHours = document.getElementById('calc-hours');
+    const cSavings = document.getElementById('calc-savings');
+    const cPayback = document.getElementById('calc-payback');
+
+    function updateCalc() {{
+      const team = parseInt(sTeam.value);
+      const salary = parseInt(sSalary.value);
+      lTeam.innerText = team + ' чел';
+      lSalary.innerText = '$' + salary + '/мес';
+
+      // 25 hours saved per employee per month (~1.2h / day)
+      const hoursSaved = team * 25;
+      const hourlyRate = salary / 160;
+      const monthlySavings = Math.round(hoursSaved * hourlyRate);
+      const annualSavings = monthlySavings * 12;
+      const dailySavings = monthlySavings / 22;
+      const paybackDays = Math.max(1, Math.round(packageCost / (dailySavings || 1)));
+
+      cHours.innerText = hoursSaved + ' ч/мес';
+      cSavings.innerText = '$' + monthlySavings.toLocaleString() + '/мес';
+      cPayback.innerText = paybackDays + (paybackDays === 1 ? ' день' : (paybackDays < 5 ? ' дня' : ' дней'));
+    }}
+
+    sTeam.addEventListener('input', updateCalc);
+    sSalary.addEventListener('input', updateCalc);
+    updateCalc();
+  </script>
 </body>
 </html>"""
 
@@ -329,5 +399,26 @@ def generate_proposal_html(client_name: str, niche: str, package_id: str = "pkg-
 
     return proposal_path
 
+def generate_all_proposals(client_name: str = "Партнер", niche: str = "B2B"):
+    """Генерирует коммерческие предложения для всех доступных тарифов."""
+    created = []
+    for pkg_id in PACKAGES.keys():
+        p = generate_proposal_html(client_name, niche, pkg_id)
+        created.append(p)
+    return created
+
 if __name__ == "__main__":
-    generate_proposal_html("ООО «ПромТехИнвест»", "Производство и Поставки", "pkg-sovereign")
+    import argparse
+    parser = argparse.ArgumentParser(description="Hormozi Proposal Engine")
+    parser.add_argument("--client", type=str, default="ООО «ПромТехИнвест»", help="Client name")
+    parser.add_argument("--niche", type=str, default="Производство и Поставки", help="Industry/Niche")
+    parser.add_argument("--pkg", type=str, default="pkg-sovereign", help="Package ID")
+    parser.add_argument("--all", action="store_true", help="Generate for all tiers")
+    args = parser.parse_args()
+
+    if args.all:
+        print(f"🚀 Генерация КП по всем тарифам для: {args.client}")
+        results = generate_all_proposals(args.client, args.niche)
+        print(f"✅ Создано {len(results)} предложений.")
+    else:
+        generate_proposal_html(args.client, args.niche, args.pkg)
