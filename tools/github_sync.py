@@ -29,6 +29,7 @@ SYNC_FILES = [
     "Teleprompter_Studio.html",
     "video_studio.html",
     "client_portal.html",
+    "sovereign_transformation.html",
     "css/main.css",
     "js/app.js",
     "js/hormozi_engine.js",

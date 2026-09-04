@@ -12,6 +12,10 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEMORY_DIR = os.path.join(ROOT_DIR, "_MEMORY")
 
 def run_git_command(command, cwd=ROOT_DIR):
+    git_exe = r"C:\Program Files\Git\bin\git.exe"
+    # Replace the generic "git" with the absolute path
+    if command[0] == "git":
+        command[0] = git_exe
     try:
         result = subprocess.run(command, cwd=cwd, check=True, capture_output=True, text=True, encoding='utf-8')
         return result.stdout.strip()
