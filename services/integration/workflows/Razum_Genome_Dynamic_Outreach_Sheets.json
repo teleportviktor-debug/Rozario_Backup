@@ -1,0 +1,186 @@
+{
+  "name": "Razum_Genome_Dynamic_Outreach_Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1fVe94GnUznuIVZr71hK561GMICQs9dt9qXHaPzINk7M",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Leads"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "id": "node-gsheet-trigger-01",
+      "name": "Google Sheets Trigger",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/v1/outreach/dispatch",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer ntn_YOUR_INTERNAL_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "ngrok-skip-browser-warning",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"company_name\": \"{{ $json.company_name || $json.Company || 'Enterprise Client' }}\",\n  \"primary_bottleneck\": \"{{ $json.primary_bottleneck || $json.Bottleneck || 'API Token Overspend & Latency' }}\",\n  \"lead_urgency_score\": \"{{ $json.lead_urgency_score || $json.Score || 'Score: 94/100 | Tier-1 Enterprise' }}\",\n  \"custom_cta_url\": \"{{ $json.custom_cta_url || $json.CTA || 'https://razum.ai/audit' }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "node-http-dispatch-02",
+      "name": "Generate Personalized Reel & Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1fVe94GnUznuIVZr71hK561GMICQs9dt9qXHaPzINk7M",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "VideoURL": "={{ $json.video_url }}",
+            "EmailSubject": "={{ $json.email_subject }}"
+          },
+          "matchingColumns": [
+            "Company"
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-gsheet-write-03",
+      "name": "Write Video Link to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1fVe94GnUznuIVZr71hK561GMICQs9dt9qXHaPzINk7M",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Draft Ready"
+          },
+          "matchingColumns": [
+            "Company"
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-gsheet-status-04",
+      "name": "Mark Status Draft Ready",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        980,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Generate Personalized Reel & Card",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Personalized Reel & Card": {
+      "main": [
+        [
+          {
+            "node": "Write Video Link to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Video Link to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Mark Status Draft Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

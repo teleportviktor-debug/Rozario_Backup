@@ -1,0 +1,168 @@
+{
+  "sync_history": [
+    {
+      "timestamp": 1788550121.7266817,
+      "action": "CREATE_SOURCE",
+      "file": "2026_MASTER_ROADMAP_90_DAYS.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_7118a9d94e61"
+    },
+    {
+      "timestamp": 1788550121.7323916,
+      "action": "CREATE_SOURCE",
+      "file": "CLAUDE_OPUS_STRATEGIC_AUDIT.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_255988cabeda"
+    },
+    {
+      "timestamp": 1788550121.7377517,
+      "action": "CREATE_SOURCE",
+      "file": "STRATEGIC_AUDIT_RESULTS.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_e63ce414bd92"
+    },
+    {
+      "timestamp": 1788550121.738416,
+      "action": "CREATE_SOURCE",
+      "file": "SYSTEM_GENOME_STATE.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_1eb15a9a8b52"
+    },
+    {
+      "timestamp": 1788550121.7389934,
+      "action": "CREATE_SOURCE",
+      "file": "VISUAL_DNA_REGISTRY.md",
+      "notebook_id": "notebooks/6a67491f-3cc2-4ccf-a2af-d67dd25171f8",
+      "source_id": "src_d5f7e05bc65b"
+    },
+    {
+      "timestamp": 1788550121.7394981,
+      "action": "CREATE_SOURCE",
+      "file": "CRM_PIPELINE_SPECIFICATION.md",
+      "notebook_id": "notebooks/a8546f6f-d37d-4c51-a394-2f5193a6f9fb",
+      "source_id": "src_d30a7ff9896b"
+    },
+    {
+      "timestamp": 1788550121.7400086,
+      "action": "CREATE_SOURCE",
+      "file": "GENERATIVE_TEMPLATES.md",
+      "notebook_id": "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185",
+      "source_id": "src_b506d2b82e9d"
+    },
+    {
+      "timestamp": 1788550121.7405212,
+      "action": "CREATE_SOURCE",
+      "file": "LEAD_SCORING_HORMOZI.md",
+      "notebook_id": "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185",
+      "source_id": "src_10cab066b35e"
+    },
+    {
+      "timestamp": 1788550121.7410338,
+      "action": "CREATE_SOURCE",
+      "file": "CONTENT_PRODUCTION_MATRIX.md",
+      "notebook_id": "notebooks/e2628ca6-8790-470d-863c-8f96c56e08fb",
+      "source_id": "src_48fec5f4af27"
+    }
+  ],
+  "sources": {
+    "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7::2026_MASTER_ROADMAP_90_DAYS.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "2026_MASTER_ROADMAP_90_DAYS.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_7118a9d94e61",
+      "hash": "cd06b2443715f94ecc9c6841969d7d3219e998d799b002318016681e0ca41705",
+      "bytes_synced": 4683,
+      "timestamp": 1788550121.7266583,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7::CLAUDE_OPUS_STRATEGIC_AUDIT.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "CLAUDE_OPUS_STRATEGIC_AUDIT.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_255988cabeda",
+      "hash": "9bc7b5dcd848902ec1a9fab5425e3293c923a1c55d78e9af14681c929c9f1dbc",
+      "bytes_synced": 7658,
+      "timestamp": 1788550121.732377,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7::STRATEGIC_AUDIT_RESULTS.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "STRATEGIC_AUDIT_RESULTS.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_e63ce414bd92",
+      "hash": "67578b02ee65ae75b1dd499b2b598898b2ab0d64653c1b72c4a1cb8a89c54d87",
+      "bytes_synced": 18776,
+      "timestamp": 1788550121.7377396,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7::SYSTEM_GENOME_STATE.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "SYSTEM_GENOME_STATE.md",
+      "notebook_id": "notebooks/f616009b-aee3-4002-aeef-b5fed3975ce7",
+      "source_id": "src_1eb15a9a8b52",
+      "hash": "c05106f5ac4683ca94289d91401620348de9a8421f16c6043a9fb271e762a592",
+      "bytes_synced": 1686,
+      "timestamp": 1788550121.7384057,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/6a67491f-3cc2-4ccf-a2af-d67dd25171f8::VISUAL_DNA_REGISTRY.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "VISUAL_DNA_REGISTRY.md",
+      "notebook_id": "notebooks/6a67491f-3cc2-4ccf-a2af-d67dd25171f8",
+      "source_id": "src_d5f7e05bc65b",
+      "hash": "d06a31056629dcfd938aa025780575aea8d4dfd008aafe5d748f46d69c01aa76",
+      "bytes_synced": 3892,
+      "timestamp": 1788550121.7389865,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/a8546f6f-d37d-4c51-a394-2f5193a6f9fb::CRM_PIPELINE_SPECIFICATION.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "CRM_PIPELINE_SPECIFICATION.md",
+      "notebook_id": "notebooks/a8546f6f-d37d-4c51-a394-2f5193a6f9fb",
+      "source_id": "src_d30a7ff9896b",
+      "hash": "f759efddccc5afbd6be2d7269bcf52541513d566ae0a3b6d1b33846d5b8962b6",
+      "bytes_synced": 2003,
+      "timestamp": 1788550121.7394907,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185::GENERATIVE_TEMPLATES.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "GENERATIVE_TEMPLATES.md",
+      "notebook_id": "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185",
+      "source_id": "src_b506d2b82e9d",
+      "hash": "5166963cf803e3d2f18cd0033a2a28766cd0e7f58a365873d6a7c8427cd98d8d",
+      "bytes_synced": 1639,
+      "timestamp": 1788550121.7400033,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185::LEAD_SCORING_HORMOZI.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "LEAD_SCORING_HORMOZI.md",
+      "notebook_id": "notebooks/fa1411c4-bf25-47d9-bdea-d42b23d95185",
+      "source_id": "src_10cab066b35e",
+      "hash": "c74afa2610231d19171502347daaa354c900312af199a7836f7da997f9e71ab4",
+      "bytes_synced": 4818,
+      "timestamp": 1788550121.7405155,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    },
+    "notebooks/e2628ca6-8790-470d-863c-8f96c56e08fb::CONTENT_PRODUCTION_MATRIX.md": {
+      "status": "SYNCED",
+      "action": "CREATE_SOURCE",
+      "filename": "CONTENT_PRODUCTION_MATRIX.md",
+      "notebook_id": "notebooks/e2628ca6-8790-470d-863c-8f96c56e08fb",
+      "source_id": "src_48fec5f4af27",
+      "hash": "709418ab827a60faed68c452eca62de575d381eddbd02d4e05d9d40654a61e15",
+      "bytes_synced": 2145,
+      "timestamp": 1788550121.7410285,
+      "last_synced_utc": "2026-09-04 19:28:41 UTC"
+    }
+  }
+}

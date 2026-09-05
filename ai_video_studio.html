@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>AI Teleprompter & Video Studio 2026</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #000000;
+      --bg-surface: #0a0d14;
+      --bg-surface-elevated: #111726;
+      --border-dim: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(6, 182, 212, 0.35);
+      
+      --cyan: #06b6d4;
+      --cyan-glow: rgba(6, 182, 212, 0.3);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amber: #fbbf24;
+      --coral: #f43f5e;
+      --coral-glow: rgba(244, 63, 94, 0.3);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      inset: 0;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+
+    /* TOP NAVIGATION */
+    header {
+      padding-top: calc(var(--safe-top) + 6px);
+      padding-bottom: 8px;
+      padding-left: calc(var(--safe-left) + 12px);
+      padding-right: calc(var(--safe-right) + 12px);
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-dim);
+      gap: 6px;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .tab-pills {
+      display: flex;
+      background: var(--bg-surface-elevated);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid var(--border-dim);
+      max-width: 100%;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-btn.active {
+      background: #000000;
+      color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      width: 100%;
+    }
+
+    .tab-content {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tab-content.active {
+      display: flex;
+    }
+
+    /* =========================================================
+       MODE 1: TELEPROMPTER PRO
+       ========================================================= */
+    #mode-prompter {
+      background: #000000;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Eye Cue Marker at exactly 35% viewport height */
+    .eye-marker {
+      position: absolute;
+      top: 35%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--cyan) 18%, var(--emerald) 82%, transparent 100%);
+      pointer-events: none;
+      z-index: 20;
+      box-shadow: 0 0 16px var(--cyan);
+    }
+
+    .eye-marker-label {
+      position: absolute;
+      right: 12px;
+      top: -18px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      background: rgba(6, 182, 212, 0.12);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      backdrop-filter: blur(4px);
+    }
+
+    .prompter-viewport {
+      flex: 1;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      position: relative;
+      scroll-behavior: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 20px;
+    }
+
+    .prompter-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .prompter-content {
+      padding-top: 35vh;
+      padding-bottom: 80vh;
+      max-width: 780px;
+      margin: 0 auto;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 1.48;
+      letter-spacing: -0.015em;
+      transition: transform 0.15s ease-out;
+      transform-origin: center center;
+    }
+
+    .prompter-content.mirrored {
+      transform: scaleX(-1);
+    }
+
+    /* Floating HUD */
+    .prompter-hud {
+      position: absolute;
+      bottom: calc(var(--safe-bottom) + 12px);
+      left: 10px;
+      right: 10px;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .prompter-hud.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(24px);
+    }
+
+    .hud-card {
+      background: rgba(10, 13, 20, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-dim);
+      border-radius: 18px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85);
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 2px 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hud-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-dim);
+      color: var(--text-main);
+      height: 38px;
+      min-width: 36px;
+      padding: 0 8px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .hud-btn:active {
+      transform: scale(0.92);
+      background: #1e293b;
+    }
+
+    .hud-btn.active {
+      background: rgba(6, 182, 212, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .play-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      color: #000000;
+      font-weight: 800;
+      border: none;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 12px;
+      box-shadow: 0 0 16px var(--cyan-glow);
+      font-family: var(--font-display);
+    }
+
+    .play-btn.running {
+      background: linear-gradient(135deg, var(--coral), #be123c);
+      color: #ffffff;
+      box-shadow: 0 0 16px var(--coral-glow);
+    }
+
+    .hud-value-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan);
+      min-width: 38px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .hud-hint {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
+    /* Countdown Overlay */
+    .countdown-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .countdown-overlay.show {
+      display: flex;
+    }
+
+    .countdown-number {
+      font-family: var(--font-mono);
+      font-size: 6.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: zoomInCountdown 0.75s infinite cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes zoomInCountdown {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    /* =========================================================
+       MODE 2: SHORTS / REELS 9:16 STUDIO
+       ========================================================= */
+    #mode-studio {
+      background: var(--bg-surface);
+      padding: 10px 12px;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #mode-studio.active {
+      display: flex;
+    }
+
+    .studio-shell {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 auto;
+      padding-bottom: calc(var(--safe-bottom) + 24px);
+    }
+
+    .video-frame-916 {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 57dvh;
+      margin: 0 auto;
+      background: #000000;
+      border-radius: 20px;
+      border: 1px solid var(--border-dim);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-frame-916.active-glow {
+      border-color: var(--cyan);
+      box-shadow: 0 0 25px var(--cyan-glow);
+    }
+
+    #studio-video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .placeholder-guide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      gap: 10px;
+    }
+
+    .placeholder-orb {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px dashed var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan);
+      font-size: 1.4rem;
+    }
+
+    /* Dynamic Neon Subtitles */
+    .neon-subtitles-box {
+      position: absolute;
+      bottom: 20px;
+      left: 12px;
+      right: 12px;
+      z-index: 15;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .neon-badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .badge-coral {
+      background: rgba(244, 63, 94, 0.2);
+      border: 1px solid var(--coral);
+      color: var(--coral);
+      box-shadow: 0 0 10px var(--coral-glow);
+    }
+
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.2);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald-glow);
+    }
+
+    .neon-text-body {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* 15-sec Rehearsal Gauge */
+    .rehearsal-meter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      z-index: 25;
+    }
+
+    .rehearsal-meter-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--coral) 0%, var(--cyan) 50%, var(--emerald) 100%);
+      transition: width 0.05s linear;
+    }
+
+    .timer-badge-chip {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--amber);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      z-index: 20;
+    }
+
+    /* Studio Controls Grid */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .source-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-dim);
+      color: var(--text-main);
+      padding: 9px 4px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .source-btn:active {
+      border-color: var(--cyan);
+      background: rgba(6, 182, 212, 0.15);
+    }
+
+    .source-icon {
+      font-size: 1.15rem;
+    }
+
+    .studio-ops-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .rehearse-action-btn {
+      flex: 1;
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #e0e7ff;
+      padding: 11px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .rehearse-action-btn.active {
+      background: linear-gradient(135deg, var(--coral), #be123c);
+      color: #ffffff;
+    }
+
+    .export-action-btn {
+      flex: 1;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      padding: 11px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    input[type="file"].native-hidden {
+      display: none;
+    }
+
+    /* =========================================================
+       MODE 3: B2B SCRIPTS DATABASE & EDITOR
+       ========================================================= */
+    #mode-scripts {
+      background: var(--bg-surface);
+      padding: 12px;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #mode-scripts.active {
+      display: flex;
+    }
+
+    .scripts-viewport {
+      max-width: 660px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-bottom: calc(var(--safe-bottom) + 36px);
+    }
+
+    .editor-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .editor-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-display);
+    }
+
+    #custom-text-field {
+      width: 100%;
+      height: 110px;
+      background: #000000;
+      color: #ffffff;
+      border: 1px solid var(--border-dim);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      line-height: 1.42;
+      resize: vertical;
+      outline: none;
+      user-select: text;
+    }
+
+    #custom-text-field:focus {
+      border-color: var(--cyan);
+    }
+
+    .apply-custom-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      color: #000000;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-display);
+    }
+
+    .offers-heading {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-top: 4px;
+    }
+
+    .script-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .script-card:hover, .script-card.active-card {
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.18);
+      background: rgba(14, 21, 35, 0.95);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-id-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .card-price-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .card-snippet {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-tags-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .mini-tag {
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+    }
+
+    /* Toast System */
+    .toast-pill {
+      position: fixed;
+      top: calc(var(--safe-top) + 56px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(16, 185, 129, 0.95);
+      color: #000000;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 7px 16px;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 250;
+    }
+
+    .toast-pill.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Top Global Header -->
+  <header id="main-header">
+    <div class="brand">
+      <span class="brand-badge">⚡ 2026 AI</span>
+      <span>STUDIO</span>
+    </div>
+
+    <nav class="tab-pills">
+      <button class="tab-btn active" data-tab="mode-prompter" id="tab-nav-prompter">
+        <span>📜 Суфлер</span>
+      </button>
+      <button class="tab-btn" data-tab="mode-studio" id="tab-nav-studio">
+        <span>📹 Видео 9:16</span>
+      </button>
+      <button class="tab-btn" data-tab="mode-scripts" id="tab-nav-scripts">
+        <span>💡 Скрипты</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- MODE 1: TELEPROMPTER PRO -->
+    <section id="mode-prompter" class="tab-content active">
+      <!-- 35% Eye-Level Cue Line -->
+      <div class="eye-marker">
+        <span class="eye-marker-label">👁️ ВЗГЛЯД В КАМЕРУ (35%)</span>
+      </div>
+
+      <!-- Scrollable Text Area -->
+      <div class="prompter-viewport" id="prompter-scroll-view">
+        <div class="prompter-content" id="prompter-render-text" style="font-size: 32px;"></div>
+      </div>
+
+      <!-- Floating HUD -->
+      <div class="prompter-hud" id="prompter-floating-hud">
+        <div class="hud-card">
+          <button class="hud-btn play-btn" id="btn-toggle-teleprompter">
+            <span id="play-btn-text">▶ СТАРТ</span>
+          </button>
+
+          <!-- Speed Controls -->
+          <div class="ctrl-group">
+            <button class="hud-btn" id="btn-speed-minus">S−</button>
+            <div class="hud-value-badge" id="hud-speed-val">3.0x</div>
+            <button class="hud-btn" id="btn-speed-plus">S+</button>
+          </div>
+
+          <!-- Font Size Controls -->
+          <div class="ctrl-group">
+            <button class="hud-btn" id="btn-font-minus">A−</button>
+            <div class="hud-value-badge" id="hud-font-val">32px</div>
+            <button class="hud-btn" id="btn-font-plus">A+</button>
+          </div>
+
+          <!-- Flip Horizontal (Mirror) -->
+          <button class="hud-btn" id="btn-toggle-mirror" title="Зеркальный режим для полупрозрачных стекол">
+            <span>⇄ Зеркало</span>
+          </button>
+        </div>
+
+        <div class="hud-hint">
+          Тап по тексту скрывает кнопки • Screen Wake Lock активен
+        </div>
+      </div>
+
+      <!-- 3.. 2.. 1.. GO Overlay -->
+      <div class="countdown-overlay" id="prestart-countdown-overlay">
+        <div class="countdown-number" id="countdown-digit">3</div>
+      </div>
+    </section>
+
+    <!-- MODE 2: SHORTS / REELS 9:16 STUDIO -->
+    <section id="mode-studio" class="tab-content">
+      <div class="studio-shell">
+        <div class="video-frame-916" id="video-display-frame">
+          <!-- 15s Rehearsal Meter -->
+          <div class="rehearsal-meter">
+            <div class="rehearsal-meter-fill" id="rehearsal-meter-bar"></div>
+          </div>
+          <div class="timer-badge-chip" id="rehearsal-time-label">00:15</div>
+
+          <!-- HTML5 Video Surface -->
+          <video id="studio-video-player" playsinline controlsList="nodownload"></video>
+
+          <div class="placeholder-guide" id="video-empty-state">
+            <div class="placeholder-orb">🎬</div>
+            <div style="font-weight: 700; color: #ffffff; font-size: 0.9rem;">Формат Reels & Shorts 9:16</div>
+            <div style="font-size: 0.72rem;">Запишите дубль на камеру или проведите 15-секундную репетицию</div>
+          </div>
+
+          <!-- Neon Dynamic Captions -->
+          <div class="neon-subtitles-box" id="neon-subtitles-box">
+            <div class="neon-badge badge-coral" id="caption-phase-badge">ХУК (0-4 СЕК)</div>
+            <div class="neon-text-body" id="caption-body-text">Вы теряете до $300 на каждом сотруднике прямо сейчас...</div>
+          </div>
+        </div>
+
+        <!-- Camera / File Native Pickers -->
+        <div class="studio-grid">
+          <label class="source-btn">
+            <span class="source-icon">🤳</span>
+            <span>Селфи-камера</span>
+            <input type="file" accept="video/*" capture="user" class="native-hidden" id="native-capture-selfie">
+          </label>
+
+          <label class="source-btn">
+            <span class="source-icon">📹</span>
+            <span>Основная</span>
+            <input type="file" accept="video/*" capture="environment" class="native-hidden" id="native-capture-back">
+          </label>
+
+          <label class="source-btn">
+            <span class="source-icon">📁</span>
+            <span>Галерея</span>
+            <input type="file" accept="video/*" class="native-hidden" id="native-file-picker">
+          </label>
+        </div>
+
+        <!-- Operations Row -->
+        <div class="studio-ops-row">
+          <button class="rehearse-action-btn" id="btn-trigger-rehearsal">
+            <span>⏱️ Репетиция 15 сек (с титрами)</span>
+          </button>
+          <a class="export-action-btn" id="btn-export-recording" download="studio-reels-2026.mp4">
+            <span>📥 Скачать видео</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 3: B2B SCRIPTS DATABASE & EDITOR -->
+    <section id="mode-scripts" class="tab-content">
+      <div class="scripts-viewport">
+        <!-- Interactive Custom Editor -->
+        <div class="editor-box">
+          <div class="editor-bar">
+            <span class="editor-label">✏️ Редактор собственного оффера</span>
+            <span style="font-size: 0.68rem; color: var(--emerald); font-weight: 700;">localStorage synced</span>
+          </div>
+          <textarea id="custom-text-field" placeholder="Введите ваш собственный скрипт или тезисы спикера..."></textarea>
+          <button class="apply-custom-btn" id="btn-commit-custom-script">
+            <span>🚀 Использовать в суфлере</span>
+          </button>
+        </div>
+
+        <div class="offers-heading">🔥 6 Готовых B2B Офферов 2026:</div>
+
+        <div id="b2b-cards-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast-pill" id="global-toast">Текст загружен</div>
+</div>
+
+<script>
+  /* ==========================================================
+     6 PRELOADED 2026 B2B HIGH-CONVERTING OFFERS
+     ========================================================== */
+  const B2B_OFFERS_DATABASE = [
+    {
+      id: 1,
+      title: "Суверенный Контур Google Workspace vs SaaS",
+      price: "$300 / раб. место",
+      tag: "Enterprise Cloud",
+      hook: "Вы платите по $300 каждый месяц за сотрудника зарубежным SaaS, рискуя мгновенной блокировкой доступа?",
+      facts: "В 2026 году компании переходят на суверенный AI-контур. Мы разворачиваем локализованный Google Workspace-аналог с полной изоляцией баз данных за 72 часа без простоя рабочих процессов.",
+      cta: "Напишите в Telegram кодовое слово 'КОНТУР' — заберите готовый аудит и расчет окупаемости перехода за 4 месяца."
+    },
+    {
+      id: 2,
+      title: "Разбор счетов PDF за 3 сек с Gemini Flash Lite",
+      price: "$50 / поток",
+      tag: "DocAI Automation",
+      hook: "Бухгалтерия тратит по 15 минут на ручной перенос номенклатуры из одного кривого PDF-счета?",
+      facts: "Архитектура Gemini Flash Lite 2026 обрабатывает многостраничные таблицы, рукописные печати и акты сверки за 3.2 секунды с гарантированной точностью 99.8%. Себестоимость 1 000 счетов — менее $2.",
+      cta: "Пришлите 1 реальный проблемный PDF в ответ на это видео — бот отдаст валидный JSON для 1С за 30 секунд."
+    },
+    {
+      id: 3,
+      title: "B2B Hormozi Lead Scorer: квалификация лидов",
+      price: "$200 / проект",
+      tag: "High-Ticket Sales",
+      hook: "Ваш отдел продаж сливает 80% времени на неплатежеспособных лидов, которым 'просто спросить'?",
+      facts: "AI Lead Scorer сканирует цифровой след, финансовую выручку и профиль компании за 2 секунды до звонка. Менеджер открывает CRM с уже готовым персонализированным скриптом под боли ЛПРа.",
+      cta: "Кликайте по ссылке в описании: бесплатно протестируйте скорер на 10 входящих заявках прямо сегодня."
+    },
+    {
+      id: 4,
+      title: "White-Label Genesis Enterprise AI",
+      price: "$500 / лицензия",
+      tag: "Agency Scale",
+      hook: "Запустите собственное Enterprise AI-агентство с чеками от $5,000 без найма дорогой команды ML-инженеров.",
+      facts: "Мы предоставляем готовую white-label экосистему Genesis 2026: мультиагентные пайплайны, коннекторы к CRM и биллинг сплит-платежей. Вы продаете под своим брендом, а поддержка инфраструктуры остается на нас.",
+      cta: "Забронируйте 20-минутное персональное демо по кнопке ниже и получите партнерский контракт первого уровня."
+    },
+    {
+      id: 5,
+      title: "Видео-Аудит за $2,500 с 1 дубля",
+      price: "$2,500 / аудит",
+      tag: "B2B Retention",
+      hook: "Как закрывать B2B-консалтинг с чеком $2,500, потратив всего 7 минут на запись экрана?",
+      facts: "Холодные PDF-коммерческие предложения больше не работают. Персонализированный 5-минутный скринкаст с разбором узких мест воронки и телесуфлером закрывает 4 из 10 сделок в день отправки.",
+      cta: "Заберите проверенный каркас продающего видео-аудита в закрепленном файле прямо сейчас."
+    },
+    {
+      id: 6,
+      title: "Секрет удержания 180 слов в минуту",
+      price: "High Retention",
+      tag: "Reels / Shorts",
+      hook: "Зритель смахивает ваш ролик уже на 2-й секунде, если вы делаете долгие паузы и бегаете глазами!",
+      facts: "Плотность речи 180 WPM, фиксация взгляда на уровне верхней трети (35% экрана) и динамическая подсветка тезисов повышают досмотры до 88%. Алгоритмы 2026 поощряют непрерывную динамику.",
+      cta: "Используйте этот телесуфлер прямо сейчас — жмите старт и запишите идеальный дубль с первой попытки!"
+    }
+  ];
+
+  /* ==========================================================
+     APPLICATION STATE
+     ========================================================== */
+  const state = {
+    selectedScriptIndex: 0,
+    // Teleprompter
+    isScrolling: false,
+    scrollSpeed: 3.0,
+    fontSize: 32,
+    isMirrored: false,
+    isHudVisible: true,
+    wakeLock: null,
+    rafId: null,
+    lastFrameTimestamp: 0,
+    subpixelAccumulator: 0,
+    // Studio
+    videoObjectUrl: null,
+    isRehearsalActive: false,
+    rehearsalIntervalId: null,
+    rehearsalStartTime: 0,
+    rehearsalTotalDuration: 15
+  };
+
+  /* ==========================================================
+     DOM SELECTORS
+     ========================================================== */
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabPanes = document.querySelectorAll('.tab-content');
+  const mainHeader = document.getElementById('main-header');
+
+  // Prompter
+  const prompterScrollView = document.getElementById('prompter-scroll-view');
+  const prompterRenderText = document.getElementById('prompter-render-text');
+  const prompterFloatingHud = document.getElementById('prompter-floating-hud');
+  const btnToggleTeleprompter = document.getElementById('btn-toggle-teleprompter');
+  const playBtnText = document.getElementById('play-btn-text');
+  const btnSpeedMinus = document.getElementById('btn-speed-minus');
+  const btnSpeedPlus = document.getElementById('btn-speed-plus');
+  const hudSpeedVal = document.getElementById('hud-speed-val');
+  const btnFontMinus = document.getElementById('btn-font-minus');
+  const btnFontPlus = document.getElementById('btn-font-plus');
+  const hudFontVal = document.getElementById('hud-font-val');
+  const btnToggleMirror = document.getElementById('btn-toggle-mirror');
+  const prestartCountdownOverlay = document.getElementById('prestart-countdown-overlay');
+  const countdownDigit = document.getElementById('countdown-digit');
+
+  // Studio
+  const studioVideoPlayer = document.getElementById('studio-video-player');
+  const videoEmptyState = document.getElementById('video-empty-state');
+  const videoDisplayFrame = document.getElementById('video-display-frame');
+  const rehearsalMeterBar = document.getElementById('rehearsal-meter-bar');
+  const rehearsalTimeLabel = document.getElementById('rehearsal-time-label');
+  const captionPhaseBadge = document.getElementById('caption-phase-badge');
+  const captionBodyText = document.getElementById('caption-body-text');
+  const btnTriggerRehearsal = document.getElementById('btn-trigger-rehearsal');
+  const btnExportRecording = document.getElementById('btn-export-recording');
+  const nativeCaptureSelfie = document.getElementById('native-capture-selfie');
+  const nativeCaptureBack = document.getElementById('native-capture-back');
+  const nativeFilePicker = document.getElementById('native-file-picker');
+
+  // Scripts
+  const b2bCardsContainer = document.getElementById('b2b-cards-container');
+  const customTextField = document.getElementById('custom-text-field');
+  const btnCommitCustomScript = document.getElementById('btn-commit-custom-script');
+  const globalToast = document.getElementById('global-toast');
+
+  /* ==========================================================
+     APP BOOTSTRAP
+     ========================================================== */
+  function bootstrapStudioApp() {
+    // Restore persistent custom draft
+    const cachedCustom = localStorage.getItem('studio_custom_offer_2026');
+    if (cachedCustom) {
+      customTextField.value = cachedCustom;
+    }
+
+    renderB2BCards();
+    applyScriptToPrompter(0);
+    bindTabNavigation();
+    bindPrompterInteractions();
+    bindStudioInteractions();
+    bindWakeLockWatchers();
+  }
+
+  function triggerToast(message) {
+    globalToast.textContent = message;
+    globalToast.classList.add('visible');
+    setTimeout(() => {
+      globalToast.classList.remove('visible');
+    }, 2200);
+  }
+
+  /* ==========================================================
+     TAB SWITCHING LOGIC
+     ========================================================== */
+  function bindTabNavigation() {
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-tab');
+
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabPanes.forEach(p => p.classList.remove('active'));
+
+        button.classList.add('active');
+        document.getElementById(targetId).classList.add('active');
+
+        // Safety: pause prompter when leaving prompter tab
+        if (targetId !== 'mode-prompter' && state.isScrolling) {
+          haltPrompter();
+        }
+      });
+    });
+  }
+
+  /* ==========================================================
+     PROMPTER CORE ENGINE (rAF 60-120Hz Subpixel)
+     ========================================================== */
+  function generatePrompterMarkup(offer) {
+    return `
+      <div style="margin-bottom: 22px; color: var(--coral); font-family: var(--font-mono); font-size: 0.68em; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">
+        🔥 [ХУК • 0-4 СЕКУНДЫ]
+      </div>
+      <div style="margin-bottom: 38px; line-height: 1.44;">
+        ${offer.hook}
+      </div>
+
+      <div style="margin-bottom: 22px; color: var(--cyan); font-family: var(--font-mono); font-size: 0.68em; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">
+        ⚡ [СУТЬ & ЦИФРЫ • 4-11 СЕКУНД]
+      </div>
+      <div style="margin-bottom: 38px; line-height: 1.44;">
+        ${offer.facts}
+      </div>
+
+      <div style="margin-bottom: 22px; color: var(--emerald); font-family: var(--font-mono); font-size: 0.68em; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">
+        🚀 [ПРИЗЫВ К ДЕЙСТВИЮ • 11-15 СЕКУНД]
+      </div>
+      <div style="margin-bottom: 50px; line-height: 1.44;">
+        ${offer.cta}
+      </div>
+
+      <div style="text-align: center; color: var(--text-muted); font-size: 0.55em; font-family: var(--font-mono); border-top: 1px dashed var(--border-dim); padding-top: 18px;">
+        — ЗАВЕРШЕНИЕ ДУБЛЯ 2026 —
+      </div>
+    `;
+  }
+
+  function applyScriptToPrompter(index) {
+    state.selectedScriptIndex = index;
+    const item = B2B_OFFERS_DATABASE[index];
+    prompterRenderText.innerHTML = generatePrompterMarkup(item);
+    syncCaptionsWithTime(0);
+    prompterScrollView.scrollTop = 0;
+    state.subpixelAccumulator = 0;
+
+    const cards = document.querySelectorAll('.script-card');
+    cards.forEach((card, i) => {
+      card.classList.toggle('active-card', i === index);
+    });
+  }
+
+  function bindPrompterInteractions() {
+    // Start / Pause button
+    btnToggleTeleprompter.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (state.isScrolling) {
+        haltPrompter();
+      } else {
+        triggerCountdownSequence();
+      }
+    });
+
+    // Speed Controls (1.0x to 12.0x)
+    btnSpeedPlus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (state.scrollSpeed < 12.0) {
+        state.scrollSpeed = parseFloat((state.scrollSpeed + 0.5).toFixed(1));
+        hudSpeedVal.textContent = `${state.scrollSpeed}x`;
+      }
+    });
+
+    btnSpeedMinus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (state.scrollSpeed > 1.0) {
+        state.scrollSpeed = parseFloat((state.scrollSpeed - 0.5).toFixed(1));
+        hudSpeedVal.textContent = `${state.scrollSpeed}x`;
+      }
+    });
+
+    // Font Controls (18px to 64px)
+    btnFontPlus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (state.fontSize < 64) {
+        state.fontSize += 4;
+        prompterRenderText.style.fontSize = `${state.fontSize}px`;
+        hudFontVal.textContent = `${state.fontSize}px`;
+      }
+    });
+
+    btnFontMinus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (state.fontSize > 18) {
+        state.fontSize -= 4;
+        prompterRenderText.style.fontSize = `${state.fontSize}px`;
+        hudFontVal.textContent = `${state.fontSize}px`;
+      }
+    });
+
+    // Mirror Switch
+    btnToggleMirror.addEventListener('click', (e) => {
+      e.stopPropagation();
+      state.isMirrored = !state.isMirrored;
+      prompterRenderText.classList.toggle('mirrored', state.isMirrored);
+      btnToggleMirror.classList.toggle('active', state.isMirrored);
+      triggerToast(state.isMirrored ? "Зеркальный режим включен" : "Прямой режим");
+    });
+
+    // Viewport tap toggles HUD visibility
+    prompterScrollView.addEventListener('click', () => {
+      state.isHudVisible = !state.isHudVisible;
+      prompterFloatingHud.classList.toggle('hidden', !state.isHudVisible);
+      mainHeader.style.transform = state.isHudVisible ? 'translateY(0)' : 'translateY(-100%)';
+    });
+
+    // Sync subpixel position during user manual scrolls
+    prompterScrollView.addEventListener('scroll', () => {
+      if (!state.isScrolling) {
+        state.subpixelAccumulator = prompterScrollView.scrollTop;
+      }
+    }, { passive: true });
+  }
+
+  function triggerCountdownSequence() {
+    prestartCountdownOverlay.classList.add('show');
+    let count = 3;
+    countdownDigit.textContent = count;
+
+    const timer = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countdownDigit.textContent = count;
+      } else if (count === 0) {
+        countdownDigit.textContent = 'GO!';
+      } else {
+        clearInterval(timer);
+        prestartCountdownOverlay.classList.remove('show');
+        executePrompterMotion();
+      }
+    }, 850);
+  }
+
+  function executePrompterMotion() {
+    state.isScrolling = true;
+    playBtnText.textContent = '⏸ ПАУЗА';
+    btnToggleTeleprompter.classList.add('running');
+    state.lastFrameTimestamp = performance.now();
+    state.subpixelAccumulator = prompterScrollView.scrollTop;
+    acquireScreenWakeLock();
+
+    state.rafId = requestAnimationFrame(renderPrompterFrame);
+  }
+
+  function haltPrompter() {
+    state.isScrolling = false;
+    playBtnText.textContent = '▶ СТАРТ';
+    btnToggleTeleprompter.classList.remove('running');
+    if (state.rafId) {
+      cancelAnimationFrame(state.rafId);
+      state.rafId = null;
+    }
+    dropScreenWakeLock();
+  }
+
+  function renderPrompterFrame(now) {
+    if (!state.isScrolling) return;
+
+    const delta = (now - state.lastFrameTimestamp) / 1000;
+    state.lastFrameTimestamp = now;
+
+    // Smooth baseline: 46px/sec at 1.0x
+    const pixelsPerSecond = 46 * state.scrollSpeed;
+    state.subpixelAccumulator += pixelsPerSecond * delta;
+
+    prompterScrollView.scrollTop = state.subpixelAccumulator;
+
+    const maxScrollHeight = prompterScrollView.scrollHeight - prompterScrollView.clientHeight;
+    if (prompterScrollView.scrollTop >= maxScrollHeight - 2) {
+      haltPrompter();
+      triggerToast("Дубль завершен!");
+      return;
+    }
+
+    state.rafId = requestAnimationFrame(renderPrompterFrame);
+  }
+
+  /* ==========================================================
+     SCREEN WAKE LOCK API (Continuous mobile display)
+     ========================================================= */
+  async function acquireScreenWakeLock() {
+    try {
+      if ('wakeLock' in navigator) {
+        state.wakeLock = await navigator.wakeLock.request('screen');
+      }
+    } catch (err) {
+      // Graceful fallback for unsupported browsers
+      console.warn("Screen Wake Lock unavailable:", err);
+    }
+  }
+
+  function dropScreenWakeLock() {
+    if (state.wakeLock) {
+      state.wakeLock.release().catch(() => {});
+      state.wakeLock = null;
+    }
+  }
+
+  function bindWakeLockWatchers() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && state.isScrolling) {
+        acquireScreenWakeLock();
+      }
+    });
+  }
+
+  /* ==========================================================
+     MODE 2: STUDIO & 15-SECOND REHEARSAL ENGINE
+     ========================================================== */
+  function bindStudioInteractions() {
+    const handleUploadedVideo = (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        if (state.videoObjectUrl) {
+          URL.revokeObjectURL(state.videoObjectUrl);
+        }
+        state.videoObjectUrl = URL.createObjectURL(file);
+        studioVideoPlayer.src = state.videoObjectUrl;
+        studioVideoPlayer.style.display = 'block';
+        videoEmptyState.style.display = 'none';
+
+        btnExportRecording.href = state.videoObjectUrl;
+        btnExportRecording.download = `b2b-reels-${Date.now()}.mp4`;
+        btnExportRecording.style.display = 'inline-flex';
+
+        triggerToast("Видео загружено в студию!");
+        studioVideoPlayer.play().catch(() => {});
+      }
+    };
+
+    nativeCaptureSelfie.addEventListener('change', handleUploadedVideo);
+    nativeCaptureBack.addEventListener('change', handleUploadedVideo);
+    nativeFilePicker.addEventListener('change', handleUploadedVideo);
+
+    btnTriggerRehearsal.addEventListener('click', toggleRehearsalSession);
+
+    studioVideoPlayer.addEventListener('timeupdate', () => {
+      if (!state.isRehearsalActive && studioVideoPlayer.duration) {
+        const loopSecond = studioVideoPlayer.currentTime % 15;
+        syncCaptionsWithTime(loopSecond);
+      }
+    });
+  }
+
+  function toggleRehearsalSession() {
+    if (state.isRehearsalActive) {
+      terminateRehearsal();
+    } else {
+      beginRehearsal();
+    }
+  }
+
+  function beginRehearsal() {
+    state.isRehearsalActive = true;
+    btnTriggerRehearsal.classList.add('active');
+    btnTriggerRehearsal.innerHTML = '<span>⏹ Завершить репетицию</span>';
+    videoDisplayFrame.classList.add('active-glow');
+    state.rehearsalStartTime = performance.now();
+
+    if (studioVideoPlayer.src) {
+      studioVideoPlayer.currentTime = 0;
+      studioVideoPlayer.play().catch(() => {});
+    }
+
+    clearInterval(state.rehearsalIntervalId);
+    state.rehearsalIntervalId = setInterval(tickRehearsalProgress, 50);
+  }
+
+  function terminateRehearsal() {
+    state.isRehearsalActive = false;
+    btnTriggerRehearsal.classList.remove('active');
+    btnTriggerRehearsal.innerHTML = '<span>⏱️ Репетиция 15 сек (с титрами)</span>';
+    videoDisplayFrame.classList.remove('active-glow');
+    clearInterval(state.rehearsalIntervalId);
+    rehearsalMeterBar.style.width = '0%';
+    rehearsalTimeLabel.textContent = '00:15';
+    syncCaptionsWithTime(0);
+
+    if (studioVideoPlayer.src) {
+      studioVideoPlayer.pause();
+    }
+  }
+
+  function tickRehearsalProgress() {
+    const elapsed = (performance.now() - state.rehearsalStartTime) / 1000;
+    const normalized = Math.min(elapsed / state.rehearsalTotalDuration, 1.0);
+
+    rehearsalMeterBar.style.width = `${normalized * 100}%`;
+    const remaining = Math.max(0, Math.ceil(state.rehearsalTotalDuration - elapsed));
+    rehearsalTimeLabel.textContent = `00:${remaining < 10 ? '0' + remaining : remaining}`;
+
+    syncCaptionsWithTime(elapsed);
+
+    if (elapsed >= state.rehearsalTotalDuration) {
+      terminateRehearsal();
+      triggerToast("15 секунд истекли! Дубль готов.");
+    }
+  }
+
+  function syncCaptionsWithTime(seconds) {
+    const offer = B2B_OFFERS_DATABASE[state.selectedScriptIndex] || {
+      hook: "Хук не задан",
+      facts: "Факты не заданы",
+      cta: "Призыв не задан"
+    };
+
+    if (seconds < 4.0) {
+      captionPhaseBadge.className = 'neon-badge badge-coral';
+      captionPhaseBadge.textContent = 'ХУК (0-4 СЕК)';
+      captionBodyText.textContent = offer.hook;
+    } else if (seconds < 11.0) {
+      captionPhaseBadge.className = 'neon-badge badge-cyan';
+      captionPhaseBadge.textContent = 'ФАКТЫ & ЦИФРЫ (4-11 СЕК)';
+      captionBodyText.textContent = offer.facts;
+    } else {
+      captionPhaseBadge.className = 'neon-badge badge-emerald';
+      captionPhaseBadge.textContent = 'ПРИЗЫВ К ДЕЙСТВИЮ (11-15 СЕК)';
+      captionBodyText.textContent = offer.cta;
+    }
+  }
+
+  /* ==========================================================
+     MODE 3: SCRIPT LIBRARY & CUSTOM DRAFT EDITOR
+     ========================================================== */
+  function renderB2BCards() {
+    b2bCardsContainer.innerHTML = '';
+    B2B_OFFERS_DATABASE.forEach((offer, idx) => {
+      const card = document.createElement('div');
+      card.className = `script-card ${idx === state.selectedScriptIndex ? 'active-card' : ''}`;
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="card-id-badge">ОФФЕР #${offer.id}</span>
+          <span class="card-price-pill">${offer.price}</span>
+        </div>
+        <div class="card-title">${offer.title}</div>
+        <div class="card-snippet">${offer.hook}</div>
+        <div class="card-tags-row">
+          <span class="mini-tag">${offer.tag}</span>
+          <span class="mini-tag">15 сек</span>
+          <span class="mini-tag">180 WPM</span>
+        </div>
+      `;
+
+      card.addEventListener('click', () => {
+        applyScriptToPrompter(idx);
+        triggerToast(`Выбран скрипт #${offer.id}`);
+        document.getElementById('tab-nav-prompter').click();
+      });
+
+      b2bCardsContainer.appendChild(card);
+    });
+
+    // Custom Script Apply Action
+    btnCommitCustomScript.addEventListener('click', () => {
+      const customValue = customTextField.value.trim();
+      if (!customValue) {
+        triggerToast("Введите текст скрипта!");
+        return;
+      }
+
+      localStorage.setItem('studio_custom_offer_2026', customValue);
+
+      // Overwrite prompter markup with user-generated copy
+      prompterRenderText.innerHTML = `
+        <div style="margin-bottom: 18px; color: var(--cyan); font-family: var(--font-mono); font-size: 0.7em; font-weight: 800; text-transform: uppercase;">
+          ✨ [ПОЛЬЗОВАТЕЛЬСКИЙ B2B СЦЕНАРИЙ]
+        </div>
+        <div style="line-height: 1.48; white-space: pre-wrap;">
+          ${customValue}
+        </div>
+      `;
+
+      syncCaptionsWithTime(0);
+      prompterScrollView.scrollTop = 0;
+      state.subpixelAccumulator = 0;
+
+      triggerToast("Скрипт загружен в суфлер!");
+      document.getElementById('tab-nav-prompter').click();
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', bootstrapStudioApp);
+</script>
+</body>
+</html>

@@ -1,13 +1,63 @@
-service_account.json
+# ==============================================================================
+# SECURITY & CREDENTIALS (STRICT ZERO LEAKAGE)
+# ==============================================================================
+service_account*.json
+token_*.json
+token_gmail.json
+token_gcs.json
+credentials*.json
+client_secret*.json
 gen-lang-client-*.json
 base64_key.txt
-.env
+*.env
+*.env.*
+*.pem
+*.key
+*.cert
+
+# ==============================================================================
+# PYTHON & ENVIRONMENT ARTIFACTS
+# ==============================================================================
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
 *.tmp
 *.log
-.DS_Store
-Thumbs.db
+.pytest_cache/
 drive_markdown_converter/__pycache__/
 python_engine/__pycache__/
+
+# ==============================================================================
+# BINARIES & HEAVY MEDIA (Keep in Cloud Storage / GCS)
+# ==============================================================================
+*.exe
+cloudflared.exe
+*.mp4
+*.webm
+*.avi
+*.mov
+*.m4a
+*.mp3
+*.wav
+output/rendered_videos/
+assets/podcast_audio/
+05_Content/Video/rendered_podcasts/
+05_Content/Video/rendered_shorts/
+
+# ==============================================================================
+# OS & LOCAL SCRATCH FILES
+# ==============================================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+scratch/
+temp_*.ps1
+temp_*.py
+temp_test.ps1

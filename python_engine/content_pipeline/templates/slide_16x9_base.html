@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <link rel="stylesheet" href="stitch_tokens.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--stitch-bg-void);
+      font-family: var(--stitch-font-display);
+      color: var(--stitch-text);
+      position: relative;
+    }
+
+    /* Background Mesh */
+    .bg-mesh {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #0B0E14, #0f172a);
+      z-index: 0;
+    }
+
+    /* Animated grid lines */
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 1;
+      opacity: 0.5;
+    }
+
+    /* Content Layer */
+    .slide-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0;
+      padding: 60px 80px;
+    }
+
+    /* Top Bar (spans full width) */
+    .top-bar {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .chapter-badge {
+      font-family: var(--stitch-font-mono);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 10px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--stitch-cyan);
+      animation: stitch-fadeInUp 0.5s var(--stitch-ease-spring) both;
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      transition: all 0.3s;
+    }
+
+    .progress-dot.active {
+      background: var(--stitch-cyan);
+      box-shadow: 0 0 10px var(--stitch-cyan-glow);
+      width: 36px;
+      border-radius: 6px;
+    }
+
+    .progress-dot.done {
+      background: var(--stitch-emerald);
+    }
+
+    /* Left Column: Title + Text */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+      padding-right: 60px;
+    }
+
+    .slide-title {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      animation: stitch-fadeInUp 0.6s var(--stitch-ease-spring) 0.1s both;
+    }
+
+    .slide-body {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--stitch-text-muted);
+      line-height: 1.6;
+      animation: stitch-fadeInUp 0.6s var(--stitch-ease-spring) 0.3s both;
+    }
+
+    /* Right Column: Visual Content */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .metric-tile {
+      padding: 32px 24px;
+      border-radius: 16px;
+      text-align: center;
+      animation: stitch-scaleIn 0.5s var(--stitch-ease-spring) both;
+    }
+
+    .metric-tile:nth-child(1) { animation-delay: 0.2s; }
+    .metric-tile:nth-child(2) { animation-delay: 0.35s; }
+    .metric-tile:nth-child(3) { animation-delay: 0.5s; }
+    .metric-tile:nth-child(4) { animation-delay: 0.65s; }
+
+    .metric-tile .big-value {
+      font-family: var(--stitch-font-mono);
+      font-size: 48px;
+      font-weight: 800;
+      animation: stitch-countUp 0.6s var(--stitch-ease-spring) both;
+    }
+
+    .metric-tile .big-label {
+      font-size: 16px;
+      color: var(--stitch-text-muted);
+      margin-top: 8px;
+    }
+
+    /* Live Caption (word-level sync) */
+    .live-caption-bar {
+      grid-column: 1 / -1;
+      padding: 20px 32px;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+
+    .live-caption-text {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .live-caption-text .highlight-word {
+      color: var(--stitch-cyan);
+      text-shadow: 0 0 12px var(--stitch-cyan-glow);
+      font-weight: 800;
+    }
+
+    /* Brand Footer */
+    .brand-footer {
+      position: absolute;
+      bottom: 24px;
+      right: 40px;
+      font-family: var(--stitch-font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.12);
+      letter-spacing: 1px;
+      z-index: 20;
+    }
+
+    /* Key Image */
+    .key-image {
+      max-width: 100%;
+      max-height: 420px;
+      border-radius: 16px;
+      border: 1px solid var(--stitch-glass-border);
+      box-shadow: var(--stitch-shadow-card);
+      animation: stitch-scaleIn 0.6s var(--stitch-ease-spring) 0.2s both;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mesh"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="slide-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="chapter-badge" id="chapter-badge">ГЛАВА 1 • ПРОБЛЕМА</div>
+      <div class="progress-bar" id="progress-bar">
+        <!-- Dots injected by renderer -->
+      </div>
+    </div>
+
+    <!-- Left Column -->
+    <div class="left-col">
+      <h1 class="slide-title" id="slide-title">Заголовок слайда</h1>
+      <p class="slide-body" id="slide-body">Тело слайда с ключевыми тезисами.</p>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-col" id="right-col">
+      <!-- Content injected by renderer: metrics, image, or custom HTML -->
+    </div>
+
+    <!-- Live Caption Bar -->
+    <div class="live-caption-bar glass-card" id="caption-bar">
+      <p class="live-caption-text" id="caption-text">
+        <!-- Word-level highlighted transcript -->
+      </p>
+    </div>
+  </div>
+
+  <div class="brand-footer">RAZUM AI 2026 • SOVEREIGN PODCAST</div>
+
+  <script>
+    function renderSlide(slideData) {
+      // Chapter badge
+      document.getElementById('chapter-badge').textContent =
+        `ГЛАВА ${slideData.chapter} • ${slideData.chapter_title}`;
+
+      // Title & body
+      document.getElementById('slide-title').textContent = slideData.title;
+      document.getElementById('slide-body').textContent = slideData.body || '';
+
+      // Progress dots
+      const progressBar = document.getElementById('progress-bar');
+      if (slideData.total_chapters) {
+        progressBar.innerHTML = '';
+        for (let i = 0; i < slideData.total_chapters; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot';
+          if (i < slideData.chapter - 1) dot.classList.add('done');
+          if (i === slideData.chapter - 1) dot.classList.add('active');
+          progressBar.appendChild(dot);
+        }
+      }
+
+      // Right column content
+      const rightCol = document.getElementById('right-col');
+      if (slideData.metrics && slideData.metrics.length > 0) {
+        rightCol.innerHTML = `
+          <div class="metrics-grid">
+            ${slideData.metrics.map((m, i) => `
+              <div class="metric-tile glass-card" style="animation-delay: ${0.2 + i * 0.15}s">
+                <div class="big-value neon-cyan" style="animation-delay: ${0.3 + i * 0.15}s">${m.value}</div>
+                <div class="big-label">${m.label}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (slideData.image) {
+        rightCol.innerHTML = `<img class="key-image" src="${slideData.image}" alt="">`;
+      } else {
+        rightCol.innerHTML = '';
+      }
+
+      // Live caption
+      const captionText = document.getElementById('caption-text');
+      if (slideData.caption) {
+        captionText.innerHTML = slideData.caption;
+      } else {
+        captionText.textContent = '';
+      }
+
+      // Re-trigger animations
+      document.querySelectorAll('[class*="stitch-"]').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = '';
+      });
+    }
+
+    function highlightWord(wordIndex) {
+      const words = document.querySelectorAll('.caption-word');
+      words.forEach((w, i) => {
+        w.classList.toggle('highlight-word', i === wordIndex);
+      });
+    }
+
+    window.renderSlide = renderSlide;
+    window.highlightWord = highlightWord;
+  </script>
+</body>
+</html>

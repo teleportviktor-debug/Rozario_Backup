@@ -117,14 +117,33 @@ def run_lead_scraper(output_dir=None):
                 f"{s['scoring']['score_percent']}%", s['scoring']['tier'], s['scoring']['action'], s['processed_at']
             ])
 
+    # Push to Google Sheets (services/scraper/sheets_ingest.py) with safe limit
+    sheets_sync_result = None
+    try:
+        from services.scraper.sheets_ingest import ingest_leads_batch
+        leads_for_sheets = []
+        for s in scored:
+            leads_for_sheets.append({
+                "company": s["company"],
+                "bottleneck": f"Bottleneck in {s.get('role', 'Operations')} • {s.get('website', '')}",
+                "score": f"Score: {s['scoring']['score_percent']}/100 | {s['scoring']['tier'].split('(')[0].strip()}",
+                "cta": f"https://razum.ai/audit/{s['company'].lower().replace(' ', '-')}",
+                "email": s.get("email", "teleportviktor@gmail.com")
+            })
+        sheets_sync_result = ingest_leads_batch(leads_for_sheets, limit=35)
+    except Exception as e:
+        print(f"⚠️ [agent_1_lead] Google Sheets Ingest notice: {e}")
+
     return {
         "status": "SUCCESS",
         "agent_id": "agent_1_lead",
         "leads_count": len(scored),
         "json_path": json_p,
-        "csv_path": csv_p
+        "csv_path": csv_p,
+        "sheets_sync": sheets_sync_result
     }
 
 if __name__ == "__main__":
     r = run_lead_scraper()
     print(f"✓ [agent_1_lead] Processed {r['leads_count']} B2B leads. File: {r['json_path']}")
+

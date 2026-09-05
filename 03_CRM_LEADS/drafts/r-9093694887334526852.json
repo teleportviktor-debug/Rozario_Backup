@@ -1,0 +1,20 @@
+{
+  "draft_id": "r-9093694887334526852",
+  "message_id": "1a071889fe24134e",
+  "created_at": "2026-09-05T15:26:14.372726",
+  "to": "contact@boothscout.com",
+  "company": "Boothscout",
+  "subject": "⚡ Quick teardown for Boothscout team (LLM Token Budget Overrun & Unbounded Streaming Latency Spikes)",
+  "plain_text": "Hi Boothscout team,\n\nNoticed your recent launch on Show HN. Took a close look at your architecture and spotted a potential scaling vulnerability around LLM Token Budget Overrun & Unbounded Streaming Latency Spikes.\n\nRather than sending a generic cold pitch, our engineering swarm generated a personalized 60-second video audit and zero-trust perimeter analysis for Boothscout:\n\n▶ Video Audit URL: https://enticing-handstand-trouble.ngrok-free.dev/videos/outreach_boothscout_1788566075.mp4\n▶ Full Interactive Audit & CTA: https://razum.ai/audit/boothscout\n\nBest regards,\nRazum AI Sovereign Architecture Team\nZero-Trust VPC Perimeter & Agentic Intelligence\n",
+  "html_body": "<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; color: #1e293b; line-height: 1.6; padding: 16px;\">\n  <p>Hi <b>Boothscout</b> team,</p>\n  <p>Noticed your recent launch on Show HN. Took a close look at your architecture and spotted a potential scaling vulnerability around <b style=\"color: #ef4444;\">LLM Token Budget Overrun & Unbounded Streaming Latency Spikes</b>.</p>\n  <p>Rather than sending a generic cold pitch, our engineering swarm generated a personalized 60-second video audit and zero-trust perimeter analysis for Boothscout:</p>\n  <div style=\"margin: 24px 0;\">\n    <a href=\"https://enticing-handstand-trouble.ngrok-free.dev/videos/outreach_boothscout_1788566075.mp4\" style=\"background: #0284c7; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;\">▶ Смотреть видео-разбор (60 сек)</a>\n  </div>\n  <p>You can also review the full exposure audit report and live interactive perimeter card here: <br><a href=\"https://razum.ai/audit/boothscout\" style=\"color: #0284c7;\">https://razum.ai/audit/boothscout</a></p>\n  <hr style=\"border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;\">\n  <p style=\"color: #64748b; font-size: 13px; line-height: 1.4;\">\n    Best regards,<br>\n    <b>Razum AI Sovereign Architecture Team</b><br>\n    Zero-Trust VPC Perimeter & Agentic Intelligence\n  </p>\n</div>",
+  "raw_response": {
+    "id": "r-9093694887334526852",
+    "message": {
+      "id": "1a071889fe24134e",
+      "threadId": "1a071889fe24134e",
+      "labelIds": [
+        "DRAFT"
+      ]
+    }
+  }
+}

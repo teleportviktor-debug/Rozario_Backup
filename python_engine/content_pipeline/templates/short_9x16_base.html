@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1920">
+  <link rel="stylesheet" href="stitch_tokens.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: var(--stitch-bg-void);
+      font-family: var(--stitch-font-display);
+      color: var(--stitch-text);
+      position: relative;
+    }
+
+    /* Background Layer */
+    .bg-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      animation: stitch-kenBurns 15s ease-in-out infinite alternate;
+    }
+
+    .bg-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(11, 14, 20, 0.6) 0%,
+        rgba(11, 14, 20, 0.3) 40%,
+        rgba(11, 14, 20, 0.85) 75%,
+        rgba(11, 14, 20, 1.0) 100%
+      );
+    }
+
+    /* Ambient Glows */
+    .glow-top-right {
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--stitch-cyan-glow), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .glow-bottom-left {
+      position: absolute;
+      bottom: -120px;
+      left: -120px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--stitch-emerald-glow), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Content Layer */
+    .content-layer {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 80px 60px;
+    }
+
+    /* Scene Type Badge */
+    .scene-badge {
+      align-self: flex-start;
+      font-family: var(--stitch-font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 12px;
+      animation: stitch-fadeInUp 0.6s var(--stitch-ease-spring) both;
+    }
+
+    .scene-badge.hook {
+      background: rgba(244, 63, 94, 0.2);
+      border: 2px solid var(--stitch-rose);
+      color: var(--stitch-rose);
+      box-shadow: 0 0 20px var(--stitch-rose-glow);
+    }
+
+    .scene-badge.solution {
+      background: rgba(6, 182, 212, 0.15);
+      border: 2px solid var(--stitch-cyan);
+      color: var(--stitch-cyan);
+      box-shadow: var(--stitch-shadow-neon-cyan);
+    }
+
+    .scene-badge.cta {
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--stitch-emerald);
+      color: var(--stitch-emerald);
+      box-shadow: var(--stitch-shadow-neon-emerald);
+    }
+
+    .scene-badge.demo {
+      background: rgba(249, 158, 11, 0.15);
+      border: 2px solid var(--stitch-amber);
+      color: var(--stitch-amber);
+    }
+
+    /* Main Title (Kinetic Typography) */
+    .main-title {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 90%;
+    }
+
+    .main-title .word {
+      display: inline-block;
+      animation: stitch-wordSlam 0.5s var(--stitch-ease-spring) both;
+    }
+
+    /* Staggered word animation */
+    .main-title .word:nth-child(1) { animation-delay: 0.1s; }
+    .main-title .word:nth-child(2) { animation-delay: 0.18s; }
+    .main-title .word:nth-child(3) { animation-delay: 0.26s; }
+    .main-title .word:nth-child(4) { animation-delay: 0.34s; }
+    .main-title .word:nth-child(5) { animation-delay: 0.42s; }
+    .main-title .word:nth-child(6) { animation-delay: 0.50s; }
+    .main-title .word:nth-child(7) { animation-delay: 0.58s; }
+    .main-title .word:nth-child(8) { animation-delay: 0.66s; }
+
+    /* Voiceover Subtitle */
+    .voiceover-text {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--stitch-text-muted);
+      line-height: 1.4;
+      max-width: 85%;
+      animation: stitch-fadeInUp 0.7s var(--stitch-ease-spring) 0.5s both;
+    }
+
+    /* SFX Pill */
+    .sfx-pill {
+      align-self: flex-start;
+      font-family: var(--stitch-font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 10px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--stitch-cyan);
+      animation: stitch-fadeInUp 0.6s var(--stitch-ease-spring) 0.8s both;
+    }
+
+    /* Bottom CTA Bar */
+    .cta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 28px 40px;
+      border-radius: 20px;
+      animation: stitch-scaleIn 0.5s var(--stitch-ease-spring) 0.6s both;
+    }
+
+    .cta-bar.emerald-glow {
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--stitch-emerald);
+      animation: stitch-neonPulse 2s ease-in-out infinite, stitch-scaleIn 0.5s var(--stitch-ease-spring) 0.6s both;
+    }
+
+    .cta-text {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--stitch-emerald);
+    }
+
+    /* Metric Cards */
+    .metrics-row {
+      display: flex;
+      gap: 24px;
+    }
+
+    .metric-card {
+      flex: 1;
+      padding: 32px 28px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .metric-card .value {
+      font-family: var(--stitch-font-mono);
+      font-size: 56px;
+      font-weight: 800;
+      animation: stitch-countUp 0.6s var(--stitch-ease-spring) both;
+    }
+
+    .metric-card .label {
+      font-size: 22px;
+      color: var(--stitch-text-muted);
+      margin-top: 8px;
+    }
+
+    .metric-card:nth-child(1) .value { animation-delay: 0.3s; }
+    .metric-card:nth-child(2) .value { animation-delay: 0.5s; }
+    .metric-card:nth-child(3) .value { animation-delay: 0.7s; }
+
+    /* Brand Watermark */
+    .brand-watermark {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      font-family: var(--stitch-font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.15);
+      letter-spacing: 1px;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <div class="bg-layer">
+    <img class="bg-image" id="bg-image" src="" alt="">
+    <div class="bg-gradient-overlay"></div>
+  </div>
+
+  <!-- Ambient Glows -->
+  <div class="glow-top-right"></div>
+  <div class="glow-bottom-left"></div>
+
+  <!-- Content Layer -->
+  <div class="content-layer">
+    <!-- Top: Scene Badge -->
+    <div>
+      <div class="scene-badge hook" id="scene-badge">🔥 ХУК</div>
+    </div>
+
+    <!-- Middle: Main Content -->
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+      <h1 class="main-title" id="main-title">
+        <!-- Words injected by renderer -->
+      </h1>
+      <p class="voiceover-text" id="voiceover-text">
+        <!-- Voiceover subtitle -->
+      </p>
+    </div>
+
+    <!-- Bottom: SFX + CTA -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      <div class="sfx-pill" id="sfx-pill">🚨 BASS DROP + GLITCH SFX</div>
+      <!-- Optional: CTA bar or metric cards inserted by renderer -->
+      <div id="bottom-slot"></div>
+    </div>
+  </div>
+
+  <div class="brand-watermark">RAZUM AI 2026</div>
+
+  <script>
+    // This script is called by the Python renderer with scene data injected
+    // via Playwright's page.evaluate() before capturing each frame.
+    
+    function renderScene(sceneData) {
+      // Badge
+      const badge = document.getElementById('scene-badge');
+      const badgeMap = {
+        'HOOK': { class: 'hook', emoji: '🔥' },
+        'AGITATION': { class: 'hook', emoji: '⚠️' },
+        'SOLUTION': { class: 'solution', emoji: '💡' },
+        'DEMO': { class: 'demo', emoji: '⚡' },
+        'BREAKDOWN': { class: 'solution', emoji: '🔬' },
+        'CALL_TO_ACTION': { class: 'cta', emoji: '🚀' }
+      };
+      const badgeInfo = badgeMap[sceneData.scene_type] || badgeMap['HOOK'];
+      badge.className = `scene-badge ${badgeInfo.class}`;
+      badge.textContent = `${badgeInfo.emoji} ${sceneData.scene_type}`;
+
+      // Main title (kinetic word animation)
+      const title = document.getElementById('main-title');
+      const words = sceneData.text_overlay.split(' ');
+      title.innerHTML = words.map((w, i) => 
+        `<span class="word" style="animation-delay: ${0.1 + i * 0.08}s">${w} </span>`
+      ).join('');
+
+      // Voiceover subtitle
+      document.getElementById('voiceover-text').textContent = '«' + sceneData.voiceover + '»';
+
+      // SFX pill
+      document.getElementById('sfx-pill').textContent = sceneData.sound_cue;
+
+      // Background image (if provided)
+      if (sceneData.bg_image) {
+        document.getElementById('bg-image').src = sceneData.bg_image;
+      }
+
+      // Bottom slot: render CTA bar if scene is CALL_TO_ACTION
+      const bottomSlot = document.getElementById('bottom-slot');
+      if (sceneData.scene_type === 'CALL_TO_ACTION') {
+        bottomSlot.innerHTML = `
+          <div class="cta-bar emerald-glow">
+            <span class="cta-text">👉 ${sceneData.text_overlay}</span>
+          </div>
+        `;
+      } else if (sceneData.metrics) {
+        bottomSlot.innerHTML = `
+          <div class="metrics-row">
+            ${sceneData.metrics.map((m, i) => `
+              <div class="metric-card glass-card">
+                <div class="value neon-cyan" style="animation-delay: ${0.3 + i * 0.2}s">${m.value}</div>
+                <div class="label">${m.label}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        bottomSlot.innerHTML = '';
+      }
+
+      // Re-trigger animations by cloning/replacing
+      document.querySelectorAll('[style*="animation"]').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // force reflow
+        el.style.animation = '';
+      });
+    }
+
+    // Expose to Playwright
+    window.renderScene = renderScene;
+  </script>
+</body>
+</html>
