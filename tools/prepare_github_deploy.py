@@ -20,8 +20,6 @@ DEPLOY_ZIP = os.path.join(ROOT_DIR, "GITHUB_PAGES_DEPLOY.zip")
 INCLUDE_FILES = [
     "index.html",
     "store_packages.html",
-    "teleprompter_studio.html",
-    "Teleprompter_Studio.html",  # Case-sensitivity compatibility for Linux GitHub Pages
     "video_studio.html",
     "client_portal.html",
     "README.md",
@@ -41,15 +39,6 @@ def bundle_github_pages():
     print("=" * 70)
     print("  🌐 СБОРКА ПАКЕТА ДЛЯ ДЕПЛОЯ НА GITHUB PAGES (Rozario_Backup)")
     print("=" * 70)
-
-    # Ensure Teleprompter_Studio.html alias exists for case-sensitivity
-    src_tele = os.path.join(ROOT_DIR, "teleprompter_studio.html")
-    dest_tele = os.path.join(ROOT_DIR, "Teleprompter_Studio.html")
-    if os.path.exists(src_tele):
-        with open(src_tele, "r", encoding="utf-8") as f:
-            content = f.read()
-        with open(dest_tele, "w", encoding="utf-8") as f:
-            f.write(content)
 
     total_files = 0
     with zipfile.ZipFile(DEPLOY_ZIP, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -77,7 +66,7 @@ def bundle_github_pages():
     print(" 1. Откройте в браузере: https://github.com/teleportviktor-debug/Rozario_Backup")
     print(" 2. Нажмите 'Add file' -> 'Upload files'")
     print(" 3. Перетащите файлы или распакованный архив -> Нажмите 'Commit changes'")
-    print(" 4. Ваши новые страницы (store_packages.html, teleprompter) сразу появятся онлайн!")
+    print(" 4. Ваши новые страницы (store_packages.html, Sprints) сразу появятся онлайн!")
     print("=" * 70)
 
 if __name__ == "__main__":

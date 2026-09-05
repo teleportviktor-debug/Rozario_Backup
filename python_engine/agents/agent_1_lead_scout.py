@@ -31,7 +31,7 @@ def calculate_ppdu_score(pain, power, decision, urgency):
     elif score_pct >= 60:
         tier = "TIER 2 (QUALIFIED - SCHEDULE DEMO)"
         priority = "HIGH"
-        action = "SEND_TELEPROMPTER_DEMO"
+        action = "SEND_SPRINT_TEARDOWN_DEMO"
     else:
         tier = "TIER 3 (NURTURE - SMM SEQUENCE)"
         priority = "NORMAL"

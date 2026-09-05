@@ -94,7 +94,7 @@ def generate_a2ui_email_html(root_dir):
 
     <div style="margin-top: 20px; text-align: center;">
       <a href="https://teleportviktor-debug.github.io/Rozario_Backup/" class="btn">🚀 Открыть Портал Роя</a>
-      <a href="https://teleportviktor-debug.github.io/Rozario_Backup/Teleprompter_Studio.html" class="btn btn-secondary">🎙️ Телесуфлер Live</a>
+      <a href="https://teleportviktor-debug.github.io/Rozario_Backup/templates/product_landing/index.html" class="btn btn-secondary">⚡ Автономные Спринты</a>
     </div>
   </div>
 </body>

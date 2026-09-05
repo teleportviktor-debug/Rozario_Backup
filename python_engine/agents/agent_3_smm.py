@@ -62,17 +62,17 @@ def generate_daily_smm_pack():
             "theme": "Предложение, от которого глупо отказаться: Тест-драйв суверенной студии",
             "hook": "🔥 Бесплатный доступ в закрытую Веб-Студию Телесуфлера 2026 открыт на 24 часа.",
             "body": (
-                "Вы когда-нибудь записывали видео с 1-го дубля без запинок и монтажа?\n\n"
-                "Наша Студия Телесуфлера автоматически рассчитывает темп (5 секунд на каждые 15 слов), "
-                "накладывает веб-камеру прямо в браузере и экспортирует чистовой ролик в 1 клик.\n\n"
-                "Без установки тяжелых программ. Без абонентских плат за сторонний софт."
+                "Вы когда-нибудь генерировали кинематографичное видео студийного качества за считанные минуты?\n\n"
+                "Наша AI Media Studio автоматически рассчитывает темп, "
+                "создает динамический синхрон речи и экспортирует чистовой ролик в 1 клик.\n\n"
+                "Без сторонних подписок. 100% суверенное развертывание в вашем облаке."
             ),
-            "cta": "🚀 Переходите по ссылке и протестируйте прямо сейчас: Teleprompter Studio Live.",
+            "cta": "🚀 Переходите по ссылке и протестируйте прямо сейчас: AI Media Studio & One-Time Sprints.",
             "visual_prompt": {
                 "engine": "Nano Banana Pro / Veo 3.1",
                 "prompt": (
-                    "Close-up of a professional modern video creator studio, teleprompter monitor reflecting "
-                    "glowing green and cyan text lines, high-end 4K cinema lens, moody neon background bokeh --ar 1:1"
+                    "Close-up of a professional modern video creator studio, ultra-high-end monitor reflecting "
+                    "glowing green and cyan wave lines, high-end 4K cinema lens, moody neon background bokeh --ar 1:1"
                 ),
                 "palette": ["#0B0E14", "#00F2FE", "#7928CA"]
             }

@@ -194,13 +194,7 @@ def generate_client_package(package_id: str, client_name: str, niche: str = "Б�
                 with open(dest_path, "w", encoding="utf-8") as f:
                     f.write(script_content)
         print(f"  ✓ Скрипты GAS скопированы в: gas_scripts/")
-
-    # 5. Include Teleprompter Studio for Intelligence / Sovereign / Genesis
-    if pkg["id"] in ["pkg-intelligence", "pkg-sovereign", "pkg-genesis"]:
-        tele_src = os.path.join(ROOT_DIR, "teleprompter_studio.html")
-        if os.path.exists(tele_src):
-            shutil.copy2(tele_src, os.path.join(package_dir, "Teleprompter_Studio.html"))
-            print("  ✓ AI-Телесуфлер: Teleprompter_Studio.html")
+    # 5. Client Packaging Ready
 
     # 6. Generate Environment and Launcher
     env_example = f"""# RAZUM SOVEREIGN AI • CONFIGURATION ({pkg['name']})

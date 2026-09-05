@@ -27,7 +27,7 @@ def calculate_hormozi_lead_score(pain, authority, budget, urgency):
         tier = "TIER 1 (VIP - Immediate Outreach)"
         action = "GENERATE_OFFER_DECK_AND_A2UI_CARD"
     elif score_pct >= 60:
-        tier = "TIER 2 (Standard - Teleprompter Demo)"
+        tier = "TIER 2 (Standard - Sprint Teardown Demo)"
         action = "SEND_AUTOMATED_VIDEO_AUDIT"
     else:
         tier = "TIER 3 (Nurture - Content Sequence)"

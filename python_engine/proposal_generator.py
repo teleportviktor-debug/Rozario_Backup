@@ -60,7 +60,7 @@ PACKAGES = {
             "Hormozi 4-Factor Lead Scoring (Pain, Power, DM, Urgency)",
             "Интерактивный ROI-радар окупаемости для закрытия клиентов",
             "AI-аудит звонков менеджеров и отработка возражений",
-            "Teleprompter Studio — профессиональный веб-суфлер для видео"
+            "AI Video Studio — конвейер генерации видео и Shorts"
         ]
     },
     "pkg-sovereign": {
@@ -106,12 +106,11 @@ PACKAGES = {
             "Business DNA Extraction (Google Pomelli): персонализированный AI-профиль вашей компании",
             "Развертывание Sovereign Контура: 5 агентов + CRM + Webhook + NotebookLM на вашем аккаунте",
             "3 кастомных AI-агента (Google Opal + Apps Script) под ваши конкретные болевые процессы",
-            "Teleprompter Studio PRO + 6 готовых вирусных скриптов для Shorts",
+            "AI Media Studio PRO + 6 готовых вирусных скриптов для Shorts",
             "Паспорт безопасности Zero-Log (юридический документ для бухгалтерии и аудита)",
             "Google Stitch UI: интерактивный прототип клиентского интерфейса",
             "NotebookLM: персональная база знаний обученная на ваших регламентах",
-            "60 дней инженерного сопровождения под ключ",
-            "Ежемесячный retainer ($300/мес): мониторинг агентов + обновления при выходе новых инструментов Google AI"
+            "Includes 30-Day Setup Support & Google Cloud Transfer (Zero Monthly Fees, Pay Once, Own Forever)"
         ]
     }
 }

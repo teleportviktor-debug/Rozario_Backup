@@ -112,7 +112,7 @@ def run_server():
         print(f"  ⚡ RAZUM AI SERVER WITH AUTO-PACKAGER RUNNING ON PORT {PORT}")
         print(f"  Web Dashboard: http://localhost:{PORT}/index.html")
         print(f"  Packages Store: http://localhost:{PORT}/store_packages.html")
-        print(f"  Teleprompter:  http://localhost:{PORT}/teleprompter_studio.html")
+        print(f"  Sprints Landing: http://localhost:{PORT}/templates/product_landing/index.html")
         print(f"=================================================================")
         try:
             httpd.serve_forever()

@@ -130,7 +130,7 @@ def analyze_google_ecosystem():
         "---",
         "## 🚀 Рекомендация Агента по следующим шагам:",
         "1. Включить упоминание **Pomelli** и **Stitch** в наши коммерческие предложения (КП) для повышения среднего чека.",
-        "2. Записать 15-секундный Shorts на тему *«Почему Google Stitch и Pomelli убьют агентства с подписками в 2026 году»* через наш [Телесуфлер PRO](file:///c:/Users/user/ГУГЛ%20ИМПЕРИЯ/teleprompter_studio.html)."
+        "2. Записать 15-секундный Shorts на тему *«Почему Google Stitch и Pomelli убьют агентства с подписками в 2026 году»* через нашу [AI Media Studio](file:///c:/Users/user/ГУГЛ%20ИМПЕРИЯ/video_studio.html)."
     ])
 
     report_md = "\n".join(report_lines)

@@ -40,7 +40,7 @@ INCLUDE_FILES = [
     "antigravity_swarm_init.json",
     "index.html",
     "store_packages.html",
-    "teleprompter_studio.html",
+    "video_studio.html",
     "run_razum_system.py",
     "run_full_system_check.py",
     "MASTER_ARCHITECTURAL_REPORT_GEMINI_2026.md",

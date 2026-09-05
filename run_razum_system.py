@@ -34,7 +34,7 @@ def main_menu():
         print(" [4] 📱 Запустить Agent 3: Neuro-SMM Daily Publisher (09:00, 15:00, 19:00)")
         print(" [5] 🎬 Запустить Agent 4: 15s Shorts Video Scripting & FFmpeg Manifest")
         print(" [6] ⚡ Запустить Agent 5: Spark Coordinator & A2UI Health Check")
-        print(" [7] 🎙️ Открыть Веб-Студию Телесуфлера (Teleprompter Studio)")
+        print(" [7] ⚡ Открыть Лендинг Автономных Спринтов (One-Time Sprints)")
         print(" [8] 🌐 Открыть Главный Сайт (Live GitHub Pages / Local Index)")
         print(" [9] 🔍 Запустить Полный Системный Тест (run_full_system_check.py)")
         print(" [10] 📦 Собрать Клиентский Пакет Внедрения (10_PRODUCTION ZIP)")
@@ -85,9 +85,9 @@ def main_menu():
             input("\nНажмите Enter для продолжения...")
 
         elif choice == "7":
-            tele_path = os.path.join(root_dir, "teleprompter_studio.html")
-            print(f"Открытие телесуфлера: {tele_path}")
-            webbrowser.open(f"file:///{tele_path.replace(os.sep, '/')}")
+            landing_path = os.path.join(root_dir, "templates", "product_landing", "index.html")
+            print(f"Открытие лендинга спринтов: {landing_path}")
+            webbrowser.open(f"file:///{landing_path.replace(os.sep, '/')}")
 
         elif choice == "8":
             index_path = os.path.join(root_dir, "index.html")

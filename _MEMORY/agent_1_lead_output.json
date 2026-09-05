@@ -1,11 +1,19 @@
 {
   "agent_id": "agent_1_lead",
-  "timestamp": "2026-09-04T03:40:28.694888+03:00",
+  "timestamp": "2026-09-05T22:31:14.229513+03:00",
   "output": {
     "status": "SUCCESS",
     "agent_id": "agent_1_lead",
     "leads_count": 3,
     "json_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\03_CRM_LEADS\\b2b_scraped_leads_scored.json",
-    "csv_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\03_CRM_LEADS\\WORKSPACE_STUDIO_SHEETS_EXPORT.csv"
+    "csv_path": "C:\\Users\\user\\ГУГЛ ИМПЕРИЯ\\03_CRM_LEADS\\WORKSPACE_STUDIO_SHEETS_EXPORT.csv",
+    "sheets_sync": {
+      "total_requested": 3,
+      "limit_applied": 35,
+      "added_count": 0,
+      "duplicate_count": 3,
+      "error_count": 0,
+      "added_leads": []
+    }
   }
 }

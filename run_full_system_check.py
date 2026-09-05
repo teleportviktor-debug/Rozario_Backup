@@ -63,7 +63,7 @@ def run_tests():
         "python_engine/swarm_orchestrator.py",
         "index.html",
         "store_packages.html",
-        "teleprompter_studio.html",
+        "templates/product_landing/index.html",
         "css/main.css",
         "js/app.js",
         "js/hormozi_engine.js",

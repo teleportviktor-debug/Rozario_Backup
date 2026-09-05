@@ -1,6 +1,6 @@
 {
   "agent": "agent_3_smm",
-  "created_at": "2026-09-04T03:40:28.714958",
+  "created_at": "2026-09-05T22:31:14.245043",
   "posts": [
     {
       "slot": "09:00 MORNING PARADIGM SHIFT",
@@ -39,11 +39,11 @@
       "slot": "19:00 EVENING GRAND SLAM CONVERSION",
       "theme": "Предложение, от которого глупо отказаться: Тест-драйв суверенной студии",
       "hook": "🔥 Бесплатный доступ в закрытую Веб-Студию Телесуфлера 2026 открыт на 24 часа.",
-      "body": "Вы когда-нибудь записывали видео с 1-го дубля без запинок и монтажа?\n\nНаша Студия Телесуфлера автоматически рассчитывает темп (5 секунд на каждые 15 слов), накладывает веб-камеру прямо в браузере и экспортирует чистовой ролик в 1 клик.\n\nБез установки тяжелых программ. Без абонентских плат за сторонний софт.",
-      "cta": "🚀 Переходите по ссылке и протестируйте прямо сейчас: Teleprompter Studio Live.",
+      "body": "Вы когда-нибудь генерировали кинематографичное видео студийного качества за считанные минуты?\n\nНаша AI Media Studio автоматически рассчитывает темп, создает динамический синхрон речи и экспортирует чистовой ролик в 1 клик.\n\nБез сторонних подписок. 100% суверенное развертывание в вашем облаке.",
+      "cta": "🚀 Переходите по ссылке и протестируйте прямо сейчас: AI Media Studio & One-Time Sprints.",
       "visual_prompt": {
         "engine": "Nano Banana Pro / Veo 3.1",
-        "prompt": "Close-up of a professional modern video creator studio, teleprompter monitor reflecting glowing green and cyan text lines, high-end 4K cinema lens, moody neon background bokeh --ar 1:1",
+        "prompt": "Close-up of a professional modern video creator studio, ultra-high-end monitor reflecting glowing green and cyan wave lines, high-end 4K cinema lens, moody neon background bokeh --ar 1:1",
         "palette": [
           "#0B0E14",
           "#00F2FE",

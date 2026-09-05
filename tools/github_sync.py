@@ -25,9 +25,8 @@ BRANCH = "main"
 SYNC_FILES = [
     "index.html",
     "store_packages.html",
-    "teleprompter_studio.html",
-    "Teleprompter_Studio.html",
     "video_studio.html",
+    "templates/product_landing/index.html",
     "client_portal.html",
     "sovereign_transformation.html",
     "client_presentation.html",

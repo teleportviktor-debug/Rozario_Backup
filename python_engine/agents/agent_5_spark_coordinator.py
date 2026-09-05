@@ -204,10 +204,10 @@ def generate_a2ui_swarm_widgets(health_report, root_dir):
                     {
                         "type": "ActionButton",
                         "props": {
-                            "label": "Открыть в Телесуфлере",
+                            "label": "Открыть в AI Media Studio",
                             "variant": "primary",
-                            "icon": "🎙️",
-                            "action": "open_teleprompter"
+                            "icon": "🎬",
+                            "action": "open_media_studio"
                         }
                     },
                     {

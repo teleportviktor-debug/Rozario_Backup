@@ -30,7 +30,7 @@ function initNavigation() {
   navItems.forEach(item => {
     item.addEventListener('click', (e) => {
       const targetView = item.getAttribute('data-view');
-      if (!targetView) return; // Allow normal links like Teleprompter
+      if (!targetView) return; // Allow normal external links
       e.preventDefault();
 
       navItems.forEach(n => n.classList.remove('active'));
@@ -514,112 +514,105 @@ function initPassportGenerator() {
 // 11. PACKAGES CATALOG & MODAL
 const packagesData = [
   {
-    id: 'pkg-starter',
-    audience: 'Фриланс & Микробизнес',
-    category: 'micro',
-    name: '«Spark Starter»',
-    tag: 'FAST LAUNCH',
+    id: 'sprint-teardown',
+    audience: 'High-Throughput AI Teams',
+    category: 'teardown',
+    name: 'Express Tech Teardown',
+    tag: '48-HOUR SPRINT',
     tagColor: 'var(--cyan-400)',
     tagBg: 'rgba(6, 182, 212, 0.15)',
     borderGradient: 'linear-gradient(135deg, rgba(6, 182, 212, 0.4), transparent)',
-    desc: 'Первая суверенная AI-автоматизация за 60 минут: интеллектуальный разбор почты в Google Sheets + суммаризатор документов.',
-    price: '$50',
-    priceVal: 50,
+    desc: 'Хирургический архитектурный аудит задержек (TTFT), утечек KV-кэша и сжигания токенов с готовым GitHub PR.',
+    price: '$490',
+    priceVal: 490,
     features: [
-      'AI-парсер Gmail ➔ структурированный Google Sheets',
-      'Суммаризатор документов PDF/Docs (выжимка в 3 клика)',
-      'Telegram-уведомления о критически важных письмах',
-      'Готовый автономный Google Apps Script (без подписок)',
-      'Видео-инструкция по установке за 15 минут + 7 дней поддержки'
+      '3-страничный Confidential Architectural Teardown (PDF)',
+      'Production GitHub PR: speculative router (Gemini Flash + Pro)',
+      'Бенчмарк-отчет стресс-тестирования (P50, P90, P99 задержки)',
+      '48 часов прямого асинхронного канала с Principal AI архитектором',
+      '100% гарантия возврата денег при недостижении улучшений'
     ]
   },
   {
-    id: 'pkg-command',
-    audience: 'Малый Бизнес & Команды 2-10 чел',
-    category: 'smb',
-    name: '«Command Center»',
-    tag: 'BUSINESS CORE',
+    id: 'sprint-mobile-os',
+    audience: 'Операционный Бизнес & Фаундеры',
+    category: 'mobile',
+    name: 'Mobile Business OS',
+    tag: '72-HOUR SPRINT',
+    tagColor: 'var(--purple-400)',
+    tagBg: 'rgba(121, 40, 202, 0.15)',
+    borderGradient: 'linear-gradient(135deg, rgba(121, 40, 202, 0.4), transparent)',
+    desc: 'Мобильный командный пункт компании: Telegram-бот и PWA с локальной SQLite очередью, защищенной от блэкаутов.',
+    price: '$990',
+    priceVal: 990,
+    features: [
+      'Telegram & Mobile PWA Command Center с биометрией',
+      'Blackout-Proof: локальная SQLite очередь без потери данных',
+      'Двусторонняя Google Apps Script MCP интеграция с Workspace',
+      'Zero-Leakage OCR: фото чека/счета ➔ структурированный реестр',
+      'Полная передача кода в ваш Google Cloud контур'
+    ]
+  },
+  {
+    id: 'sprint-b2b-pipeline',
+    audience: 'Отделы Продаж & B2B Компании',
+    category: 'pipeline',
+    name: 'B2B Intent Pipeline',
+    tag: '🔥 5-DAY HIGH CONVERSION',
     tagColor: 'var(--emerald-400)',
-    tagBg: 'rgba(16, 185, 129, 0.15)',
-    borderGradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.4), transparent)',
-    desc: 'Единый центр управления продажами и контентом: сквозная mini-CRM, авто-генератор КП за 30 секунд и AI-контент на 30 дней.',
-    price: '$100',
-    priceVal: 100,
+    tagBg: 'rgba(16, 185, 129, 0.18)',
+    borderGradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(99, 102, 241, 0.4))',
+    featured: true,
+    desc: 'Автономный радар найма и сигналов боли клиентов: парсер намерений, Hormozi-скоринг и автогенерация КП за 30 сек.',
+    price: '$1,500',
+    priceVal: 1500,
     features: [
-      'Всё из Spark Starter ($50) включено',
-      'Сквозной CRM-реестр лидов (сайт + email ➔ Sheets)',
-      'Генератор коммерческих предложений за 30 секунд в Docs',
-      'Telegram-бот квалификации лидов с оценкой горячести',
-      'AI Контент-календарь: генерация постов на 30 дней',
-      'Установка инженером под ключ (remote, 1 час)'
+      'Парсер вакансий и триггеров роста (hh.ru / LinkedIn / TG)',
+      'Hormozi 4-факторная квалификация лидов на изолированном Python',
+      'Генератор персонализированных КП в Google Docs / PDF за 1 клик',
+      'Сквозная CRM-синхронизация в Sheets + мгновенный Telegram-пуш',
+      'SOP регламенты для сейлз-команды под ключ'
     ]
   },
   {
-    id: 'pkg-intelligence',
-    audience: 'Отделы Продаж & B2B Агентства',
-    category: 'sales',
-    name: '«Intelligence Module»',
-    tag: '🔥 MOST POPULAR',
+    id: 'sprint-content-core',
+    audience: 'Медиа, Бренды & Эксперты',
+    category: 'content',
+    name: 'Autonomous Content Core',
+    tag: '5-DAY SPRINT',
+    tagColor: 'var(--cyan-400)',
+    tagBg: 'rgba(6, 182, 212, 0.15)',
+    borderGradient: 'linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(6, 182, 212, 0.2))',
+    desc: 'Рой Gem-ботов на Gemini 1.5 Pro для фонового 24/7 анализа трендов, синтеза виральных постов и мультиканального автопостинга.',
+    price: '$1,900',
+    priceVal: 1900,
+    features: [
+      'Gemini 1.5 Pro Gem-боты: фоновый мониторинг 300+ источников',
+      'Source Mixing & RetentionMax: виральные посты и карусели',
+      'Очередь автопостинга в Telegram-каналы, LinkedIn и соцсети',
+      'GEO / AEO JSON-LD оптимизатор для ранжирования в LLM (Perplexity, ChatGPT)',
+      'Работает автономно по Google Cloud cron без включенного ПК'
+    ]
+  },
+  {
+    id: 'sprint-media-studio',
+    audience: 'Enterprise & Видео-Продакшн',
+    category: 'media',
+    name: 'Cinematic AI Media Studio',
+    tag: '👑 7-DAY ULTRA-PREMIUM',
     tagColor: '#fbbf24',
     tagBg: 'rgba(251, 191, 36, 0.18)',
-    borderGradient: 'linear-gradient(135deg, rgba(251, 191, 36, 0.5), rgba(99, 102, 241, 0.4))',
+    borderGradient: 'linear-gradient(135deg, rgba(251, 191, 36, 0.6), rgba(245, 158, 11, 0.3))',
     featured: true,
-    desc: 'Математический интеллект продаж по Алексу Хормози: точный 4-факторный скоринг, Zero-Log парсинг счетов и видео-суфлер.',
-    price: '$200',
-    priceVal: 200,
+    desc: 'Студия кинематографичного медиа на базе Grok Flux и Aurora: гиперреалистичное видео, клонирование голоса и липсинк.',
+    price: '$3,400',
+    priceVal: 3400,
     features: [
-      'Всё из Command Center ($100) включено',
-      'Hormozi 4-Factor Lead Scoring (Pain, Power, DM, Urgency)',
-      'Интерактивный ROI-калькулятор окупаемости для ваших клиентов',
-      'Zero-Log Invoice Parser (ИНН, НДС, суммы из PDF в реестр)',
-      'AI-аудит транскриптов звонков менеджеров на возражения',
-      'Teleprompter Studio — веб-суфлер для продающих видео',
-      'A2UI интерактивные карточки согласования в 1 клик',
-      '30 дней гарантии и поддержки'
-    ]
-  },
-  {
-    id: 'pkg-sovereign',
-    audience: 'Компании 10-50 чел & Финтех',
-    category: 'agency',
-    name: '«Sovereign Autopilot»',
-    tag: '24/7 AUTONOMOUS',
-    tagColor: 'var(--indigo-400)',
-    tagBg: 'rgba(99, 102, 241, 0.18)',
-    borderGradient: 'linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(6, 182, 212, 0.4))',
-    desc: 'Полностью автономный рой из 5 AI-агентов Antigravity Swarm, работающих в защищенном облаке Google по cron 24/7 без вашего участия.',
-    price: '$300',
-    priceVal: 300,
-    features: [
-      'Всё из Intelligence Module ($200) включено',
-      '5 автономных агентов: Scout, Spy, SMM, Shorts, Spark Watchdog',
-      'Фоновые триггеры Google Cloud — работает при выключенном ПК',
-      'Двусторонний MCP Server (прямой доступ агентов в Workspace)',
-      'Zero-Log Security SOP (данные строго на вашем Google Drive)',
-      'Суверенный паспорт контура и шифрование',
-      'Развертывание инженером за 4 часа + 60 дней поддержки'
-    ]
-  },
-  {
-    id: 'pkg-genesis',
-    audience: 'Холдинги, Enterprise & White-Label',
-    category: 'enterprise',
-    name: '«Genesis Enterprise»',
-    tag: '👑 BEST VALUE • WHITE-LABEL',
-    tagColor: '#34d399',
-    tagBg: 'rgba(52, 211, 153, 0.2)',
-    borderGradient: 'linear-gradient(135deg, rgba(52, 211, 153, 0.6), rgba(251, 191, 36, 0.5))',
-    desc: 'Индивидуальный AI-геном компании с правом перепродажи (White-Label), интеграцией в 1C/CRM и персональным AI-архитектором.',
-    price: '$500',
-    priceVal: 500,
-    features: [
-      'Всё из Sovereign Autopilot ($300) включено',
-      'Deep-dive аудит бизнес-процессов компании с основателем',
-      'Разработка до 3 кастомных AI-агентов под ваши процессы',
-      'White-Label лицензия — перепродавайте систему своим клиентам',
-      'Air-Gapped Python Antigravity среда (0% галлюцинаций в цифрах)',
-      'Интеграция с существующими CRM / API / 1C',
-      'Обучение команды (до 5 сотрудников) + 90 дней VIP-поддержки 24/7'
+      'Конвейер кинематографичной генерации видео на Grok Flux & Aurora',
+      'Нейросетевое клонирование голоса и динамический синхрон губ (Lip-Sync)',
+      'Автоматический монтаж вертикальных Shorts / Reels в 4K',
+      'Полная передача исходного кода, весов моделей и GPU скриптов',
+      '100% владение технологией без сторонних SaaS-подписок'
     ]
   }
 ];
@@ -640,15 +633,20 @@ function initPackagesCatalog() {
       const card = document.createElement('div');
       card.className = 'package-card spotlight hover-snd';
       if (pkg.featured) {
-        card.style.borderColor = 'rgba(251, 191, 36, 0.5)';
-        card.style.boxShadow = '0 0 25px rgba(251, 191, 36, 0.15)';
+        card.style.borderColor = 'rgba(0, 255, 163, 0.5)';
+        card.style.boxShadow = '0 0 25px rgba(0, 255, 163, 0.15)';
       }
       card.innerHTML = `
         <span class="package-badge" style="background:${pkg.tagBg}; color:${pkg.tagColor}; border: 1px solid ${pkg.tagColor};">
           ${pkg.tag}
         </span>
         <div class="package-audience">${pkg.audience}</div>
-        <div class="package-name" style="${pkg.featured ? 'color:#fef08a;' : ''}">${pkg.name}</div>
+        <div class="package-name" style="${pkg.featured ? 'color:#a7f3d0;' : ''}">${pkg.name}</div>
+        
+        <div style="background:rgba(0,255,163,0.08); border:1px solid rgba(0,255,163,0.25); color:#a7f3d0; font-size:11.5px; font-weight:600; padding:6px 10px; border-radius:6px; margin:10px 0 14px; display:flex; align-items:center; gap:6px;">
+          <span>✓</span> Includes 30-Day Setup Support & Google Cloud Transfer
+        </div>
+
         <div class="package-desc">${pkg.desc}</div>
         <ul class="package-features">
           ${pkg.features.map(f => `<li>${f}</li>`).join('')}
@@ -656,11 +654,16 @@ function initPackagesCatalog() {
         <div class="package-footer">
           <div class="package-price">
             ${pkg.price}
-            <small>Единоразово • Без подписки</small>
+            <small>Разово • Zero Monthly Fees</small>
           </div>
-          <button class="btn ${pkg.featured ? 'btn-primary' : 'btn-secondary'} btn-sm click-snd" onclick="openOrderModal('${pkg.id}')">
-            Запустить 🚀
-          </button>
+          <div style="display:flex; gap:8px; width:100%; margin-top:12px;">
+            <button class="btn btn-secondary btn-sm click-snd" style="flex:1;" onclick="window.open('templates/product_landing/index.html#pricing', '_blank')">
+              Explore Teardown 🔍
+            </button>
+            <button class="btn ${pkg.featured ? 'btn-primary' : 'btn-secondary'} btn-sm click-snd" style="flex:1.2;" onclick="openOrderModal('${pkg.id}')">
+              Order Sprint 🚀
+            </button>
+          </div>
         </div>
       `;
       container.appendChild(card);

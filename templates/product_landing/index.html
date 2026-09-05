@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Razum AI // 48-Hour LLM Latency & Token Optimization Sprint ($490)</title>
-  <meta name="description" content="Slash LLM streaming latency and token spend by 40% in 48 hours. Production architectural sprint with guaranteed TTFT benchmarks, KV-caching, and code PRs.">
+  <title>Razum AI // Autonomous Production AI Sprints (Zero Monthly Fees • Pay Once, Own Forever)</title>
+  <meta name="description" content="100% Autonomous Turnkey Deployment in Your Google Cloud. Zero Monthly Fees. Pay Once, Own Forever. Production AI engineering sprints from $490 to $3,400.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
       --neon-emerald: #00ffa3;
       --neon-purple: #7928ca;
       --neon-cyan: #00f0ff;
+      --neon-amber: #f59e0b;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
@@ -64,7 +65,7 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
       padding: 0 24px;
       position: relative;
@@ -97,6 +98,7 @@
       font-weight: 800;
       letter-spacing: 2px;
       color: #fff;
+      text-decoration: none;
     }
     .brand-logo span {
       color: var(--neon-emerald);
@@ -150,7 +152,7 @@
 
     /* Hero Section */
     .hero {
-      padding: 90px 0 60px;
+      padding: 85px 0 50px;
       text-align: center;
     }
 
@@ -172,12 +174,12 @@
     }
 
     .hero h1 {
-      font-size: 64px;
+      font-size: 60px;
       font-weight: 900;
-      line-height: 1.1;
+      line-height: 1.12;
       letter-spacing: -2px;
       margin-bottom: 24px;
-      max-width: 950px;
+      max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
       background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
@@ -194,9 +196,10 @@
     .hero-sub {
       font-size: 20px;
       color: var(--text-muted);
-      max-width: 740px;
+      max-width: 800px;
       margin: 0 auto 38px;
       font-weight: 400;
+      line-height: 1.55;
     }
 
     .hero-actions {
@@ -205,6 +208,7 @@
       justify-content: center;
       gap: 18px;
       margin-bottom: 36px;
+      flex-wrap: wrap;
     }
 
     .btn-primary {
@@ -219,6 +223,9 @@
       box-shadow: 0 0 30px rgba(0, 255, 163, 0.25);
       border: none;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
     .btn-primary:hover {
       box-shadow: 0 0 45px rgba(0, 255, 163, 0.5);
@@ -235,6 +242,10 @@
       font-size: 16px;
       text-decoration: none;
       transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
     }
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.08);
@@ -251,6 +262,7 @@
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: 1px;
+      flex-wrap: wrap;
     }
     .social-proof-bar span {
       color: var(--neon-emerald);
@@ -259,7 +271,7 @@
 
     /* Video Player Slot */
     .video-section {
-      margin: 40px auto 100px;
+      margin: 30px auto 90px;
       max-width: 980px;
     }
 
@@ -310,7 +322,7 @@
     /* Section Titles */
     .section-head {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 50px;
     }
     .section-tag {
       font-family: var(--font-mono);
@@ -323,9 +335,47 @@
       display: block;
     }
     .section-title {
-      font-size: 40px;
+      font-size: 42px;
       font-weight: 800;
       letter-spacing: -1px;
+    }
+
+    /* Positioning Banner */
+    .position-banner {
+      background: linear-gradient(135deg, rgba(0, 255, 163, 0.1) 0%, rgba(0, 240, 255, 0.06) 50%, rgba(121, 40, 202, 0.08) 100%);
+      border: 1px solid rgba(0, 255, 163, 0.35);
+      border-radius: 18px;
+      padding: 24px 32px;
+      text-align: center;
+      margin: 0 auto 50px;
+      box-shadow: 0 0 35px rgba(0, 255, 163, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .position-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 163, 0.8), transparent);
+    }
+    .position-headline {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    .position-headline span {
+      color: var(--neon-emerald);
+    }
+    .position-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto;
     }
 
     /* 3 Critical Bottlenecks */
@@ -333,7 +383,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-bottom: 120px;
+      margin-bottom: 100px;
     }
 
     .bottleneck-card {
@@ -388,109 +438,252 @@
       display: inline-block;
     }
 
-    /* Offer Section */
-    .offer-section {
-      background: linear-gradient(180deg, rgba(18, 21, 29, 0.9) 0%, rgba(10, 12, 16, 0.95) 100%);
-      border: 1px solid rgba(0, 255, 163, 0.2);
-      border-radius: 24px;
-      padding: 56px 48px;
+    /* 5 AUTONOMOUS SPRINTS PRICING GRID */
+    .pricing-section {
       margin-bottom: 120px;
-      position: relative;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
     }
 
-    .offer-grid {
+    .sprints-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 50px;
-      align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      align-items: stretch;
     }
 
-    .offer-left h3 {
-      font-size: 32px;
-      font-weight: 800;
+    .sprint-card {
+      background: linear-gradient(180deg, rgba(18, 21, 29, 0.9) 0%, rgba(10, 12, 16, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 34px 28px;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+    .sprint-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 255, 163, 0.4);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 163, 0.12);
+    }
+
+    .sprint-card.featured {
+      border: 1px solid rgba(0, 255, 163, 0.45);
+      background: linear-gradient(180deg, rgba(20, 28, 38, 0.95) 0%, rgba(10, 12, 16, 0.98) 100%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 255, 163, 0.15);
+    }
+    .sprint-card.featured-gold {
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      background: linear-gradient(180deg, rgba(28, 24, 20, 0.95) 0%, rgba(10, 12, 16, 0.98) 100%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(245, 158, 11, 0.15);
+    }
+
+    .sprint-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 16px;
     }
-    .offer-left p {
+
+    .sprint-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text-muted);
-      font-size: 16px;
-      margin-bottom: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .deliverables-list {
+    .sprint-tag.highlight-emerald {
+      background: rgba(0, 255, 163, 0.12);
+      color: var(--neon-emerald);
+      border-color: rgba(0, 255, 163, 0.35);
+    }
+    .sprint-tag.highlight-amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--neon-amber);
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    .sprint-tag.highlight-cyan {
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--neon-cyan);
+      border-color: rgba(0, 240, 255, 0.35);
+    }
+    .sprint-tag.highlight-purple {
+      background: rgba(121, 40, 202, 0.15);
+      color: #d8b4fe;
+      border-color: rgba(121, 40, 202, 0.4);
+    }
+
+    .sprint-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .sprint-timeline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sprint-timeline strong {
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+
+    .sprint-price-row {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .sprint-price {
+      font-family: var(--font-mono);
+      font-size: 40px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .sprint-price-terms {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* 30-Day Support Pill required on every card */
+    .support-transfer-pill {
+      background: rgba(0, 255, 163, 0.08);
+      border: 1px solid rgba(0, 255, 163, 0.28);
+      color: #a7f3d0;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.35;
+    }
+    .support-transfer-pill span.icon {
+      color: var(--neon-emerald);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .sprint-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .sprint-features {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-grow: 1;
     }
-
-    .deliverables-list li {
+    .sprint-features li {
+      font-size: 13px;
+      color: #e2e8f0;
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 15px;
-      color: #e2e8f0;
+      gap: 10px;
+      line-height: 1.45;
     }
-
-    .del-check {
+    .feat-check {
       background: rgba(0, 255, 163, 0.15);
       color: var(--neon-emerald);
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 900;
       flex-shrink: 0;
       margin-top: 2px;
     }
 
-    .offer-card-price {
-      background: var(--bg-dark);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      padding: 36px 32px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    .sprint-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
     }
 
-    .price-tag {
-      font-family: var(--font-mono);
-      font-size: 52px;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-    .price-sub {
-      color: var(--text-dim);
+    .btn-card-teardown {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
       font-size: 13px;
-      text-transform: uppercase;
-      font-family: var(--font-mono);
-      margin-bottom: 24px;
-    }
-
-    .guarantee-box {
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 20px;
-      margin-top: 20px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .guarantee-box span {
-      color: var(--neon-emerald);
       font-weight: 700;
+      padding: 12px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .btn-card-teardown:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
     }
 
-    /* Form Section */
+    .btn-card-order {
+      flex: 1.25;
+      background: linear-gradient(135deg, var(--neon-emerald) 0%, #00d984 100%);
+      color: #061e13;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 163, 0.2);
+      font-family: var(--font-sans);
+    }
+    .btn-card-order:hover {
+      box-shadow: 0 0 30px rgba(0, 255, 163, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-card-order.featured-btn {
+      background: linear-gradient(135deg, var(--neon-emerald) 0%, #00f0ff 100%);
+      color: #041820;
+    }
+
+    /* Checkout / Form Section */
     .form-section {
-      max-width: 640px;
+      max-width: 680px;
       margin: 0 auto 120px;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
-      padding: 40px 44px;
+      padding: 42px 46px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
     }
 
     .form-head {
@@ -498,7 +691,7 @@
       margin-bottom: 32px;
     }
     .form-head h3 {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       margin-bottom: 8px;
     }
@@ -513,25 +706,26 @@
 
     .form-label {
       display: block;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       color: #cbd5e1;
       margin-bottom: 8px;
       font-family: var(--font-mono);
+      letter-spacing: 0.5px;
     }
 
-    .form-input {
+    .form-input, .form-select {
       width: 100%;
       background: #0a0c10;
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
       padding: 14px 16px;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       font-family: var(--font-sans);
       transition: all 0.2s;
     }
-    .form-input:focus {
+    .form-input:focus, .form-select:focus {
       outline: none;
       border-color: var(--neon-emerald);
       box-shadow: 0 0 15px rgba(0, 255, 163, 0.15);
@@ -547,7 +741,7 @@
     .btn-stripe {
       background: #635bff;
       color: #ffffff;
-      padding: 15px;
+      padding: 16px;
       border-radius: 8px;
       font-weight: 700;
       font-size: 15px;
@@ -567,7 +761,7 @@
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #94a3b8;
-      padding: 13px;
+      padding: 14px;
       border-radius: 8px;
       font-weight: 600;
       font-size: 14px;
@@ -580,19 +774,83 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 6, 10, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #10141d;
+      border: 1px solid rgba(0, 255, 163, 0.3);
+      border-radius: 20px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px 32px;
+      position: relative;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 255, 163, 0.1);
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.active .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
     /* Footer */
     footer {
       border-top: 1px solid var(--border-subtle);
-      padding: 40px 0;
+      padding: 48px 0;
       text-align: center;
       color: var(--text-dim);
       font-size: 13px;
     }
 
     @media (max-width: 900px) {
-      .hero h1 { font-size: 42px; }
+      .hero h1 { font-size: 40px; }
       .bottlenecks-grid { grid-template-columns: 1fr; }
-      .offer-grid { grid-template-columns: 1fr; }
+      .sprints-grid { grid-template-columns: 1fr; }
+      .form-section { padding: 30px 24px; }
     }
   </style>
 </head>
@@ -604,13 +862,13 @@
   <nav>
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <div class="brand-group">
-        <div class="brand-logo">RAZUM<span>.AI</span></div>
+        <a href="#" class="brand-logo">RAZUM<span>.AI</span></a>
         <div class="status-pill">
           <div class="pulse-dot"></div>
-          <span>48H SPRINT VAULT ACTIVE</span>
+          <span>AUTONOMOUS SPRINTS VAULT</span>
         </div>
       </div>
-      <a href="#checkout" class="nav-btn">Book Sprint ($490)</a>
+      <a href="#pricing" class="nav-btn">Explore 5 Sprints ($490–$3,400)</a>
     </div>
   </nav>
 
@@ -618,20 +876,26 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-badge">
-        <span>⚡ Production AI Architecture Sprint</span>
+        <span>⚡ 100% Autonomous Turnkey Deployment</span>
       </div>
-      <h1>Slash LLM Latency &amp; Token Spend by <span class="highlight">40% in 48 Hours</span></h1>
+      <h1>Slash Latency &amp; Build Sovereign AI with <span class="highlight">One-Time Sprints</span></h1>
       <p class="hero-sub">
-        Eliminate stream buffering stalls, cut redundant prompt token re-ingestion, and lock in sub-380ms TTFT across high-throughput production AI applications.
+        Zero monthly fees. Zero subscription creep. Pay once and own production-grade AI infrastructure, autonomous agent swarms, and high-performance LLM engines running directly in your Google Cloud.
       </p>
       <div class="hero-actions">
-        <a href="#checkout" class="btn-primary">Claim $490 Fixed Sprint Audit</a>
-        <a href="#video-demo" class="btn-secondary">Watch Architecture Teardown</a>
+        <a href="#pricing" class="btn-primary">
+          <span>⚡ Explore 5 Autonomous Sprints</span>
+        </a>
+        <a href="#video-demo" class="btn-secondary">
+          <span>▶ Watch Architecture Teardown</span>
+        </a>
       </div>
       <div class="social-proof-bar">
         <div><span>40+</span> Production Audits Completed</div>
         <div>•</div>
         <div><span>-84%</span> Average TTFT Reduction</div>
+        <div>•</div>
+        <div><span>Zero</span> Monthly Retainers</div>
         <div>•</div>
         <div><span>100%</span> Money-Back Guarantee</div>
       </div>
@@ -647,7 +911,7 @@
           </video>
           <div class="video-overlay-badge">
             <span style="color: var(--neon-emerald);">▶</span>
-            <span>Live Teaser: Tiered Speculative Model Routing (Gemini 1.5 Flash + Pro)</span>
+            <span>Live Architecture Teardown: Tiered Speculative Model Routing (Gemini 1.5 Flash + Pro)</span>
           </div>
         </div>
       </div>
@@ -679,7 +943,7 @@
             <span class="bn-num">BOTTLENECK // 02</span>
             <h3 class="bn-title">Runaway Token Re-Ingestion</h3>
             <p class="bn-desc">
-              Multi-turn conversations repeat identical system instructions and tool schemas from scratch. Missing KV-cache reuse burns $10k+/mo in pure waste.
+              Multi-turn conversations repeat identical system instructions and tool schemas from scratch. Missing KV-cache reuse burns $10,000+ in pure waste.
             </p>
           </div>
           <span class="bn-pill">78% Redundant Prefill Tokens</span>
@@ -699,52 +963,304 @@
       </div>
     </section>
 
-    <!-- Offer Card -->
-    <section class="offer-section">
-      <div class="offer-grid">
-        <div class="offer-left">
-          <h3>What You Get in the $490 Sprint Audit</h3>
-          <p>A surgical, production-grade architectural overhaul executed directly against your stack in 48 hours.</p>
+    <!-- PRICING SECTION: 5 AUTONOMOUS SPRINTS -->
+    <section id="pricing" class="pricing-section">
+      <div class="section-head">
+        <span class="section-tag">// ONE-TIME SPRINT CATALOGUE</span>
+        <h2 class="section-title">Turnkey Production AI Sprints</h2>
+      </div>
 
-          <ul class="deliverables-list">
-            <li>
-              <div class="del-check">✓</div>
-              <div><b>3-Page Confidential Architectural Teardown (PDF)</b>: Line-by-line breakdown of your latency bottlenecks, KV-cache leaks, and token waste.</div>
-            </li>
-            <li>
-              <div class="del-check">✓</div>
-              <div><b>Production GitHub Pull Request</b>: Drop-in FastAPI / LiteLLM speculative tiered router code (Gemini 1.5 Flash + Pro fallback).</div>
-            </li>
-            <li>
-              <div class="del-check">✓</div>
-              <div><b>Stress-Testing Benchmark Report</b>: P50, P90, P99 latency verification graphs under concurrent user simulation.</div>
-            </li>
-            <li>
-              <div class="del-check">✓</div>
-              <div><b>Direct Slack/Telegram Channel</b>: 48 hours of asynchronous pairing with principal AI infrastructure architects.</div>
-            </li>
-          </ul>
+      <!-- Core Positioning Banner -->
+      <div class="position-banner">
+        <div class="position-headline">
+          100% Autonomous Turnkey Deployment in Your Google Cloud. <span>Zero Monthly Fees. Pay Once, Own Forever.</span>
         </div>
+        <div class="position-sub">
+          Every sprint is a fixed-scope, production-grade deployment executed directly into your private Google Cloud &amp; Google Workspace sandbox. You receive complete source code, deployment scripts, zero-log SOPs, and full ownership with no recurring subscription.
+        </div>
+      </div>
 
-        <div class="offer-card-price">
-          <div class="price-tag">$490</div>
-          <div class="price-sub">Fixed One-Time Sprint // Zero Retainer</div>
-          <a href="#checkout" class="btn-primary" style="display: block; width: 100%;">Claim Sprint Slot</a>
-          <div class="guarantee-box">
-            🛡 <span>100% Money-Back Guarantee</span>: If we don't demonstrate measurable latency and cost improvements, you pay nothing.
+      <!-- 5 Sprint Cards Grid -->
+      <div class="sprints-grid">
+        
+        <!-- SPRINT 1: Express Tech Teardown ($490) -->
+        <div class="sprint-card">
+          <div>
+            <div class="sprint-badge-row">
+              <span class="sprint-tag highlight-cyan">48-HOUR SPRINT</span>
+              <span style="font-size:12px; color:var(--neon-cyan); font-family:var(--font-mono);">FIXED AUDIT</span>
+            </div>
+            <h3 class="sprint-name">Express Tech Teardown</h3>
+            <div class="sprint-timeline">Turnaround: <strong>48 Hours (Fixed)</strong></div>
+            
+            <div class="sprint-price-row">
+              <div class="sprint-price">$490</div>
+              <div class="sprint-price-terms">Fixed // One-Time</div>
+            </div>
+
+            <!-- Mandatory 30-Day Support & Transfer Pill -->
+            <div class="support-transfer-pill">
+              <span class="icon">✓</span>
+              <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+            </div>
+
+            <p class="sprint-desc">
+              Surgical architectural teardown of your latency, KV-cache leaks, and runaway token burn with drop-in production PRs.
+            </p>
+
+            <ul class="sprint-features">
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>3-Page Confidential Teardown (PDF)</b>: Line-by-line breakdown of bottlenecks &amp; token leaks.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Production GitHub Pull Request</b>: Drop-in FastAPI / LiteLLM speculative tiered router (Gemini Flash + Pro).</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Stress-Testing Benchmark Report</b>: P50, P90, P99 latency verification under simulation.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Direct Asynchronous Channel</b>: 48 hours pairing with principal AI infrastructure architects.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sprint-actions">
+            <button class="btn-card-teardown" onclick="openTeardownModal('sprint-teardown')">Explore Teardown</button>
+            <button class="btn-card-order" onclick="openSprintModal('Express Tech Teardown', '$490', '48 Hours (Fixed)')">Order Sprint</button>
           </div>
         </div>
+
+        <!-- SPRINT 2: Mobile Business OS ($990) -->
+        <div class="sprint-card">
+          <div>
+            <div class="sprint-badge-row">
+              <span class="sprint-tag highlight-purple">72-HOUR SPRINT</span>
+              <span style="font-size:12px; color:#d8b4fe; font-family:var(--font-mono);">BLACKOUT-PROOF</span>
+            </div>
+            <h3 class="sprint-name">Mobile Business OS</h3>
+            <div class="sprint-timeline">Turnaround: <strong>72 Hours (One-Time)</strong></div>
+            
+            <div class="sprint-price-row">
+              <div class="sprint-price">$990</div>
+              <div class="sprint-price-terms">One-Time // Zero SaaS</div>
+            </div>
+
+            <!-- Mandatory 30-Day Support & Transfer Pill -->
+            <div class="support-transfer-pill">
+              <span class="icon">✓</span>
+              <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+            </div>
+
+            <p class="sprint-desc">
+              Full-featured mobile operations cockpit with offline-first SQLite fallback, biometrics, and two-way Google Workspace sync.
+            </p>
+
+            <ul class="sprint-features">
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Telegram &amp; Mobile PWA Command Center</b>: Run your entire company from your smartphone.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Blackout-Proof Offline Queue</b>: Local SQLite caching keeps workflows alive even without internet.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Google Apps Script MCP Bridge</b>: Seamless bi-directional sync with Google Sheets &amp; Drive.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Zero-Leakage Mobile Document OCR</b>: Instant invoice, bill, and contract parser into structured CRM.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sprint-actions">
+            <button class="btn-card-teardown" onclick="openTeardownModal('sprint-mobile-os')">Explore Teardown</button>
+            <button class="btn-card-order" onclick="openSprintModal('Mobile Business OS', '$990', '72 Hours (One-Time, Blackout-Proof)')">Order Sprint</button>
+          </div>
+        </div>
+
+        <!-- SPRINT 3: B2B Intent Pipeline ($1,500) -->
+        <div class="sprint-card featured">
+          <div>
+            <div class="sprint-badge-row">
+              <span class="sprint-tag highlight-emerald">5-DAY SPRINT</span>
+              <span style="font-size:11px; color:var(--neon-emerald); font-family:var(--font-mono); font-weight:800;">🔥 HIGH CONVERSION</span>
+            </div>
+            <h3 class="sprint-name">B2B Intent Pipeline</h3>
+            <div class="sprint-timeline">Turnaround: <strong>5 Days (One-Time)</strong></div>
+            
+            <div class="sprint-price-row">
+              <div class="sprint-price">$1,500</div>
+              <div class="sprint-price-terms">One-Time // Own Forever</div>
+            </div>
+
+            <!-- Mandatory 30-Day Support & Transfer Pill -->
+            <div class="support-transfer-pill">
+              <span class="icon">✓</span>
+              <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+            </div>
+
+            <p class="sprint-desc">
+              Autonomous hiring-intent intelligence engine that scrapes high-budget leads, calculates Hormozi ROI, and auto-generates custom proposals.
+            </p>
+
+            <ul class="sprint-features">
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Hiring Intent &amp; Pain Trigger Scraper</b>: Automated radar scanning job postings and corporate intent signals.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Hormozi 4-Factor Lead Qualifier</b>: Pain, Budget, DM authority, and Urgency scoring on air-gapped Python.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>1-Click Dynamic Proposal Generator</b>: Generates personalized multi-page client pitch decks in Docs/PDF.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>CRM Sync &amp; Instant Telegram Push</b>: Tier-1 VIP deal notifications delivered directly to your founders.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sprint-actions">
+            <button class="btn-card-teardown" onclick="openTeardownModal('sprint-b2b-pipeline')">Explore Teardown</button>
+            <button class="btn-card-order featured-btn" onclick="openSprintModal('B2B Intent Pipeline', '$1,500', '5 Days (One-Time)')">Order Sprint</button>
+          </div>
+        </div>
+
+        <!-- SPRINT 4: Autonomous Content Core ($1,900) -->
+        <div class="sprint-card">
+          <div>
+            <div class="sprint-badge-row">
+              <span class="sprint-tag highlight-cyan">5-DAY SPRINT</span>
+              <span style="font-size:12px; color:var(--neon-cyan); font-family:var(--font-mono);">GEMINI PRO SWARM</span>
+            </div>
+            <h3 class="sprint-name">Autonomous Content Core</h3>
+            <div class="sprint-timeline">Turnaround: <strong>5 Days (Gemini Pro Gem-боты)</strong></div>
+            
+            <div class="sprint-price-row">
+              <div class="sprint-price">$1,900</div>
+              <div class="sprint-price-terms">One-Time // Zero SaaS</div>
+            </div>
+
+            <!-- Mandatory 30-Day Support & Transfer Pill -->
+            <div class="support-transfer-pill">
+              <span class="icon">✓</span>
+              <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+            </div>
+
+            <p class="sprint-desc">
+              Swarm of Gemini 1.5 Pro Gem-bots running 24/7 background research, viral Source Mixing content synthesis, and omnichannel auto-posting.
+            </p>
+
+            <ul class="sprint-features">
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Gemini 1.5 Pro Gem-Bot Swarm</b>: Autonomous agents monitoring industry trends &amp; competitive frameworks.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Source Mixing &amp; RetentionMax Engine</b>: Synthesizes viral posts, carousels, and script hooks in your tone.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Omnichannel Publishing Queue</b>: Auto-dispatch to Telegram Channels, LinkedIn, and social portals.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>GEO / AEO JSON-LD Schema Generator</b>: Indexes your brand authority in ChatGPT, Perplexity, and Gemini.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sprint-actions">
+            <button class="btn-card-teardown" onclick="openTeardownModal('sprint-content-core')">Explore Teardown</button>
+            <button class="btn-card-order" onclick="openSprintModal('Autonomous Content Core', '$1,900', '5 Days (Gemini Pro Gem-боты)')">Order Sprint</button>
+          </div>
+        </div>
+
+        <!-- SPRINT 5: Cinematic AI Media Studio ($3,400) -->
+        <div class="sprint-card featured-gold">
+          <div>
+            <div class="sprint-badge-row">
+              <span class="sprint-tag highlight-amber">7-DAY SPRINT</span>
+              <span style="font-size:11px; color:var(--neon-amber); font-family:var(--font-mono); font-weight:800;">👑 GROK FLUX / AURORA</span>
+            </div>
+            <h3 class="sprint-name">Cinematic AI Media Studio</h3>
+            <div class="sprint-timeline">Turnaround: <strong>7 Days (Grok Flux/Aurora)</strong></div>
+            
+            <div class="sprint-price-row">
+              <div class="sprint-price">$3,400</div>
+              <div class="sprint-price-terms">One-Time // Zero SaaS</div>
+            </div>
+
+            <!-- Mandatory 30-Day Support & Transfer Pill -->
+            <div class="support-transfer-pill">
+              <span class="icon">✓</span>
+              <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+            </div>
+
+            <p class="sprint-desc">
+              State-of-the-art cinematic AI media generation engine combining Grok Flux and Aurora models for hyper-realistic video production.
+            </p>
+
+            <ul class="sprint-features">
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Cinematic Video Generation Pipeline</b>: Grok Flux photorealism and Aurora dynamics for commercial-grade assets.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Neural Voice Cloning &amp; Dynamic Lip-Sync</b>: 100% natural avatar narration with zero synthetic artifacts.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Automated Shorts &amp; Reels Rendering</b>: Turn raw text scripts into finished 4K vertical media in minutes.</div>
+              </li>
+              <li>
+                <div class="feat-check">✓</div>
+                <div><b>Full Cloud Ownership &amp; GPU Scripts</b>: Complete code repository running on your private hardware or cloud.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sprint-actions">
+            <button class="btn-card-teardown" onclick="openTeardownModal('sprint-media-studio')">Explore Teardown</button>
+            <button class="btn-card-order" style="background:linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color:#1a1003;" onclick="openSprintModal('Cinematic AI Media Studio', '$3,400', '7 Days (Grok Flux/Aurora)')">Order Sprint</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- Checkout / Form Section -->
     <section id="checkout" class="form-section">
       <div class="form-head">
-        <h3>Reserve Your 48-Hour Sprint</h3>
-        <p>Only 3 slots accepted per week to maintain principal engineering depth.</p>
+        <span class="section-tag" style="margin-bottom:8px;">// DIRECT SPRINT BOOKING</span>
+        <h3 id="checkout-title">Reserve Your Turnkey Sprint</h3>
+        <p>100% Autonomous Turnkey Deployment in Your Google Cloud. Zero Monthly Fees.</p>
       </div>
 
       <form id="sprint-form" onsubmit="event.preventDefault(); handleFormSubmit();">
+        <div class="form-group">
+          <label class="form-label">SELECTED SPRINT PACKAGE</label>
+          <select class="form-select" id="selected-sprint" onchange="updateSelectedSprintUI()">
+            <option value="Express Tech Teardown" data-price="$490" data-time="48 Hours (Fixed)">Express Tech Teardown — $490 (Fixed, 48 Hours)</option>
+            <option value="Mobile Business OS" data-price="$990" data-time="72 Hours (One-Time, Blackout-Proof)">Mobile Business OS — $990 (One-Time, 72 Hours)</option>
+            <option value="B2B Intent Pipeline" data-price="$1,500" data-time="5 Days (One-Time)" selected>B2B Intent Pipeline — $1,500 (One-Time, 5 Days)</option>
+            <option value="Autonomous Content Core" data-price="$1,900" data-time="5 Days (Gemini Pro Gem-боты)">Autonomous Content Core — $1,900 (One-Time, 5 Days)</option>
+            <option value="Cinematic AI Media Studio" data-price="$3,400" data-time="7 Days (Grok Flux/Aurora)">Cinematic AI Media Studio — $3,400 (One-Time, 7 Days)</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label class="form-label">FULL NAME</label>
           <input type="text" class="form-input" id="name" placeholder="Viktor Morozov" required>
@@ -761,15 +1277,20 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">CURRENT AI STACK (MODELS / GATEWAY)</label>
-          <input type="text" class="form-input" id="stack" placeholder="OpenAI / Claude / Gemini / vLLM / LiteLLM" required>
+          <label class="form-label">CURRENT CLOUD OR AI STACK (GOOGLE CLOUD / AWS / LITELLM)</label>
+          <input type="text" class="form-input" id="stack" placeholder="Google Cloud / Gemini / LiteLLM / Custom Python" required>
+        </div>
+
+        <div class="support-transfer-pill" style="margin-top:10px; margin-bottom:20px;">
+          <span class="icon">🛡️</span>
+          <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer • 100% Money-Back SLA</span>
         </div>
 
         <div class="payment-triggers">
-          <button type="submit" class="btn-stripe">
-            💳 Instant Checkout via Stripe ($490)
+          <button type="submit" class="btn-stripe" id="btn-stripe-submit">
+            💳 Instant Checkout via Stripe ($1,500)
           </button>
-          <button type="button" class="btn-invoice" onclick="alert('Corporate Invoice Request Received! We will email bank wire instructions within 2 hours.');">
+          <button type="button" class="btn-invoice" onclick="requestInvoice();">
             📄 Request Corporate Wire Invoice (PDF)
           </button>
         </div>
@@ -777,21 +1298,246 @@
     </section>
   </div>
 
+  <!-- INTERACTIVE TEARDOWN EXPLORER MODAL -->
+  <div id="teardown-modal" class="modal-overlay" onclick="handleModalBackdropClick(event, 'teardown-modal')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeTeardownModal()">✕</button>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--neon-emerald); font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">
+        // ARCHITECTURAL TEARDOWN BLUEPRINT
+      </div>
+      <h3 id="td-modal-title" style="font-size:24px; font-weight:800; color:#fff; margin-bottom:6px;">
+        Sprint Teardown Blueprint
+      </h3>
+      <div id="td-modal-meta" style="font-family:var(--font-mono); font-size:13px; color:var(--neon-cyan); margin-bottom:18px;">
+        Turnaround &amp; Scope Overview
+      </div>
+
+      <div class="support-transfer-pill" style="margin-bottom:20px;">
+        <span class="icon">✓</span>
+        <span>Includes 30-Day Setup Support &amp; Google Cloud Transfer</span>
+      </div>
+
+      <div id="td-modal-content" style="font-size:14px; color:#cbd5e1; line-height:1.6; margin-bottom:24px;">
+        <!-- Dynamic content filled via JS -->
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:12px;">
+        <button class="btn-secondary" onclick="closeTeardownModal()">Close Blueprint</button>
+        <button id="td-modal-order-btn" class="btn-primary" onclick="proceedToOrderFromTeardown()">
+          Order This Sprint Now 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>© 2026 RAZUM AI Infrastructure &amp; Latency Optimization. Built for sovereign AI engineering teams.</p>
-      <p style="margin-top: 8px; font-size: 11px; font-family: var(--font-mono);">SOC-2 Type II Certified Process • Zero Data Retention • Non-Disclosure Guaranteed</p>
+      <p>© 2026 RAZUM AI Infrastructure &amp; Sovereign Cloud Automations. Built for high-performance engineering teams.</p>
+      <p style="margin-top: 8px; font-size: 11.5px; font-family: var(--font-mono); color: var(--text-dim);">
+        100% Autonomous Turnkey Deployment in Your Google Cloud • Zero Monthly Fees • Pay Once, Own Forever
+      </p>
     </div>
   </footer>
 
   <script>
+    // Teardown Blueprints Database
+    const teardownBlueprints = {
+      'sprint-teardown': {
+        title: 'Express Tech Teardown',
+        price: '$490',
+        timeline: '48 Hours (Fixed)',
+        badge: 'ARCHITECTURAL AUDIT & PR',
+        content: `
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:8px;">🔬 Architectural Target:</div>
+            <p style="color:var(--text-muted); font-size:13px;">Eliminate TTFT queuing stalls, fix redundant KV-cache token ingestion, and configure tiered speculative routing between Gemini 1.5 Flash and Pro fallbacks.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:6px;">📦 Key Deliverables:</div>
+            <ul style="padding-left:20px; color:#94a3b8; font-size:13px; line-height:1.6;">
+              <li>3-Page Confidential Architectural Teardown Report (PDF with line-by-line profiling).</li>
+              <li>Production GitHub Pull Request with speculative router and sub-380ms TTFT guarantees.</li>
+              <li>P50, P90, P99 stress-testing latency benchmarks under simulated concurrent load.</li>
+              <li>Direct Slack/Telegram pairing channel for 48 hours with a principal AI architect.</li>
+            </ul>
+          </div>
+          <div style="background:rgba(0,255,163,0.06); border-left:3px solid var(--neon-emerald); padding:10px 14px; font-size:12.5px; color:#a7f3d0;">
+            <b>Guaranteed SLA:</b> -84% average TTFT reduction or 100% money-back guarantee.
+          </div>
+        `
+      },
+      'sprint-mobile-os': {
+        title: 'Mobile Business OS',
+        price: '$990',
+        timeline: '72 Hours (One-Time, Blackout-Proof)',
+        badge: 'OFFLINE-FIRST MOBILE COCKPIT',
+        content: `
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:8px;">🔬 Architectural Target:</div>
+            <p style="color:var(--text-muted); font-size:13px;">Deploy a secure mobile PWA & Telegram Command Center with an offline SQLite queue that guarantees uninterrupted business operations during internet blackouts or network drops.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:6px;">📦 Key Deliverables:</div>
+            <ul style="padding-left:20px; color:#94a3b8; font-size:13px; line-height:1.6;">
+              <li>Mobile PWA Command Center with biometric authentication & instant status widgets.</li>
+              <li>Local SQLite synchronization queue that auto-syncs to Google Workspace when reconnected.</li>
+              <li>Zero-Leakage Mobile OCR: photograph receipts and invoices, parse to Sheets in 3 seconds.</li>
+              <li>Direct Google Apps Script MCP Server installed directly in your private account.</li>
+            </ul>
+          </div>
+          <div style="background:rgba(0,255,163,0.06); border-left:3px solid var(--neon-emerald); padding:10px 14px; font-size:12.5px; color:#a7f3d0;">
+            <b>Zero Monthly Fees:</b> Pay once, own forever on your own Google Cloud infrastructure.
+          </div>
+        `
+      },
+      'sprint-b2b-pipeline': {
+        title: 'B2B Intent Pipeline',
+        price: '$1,500',
+        timeline: '5 Days (One-Time)',
+        badge: 'INTENT SCRAPER & 1-CLICK PROPOSALS',
+        content: `
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:8px;">🔬 Architectural Target:</div>
+            <p style="color:var(--text-muted); font-size:13px;">Automate end-to-end inbound and outbound B2B customer acquisition: detect hiring intent, calculate Hormozi score, and auto-generate bespoke proposals before competitors notice.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:6px;">📦 Key Deliverables:</div>
+            <ul style="padding-left:20px; color:#94a3b8; font-size:13px; line-height:1.6;">
+              <li>Hiring Intent Scraper parsing job boards and growth announcements into structured leads.</li>
+              <li>Hormozi 4-Factor Lead Qualifier (Pain, Budget, Decision-Maker, Urgency) on air-gapped Python.</li>
+              <li>Automated 1-Click Proposal Engine generating branded Google Docs & PDFs in 30 seconds.</li>
+              <li>Instant Telegram Push Bridge alerting founders to Tier-1 high-ticket opportunities.</li>
+            </ul>
+          </div>
+          <div style="background:rgba(0,255,163,0.06); border-left:3px solid var(--neon-emerald); padding:10px 14px; font-size:12.5px; color:#a7f3d0;">
+            <b>Deployment Scope:</b> Transferred into your Google Sheets CRM with 30-Day Setup Support.
+          </div>
+        `
+      },
+      'sprint-content-core': {
+        title: 'Autonomous Content Core',
+        price: '$1,900',
+        timeline: '5 Days (Gemini Pro Gem-боты)',
+        badge: '24/7 AGENT SWARM & SOURCE MIXING',
+        content: `
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:8px;">🔬 Architectural Target:</div>
+            <p style="color:var(--text-muted); font-size:13px;">Deploy a multi-agent content synthesis engine powered by Gemini 1.5 Pro Gem-bots running continuous background research and high-retention post creation.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:6px;">📦 Key Deliverables:</div>
+            <ul style="padding-left:20px; color:#94a3b8; font-size:13px; line-height:1.6;">
+              <li>24/7 Background Gem-Bots scanning 300+ authoritative sources for emerging trends.</li>
+              <li>Source Mixing Algorithm: decomposes viral formats and injects your proprietary case studies.</li>
+              <li>Omnichannel Publishing Automation to Telegram Channels, LinkedIn, and social feeds.</li>
+              <li>Automated GEO/AEO Schema.org JSON-LD generator for ranking in ChatGPT & Perplexity.</li>
+            </ul>
+          </div>
+          <div style="background:rgba(0,255,163,0.06); border-left:3px solid var(--neon-emerald); padding:10px 14px; font-size:12.5px; color:#a7f3d0;">
+            <b>Independence:</b> Runs on Google Cloud cron schedules without needing a running laptop.
+          </div>
+        `
+      },
+      'sprint-media-studio': {
+        title: 'Cinematic AI Media Studio',
+        price: '$3,400',
+        timeline: '7 Days (Grok Flux/Aurora)',
+        badge: 'ENTERPRISE CINEMATIC VIDEO PIPELINE',
+        content: `
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:8px;">🔬 Architectural Target:</div>
+            <p style="color:var(--text-muted); font-size:13px;">Engineered media generation studio leveraging Grok Flux photorealism and Aurora video models to produce broadcast-ready commercial assets and viral Shorts/Reels.</p>
+          </div>
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700; color:#fff; margin-bottom:6px;">📦 Key Deliverables:</div>
+            <ul style="padding-left:20px; color:#94a3b8; font-size:13px; line-height:1.6;">
+              <li>Cinematic Grok Flux & Aurora generation pipelines fine-tuned for high-engagement media.</li>
+              <li>Ultra-realistic neural voice cloning and dynamic lip-sync engine with zero artifacts.</li>
+              <li>Automated vertical video pipeline: automated subtitles, sound effects, and kinetic pacing.</li>
+              <li>100% Code & Model Weights transfer with private GPU / Cloud execution scripts.</li>
+            </ul>
+          </div>
+          <div style="background:rgba(245,158,11,0.08); border-left:3px solid var(--neon-amber); padding:10px 14px; font-size:12.5px; color:#fde68a;">
+            <b>Permanent Asset:</b> Zero third-party SaaS dependency. Complete code ownership.
+          </div>
+        `
+      }
+    };
+
+    let currentSelectedTeardownKey = 'sprint-teardown';
+
+    function openTeardownModal(sprintKey) {
+      currentSelectedTeardownKey = sprintKey;
+      const bp = teardownBlueprints[sprintKey] || teardownBlueprints['sprint-teardown'];
+      
+      document.getElementById('td-modal-title').innerText = bp.title;
+      document.getElementById('td-modal-meta').innerText = `${bp.badge} • ${bp.price} (Turnaround: ${bp.timeline})`;
+      document.getElementById('td-modal-content').innerHTML = bp.content;
+      document.getElementById('td-modal-order-btn').innerText = `Order ${bp.title} (${bp.price}) 🚀`;
+      
+      document.getElementById('teardown-modal').classList.add('active');
+    }
+
+    function closeTeardownModal() {
+      document.getElementById('teardown-modal').classList.remove('active');
+    }
+
+    function handleModalBackdropClick(e, modalId) {
+      if (e.target.id === modalId) {
+        document.getElementById(modalId).classList.remove('active');
+      }
+    }
+
+    function proceedToOrderFromTeardown() {
+      const bp = teardownBlueprints[currentSelectedTeardownKey];
+      closeTeardownModal();
+      openSprintModal(bp.title, bp.price, bp.timeline);
+    }
+
+    function openSprintModal(title, price, timeline) {
+      const select = document.getElementById('selected-sprint');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === title) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      updateSelectedSprintUI();
+      document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateSelectedSprintUI() {
+      const select = document.getElementById('selected-sprint');
+      const selectedOpt = select.options[select.selectedIndex];
+      const price = selectedOpt.getAttribute('data-price') || '$490';
+      const name = selectedOpt.value;
+      
+      document.getElementById('checkout-title').innerText = `Reserve ${name} (${price})`;
+      document.getElementById('btn-stripe-submit').innerText = `💳 Instant Checkout via Stripe (${price})`;
+    }
+
     function handleFormSubmit() {
+      const select = document.getElementById('selected-sprint');
+      const selectedOpt = select.options[select.selectedIndex];
+      const sprintName = selectedOpt.value;
+      const price = selectedOpt.getAttribute('data-price');
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const domain = document.getElementById('domain').value;
-      alert(`🎉 Sprint Application Reserved for ${name} (${domain})!\n\nRedirecting to secure Stripe Checkout ($490)...`);
+      
+      alert(`🎉 Sprint Application Reserved!\n\nProduct: ${sprintName} (${price})\nClient: ${name} (${domain})\nIncludes 30-Day Setup Support & Google Cloud Transfer.\n\nRedirecting to secure Stripe Checkout...`);
       window.location.href = "https://buy.stripe.com/test_placeholder_razum_sprint";
+    }
+
+    function requestInvoice() {
+      const select = document.getElementById('selected-sprint');
+      const sprintName = select.options[select.selectedIndex].value;
+      const price = select.options[select.selectedIndex].getAttribute('data-price');
+      const name = document.getElementById('name').value || 'Corporate Client';
+      const email = document.getElementById('email').value || 'client@company.com';
+      
+      alert(`📄 Corporate Wire Invoice Requested!\n\nSprint: ${sprintName} (${price})\nBilled To: ${name} (${email})\nModel: One-time payment (No recurring fees)\n\nA formal PDF wire invoice with banking details has been queued to your email.`);
     }
   </script>
 </body>
